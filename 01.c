@@ -153,7 +153,7 @@ void imprimirArr(int numeros[], int len) {
 			printf("%d, ", numeros[j]);
 		}
     }
-	printf("]");
+	printf("]\n");
 }
 
 void invertirArr(int numeros[], int len) {
@@ -169,37 +169,44 @@ void invertirArr(int numeros[], int len) {
 }
 
 int main() {
-    // int numeros[10];
-    // cargaArr(numeros);
-    int numeros[10] = {5, 1, 3, 2, 4};
+    int numeros[10];
+    cargaArr(numeros);
+    // int numeros[10] = {5, 1, 3, 2, 4};
 
     int len = 0;
     for(int u = 0; numeros[u] != 0 && u < 10 ; u++) {
         len++;
     }    
 
-    imprimirArr(numeros, len);
-
-
     // printf("\nEl numero de elementos en la array es: %d\n", len);
 
     // printf("\n%d, %d", (len-1), numeros[len-1]);
     // printf("\n%d, %d\n", (len-1)/2, numeros[(len-1)/2]);
 
-    for(int x = 0; numeros[x] != 0 && x < len-1; x++) {
-        for(int y = x + 1; numeros[y] != 0 && y < len; y++) {
+    invertirArr(numeros, len);
+
+    imprimirArr(numeros, len);
+
+    int numeros1[10];
+    cargaArr(numeros1);
+
+    int len1 = 0;
+    for(int j = 0; numeros1[j] != 0 && j < 10 ; j++) {
+        len1++;
+    }    
+
+    for(int x = 0; numeros1[x] != 0 && x < len1-1; x++) {
+        for(int y = x + 1; numeros1[y] != 0 && y < len1; y++) {
             // printf("%d y %d\n", numeros[x], numeros[y]);
-            if(numeros[x] > numeros[y]) {
-                int temp = numeros[x];
-                numeros[x] = numeros[y];
-                numeros[y] = temp;
+            if(numeros1[x] > numeros1[y]) {
+                int temp = numeros1[x];
+                numeros1[x] = numeros1[y];
+                numeros1[y] = temp;
             }
         }
     }
 
-    // invertirArr(numeros, len);
-
-    imprimirArr(numeros, len);
+    imprimirArr(numeros1, len1);
 
     return 0;
 }
