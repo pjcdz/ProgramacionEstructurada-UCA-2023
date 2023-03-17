@@ -132,82 +132,105 @@
 
 // ############################# EJ 04 #######################################################################################
 
-#include <stdio.h>
-
-void cargaArr(int numeros[10]) {
-    int i = 0;
+// void cargaArr(int numeros[10]) {
+//     int i = 0;
     
-    do {
-        printf("Ingresa un numero: ");    
-        scanf("%d", &numeros[i]);
-        i++;
-    } while (numeros[i-1] != 0 && i < 10);
-}
+//     do {
+//         printf("Ingresa un numero: ");    
+//         scanf("%d", &numeros[i]);
+//         i++;
+//     } while (numeros[i-1] != 0 && i < 10);
+// }
 
-void imprimirArr(int numeros[], int len) {
-    printf("El array ingresado es: [");
-    for (int j = 0; numeros[j] != 0 && j < len + 1; j++) {
-		if (numeros[j+1] == 0 || j == 9) {
-			printf("%d", numeros[j]);
-		} else {
-			printf("%d, ", numeros[j]);
-		}
-    }
-	printf("]\n");
-}
+// void imprimirArr(int numeros[], int len) {
+//     printf("El array ingresado es: [");
+//     for (int j = 0; numeros[j] != 0 && j < len + 1; j++) {
+// 		if (numeros[j+1] == 0 || j == 9) {
+// 			printf("%d", numeros[j]);
+// 		} else {
+// 			printf("%d, ", numeros[j]);
+// 		}
+//     }
+// 	printf("]\n");
+// }
 
-void invertirArr(int numeros[], int len) {
-    int x = 0;
-    int y = (len-1);
-    while (x < (len-1)/2) {
-        int temp = numeros[x];
-        numeros[x] = numeros[y];
-        numeros[y] = temp;
-        x++;
-        y--;
+// void invertirArr(int numeros[], int len) {
+//     int x = 0;
+//     int y = (len-1);
+//     while (x < (len-1)/2) {
+//         int temp = numeros[x];
+//         numeros[x] = numeros[y];
+//         numeros[y] = temp;
+//         x++;
+//         y--;
+//     }
+// }
+
+// int main() {
+//     int numeros[10];
+//     cargaArr(numeros);
+//     // int numeros[10] = {5, 1, 3, 2, 4};
+
+//     int len = 0;
+//     for(int u = 0; numeros[u] != 0 && u < 10 ; u++) {
+//         len++;
+//     }    
+
+//     // printf("\nEl numero de elementos en la array es: %d\n", len);
+
+//     // printf("\n%d, %d", (len-1), numeros[len-1]);
+//     // printf("\n%d, %d\n", (len-1)/2, numeros[(len-1)/2]);
+
+//     invertirArr(numeros, len);
+
+//     imprimirArr(numeros, len);
+
+//     int numeros1[10];
+//     cargaArr(numeros1);
+
+//     int len1 = 0;
+//     for(int j = 0; numeros1[j] != 0 && j < 10 ; j++) {
+//         len1++;
+//     }    
+
+//     for(int x = 0; numeros1[x] != 0 && x < len1-1; x++) {
+//         for(int y = x + 1; numeros1[y] != 0 && y < len1; y++) {
+//             // printf("%d y %d\n", numeros[x], numeros[y]);
+//             if(numeros1[x] > numeros1[y]) {
+//                 int temp = numeros1[x];
+//                 numeros1[x] = numeros1[y];
+//                 numeros1[y] = temp;
+//             }
+//         }
+//     }
+
+//     imprimirArr(numeros1, len1);
+
+//     return 0;
+// }
+
+// ############################# EJ 05 #######################################################################################
+
+int estaEnArr(numeros[10], int i) {
+    int rt = 0;
+
+    for(int u = 0; numeros[u] != 0 && u < 10 ; u++) {
+        if (numeros[i] == numeros[u]) {
+            rt = 1;
+        }
     }
+
+    return rt;
 }
 
 int main() {
     int numeros[10];
-    cargaArr(numeros);
-    // int numeros[10] = {5, 1, 3, 2, 4};
 
-    int len = 0;
-    for(int u = 0; numeros[u] != 0 && u < 10 ; u++) {
-        len++;
-    }    
-
-    // printf("\nEl numero de elementos en la array es: %d\n", len);
-
-    // printf("\n%d, %d", (len-1), numeros[len-1]);
-    // printf("\n%d, %d\n", (len-1)/2, numeros[(len-1)/2]);
-
-    invertirArr(numeros, len);
-
-    imprimirArr(numeros, len);
-
-    int numeros1[10];
-    cargaArr(numeros1);
-
-    int len1 = 0;
-    for(int j = 0; numeros1[j] != 0 && j < 10 ; j++) {
-        len1++;
-    }    
-
-    for(int x = 0; numeros1[x] != 0 && x < len1-1; x++) {
-        for(int y = x + 1; numeros1[y] != 0 && y < len1; y++) {
-            // printf("%d y %d\n", numeros[x], numeros[y]);
-            if(numeros1[x] > numeros1[y]) {
-                int temp = numeros1[x];
-                numeros1[x] = numeros1[y];
-                numeros1[y] = temp;
-            }
-        }
-    }
-
-    imprimirArr(numeros1, len1);
+    int i = 0;
+    do {
+        printf("Ingrese un numero: ");
+        scanf("%d", &numeros[i]);
+    } while(estaEnArr(numeros, i) == 0 && esPos(numeros, i) == 1 && i < 10);
 
     return 0;
 }
-
