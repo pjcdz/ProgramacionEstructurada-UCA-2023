@@ -3,74 +3,75 @@
 
 // ############################# EJ 01 #######################################################################################
 
-int main() {
-    float num;
-    printf("Ingrese un numero real: "); 
-    scanf("%f", &num);
+// int main() {
+//     float num;
+//     printf("Ingrese un numero real: "); 
+//     scanf("%f", &num);
 
-    printf("Piso: %.0f\n", floor(num));
-    printf("Techo: %.0f\n", ceil(num));
-    printf("Redondeo: %.0f\n", num);
+//     printf("Piso: %.0f\n", floor(num));
+//     printf("Techo: %.0f\n", ceil(num));
+//     printf("Redondeo: %.0f\n", num);
 
-    return 0;
-}
+//     return 0;
+// }
 
 // TEST CON 8.6 PREGUNTAR POR EL PISO = 9
 
 // ############################# EJ 02 #######################################################################################
 
-int suma(int num1, int num2) {
-	return num1 + num2;
-}
+// int suma(int num1, int num2) {
+// 	return num1 + num2;
+// }
 
-int resta(int num1, int num2) {
-	return num1 - num2;
-}
+// int resta(int num1, int num2) {
+// 	return num1 - num2;
+// }
 
-int multiplicacion(int num1, int num2) {
-	return num1 * num2;
-}
+// int multiplicacion(int num1, int num2) {
+// 	return num1 * num2;
+// }
 
-int division(int num1, int num2) {
-	return num1 / num2;
-}
+// int division(int num1, int num2) {
+// 	return num1 / num2;
+// }
 
-int main() {
-	int num1;
-	int num2;
+// int main() {
+// 	int num1;
+// 	int num2;
 	
-	printf("Ingrese primer numero: ");
-	scanf("%d", &num1);
-	printf("Ingrese segundo numero: ");
-	scanf("%d", &num2);
+// 	printf("Ingrese primer numero: ");
+// 	scanf("%d", &num1);
+// 	printf("Ingrese segundo numero: ");
+// 	scanf("%d", &num2);
 	
-	char op;
+// 	char op;
 	
-	printf("Ingrese operador [+ - * /]: ");
-	scanf(" %c", &op);
+// 	printf("Ingrese operador [+ - * /]: ");
+// 	scanf(" %c", &op);
 	
-	switch (op) {
-	case '+': 
-		printf("\n%d %c %d = %d", num1, op, num2, suma(num1, num2));
-		break;
-	case '-':
-		printf("\n%d %c %d = %d", num1, op, num2, resta(num1, num2));
-		break;
-	case '*':
-		printf("\n%d %c %d = %d", num1, op, num2, multiplicacion(num1, num2));
-		break;
-	case '/':
-		printf("\n%d %c %d = %d", num1, op, num2, division(num1, num2));
-		break;
-	default:
-		printf("Operador invalido\n");
-		break;
-	}
+// 	switch (op) {
+// 	case '+': 
+// 		printf("\n%d %c %d = %d", num1, op, num2, suma(num1, num2));
+// 		break;
+// 	case '-':
+// 		printf("\n%d %c %d = %d", num1, op, num2, resta(num1, num2));
+// 		break;
+// 	case '*':
+// 		printf("\n%d %c %d = %d", num1, op, num2, multiplicacion(num1, num2));
+// 		break;
+// 	case '/':
+// 		printf("\n%d %c %d = %d", num1, op, num2, division(num1, num2));
+// 		break;
+// 	default:
+// 		printf("Operador invalido\n");
+// 		break;
+// 	}
 	
-	return 0;
-}
+// 	return 0;
+// }
 
 // ############################# EJ 03 #######################################################################################
+
 
 // char *leer() {
 // 	char *texto = (char *) malloc(100); // Reservar memoria dinámica para el string
@@ -96,68 +97,66 @@ int main() {
 // 	return 0;
 // }
 
-void leer(char texto[]) {
-	printf("Ingrese texto: ");
-	scanf("%s", texto);
-}
 
-void reemplazar(char texto[], char reemplazar, char reemplazo) {
-	for (int i = 0; i < 100; i++) {
-		if (texto[i] == reemplazar) {
-			texto[i] = reemplazo;
-		}
-	}
-}
+// void leer(char texto[]) {
+// 	printf("Ingrese texto: ");
+// 	scanf("%s", texto);
+// }
 
-int main() {
-	char texto[100];
-	leer(texto);
+// void reemplazar(char texto[], char reemplazar, char reemplazo) {
+// 	for (int i = 0; i < 100; i++) {
+// 		if (texto[i] == reemplazar) {
+// 			texto[i] = reemplazo;
+// 		}
+// 	}
+// }
+
+// int main() {
+// 	char texto[100];
+// 	leer(texto);
 	
-	char remplazar;
-	printf("Ingrese caracter a remplazar: ");
-	scanf(" %c", &remplazar);
+// 	char remplazar;
+// 	printf("Ingrese caracter a remplazar: ");
+// 	scanf(" %c", &remplazar);
 	
-	char reemplazo;
-	printf("Ingrese caracter de reemplazo: ");
-	scanf(" %c", &reemplazo);
+// 	char reemplazo;
+// 	printf("Ingrese caracter de reemplazo: ");
+// 	scanf(" %c", &reemplazo);
 	
-	reemplazar(texto, remplazar, reemplazo);
+// 	reemplazar(texto, remplazar, reemplazo);
 	
-	printf("Resultado: %s", texto);
+// 	printf("Resultado: %s", texto);
 	
-	return 0;
-}
+// 	return 0;
+// }
 
 // ############################# EJ 04 #######################################################################################
 
-int cargaArr {
-	int arr[10];
-	
-	for (int i = 0; i < 10; i++) {
-		while (scanf("%d", &arr[i]) != 0) {
-			printf("Ingrese un numero: ");
-			scanf("%d", &arr[i]);
-		}	
-	}
+#include <stdio.h>
+
+void cargaArr(int numeros[10]) {
+    int i = 0;
+    
+    do {
+        printf("Ingresa un numero: ");    
+        scanf("%d", &numeros[i]);
+        i++;
+    } while (numeros[i-1] != 0 && i < 10);
 }
 
 int main() {
-	int numeros[10];
-	
-	int i = 0;
-	
-	do {
-		printf("Ingresa un número: ");	
-		scanf("%d", &numeros[i]);
-		i++;
-	} while (numeros[i-1] != 0 && i < 10);
+    int numeros[10];
+    cargaArr(numeros);
+    
+    printf("El array ingresado es: [");
+    for (int j = 0; numeros[j] != 0 && j < 10; j++) {
+		if (numeros[j+1] == 0 || j == 9) {
+			printf("%d", numeros[j]);
+		} else {
+			printf("%d, ", numeros[j]);
+		}
+    }
+	printf("]");
 
-	printf("El array ingresado es: \n");
-	for (int j = 0; j < i-1; j++) {
-		printf("%d, ", numeros[j]);
-	}
-	
-	//Haz algo con el arreglo de numeros aquí
-	
-	return 0;
+    return 0;
 }
