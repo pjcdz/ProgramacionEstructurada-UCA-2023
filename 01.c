@@ -130,3 +130,34 @@ int main() {
 
 // ############################# EJ 04 #######################################################################################
 
+int cargaArr {
+	int arr[10];
+	
+	for (int i = 0; i < 10; i++) {
+		while (scanf("%d", &arr[i]) != 0) {
+			printf("Ingrese un numero: ");
+			scanf("%d", &arr[i]);
+		}	
+	}
+}
+
+int main() {
+	int numeros[10];
+	
+	int i = 0;
+	
+	do {
+		printf("Ingresa un número: ");	
+		scanf("%d", &numeros[i]);
+		i++;
+	} while (numeros[i-1] != 0 && i < 10);
+
+	printf("El array ingresado es: \n");
+	for (int j = 0; j < i-1; j++) {
+		printf("%d, ", numeros[j]);
+	}
+	
+	//Haz algo con el arreglo de numeros aquí
+	
+	return 0;
+}
