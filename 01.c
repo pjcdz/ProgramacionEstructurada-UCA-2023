@@ -144,12 +144,9 @@ void cargaArr(int numeros[10]) {
     } while (numeros[i-1] != 0 && i < 10);
 }
 
-int main() {
-    int numeros[10];
-    cargaArr(numeros);
-    
+void imprimirArr(int numeros[], int len) {
     printf("El array ingresado es: [");
-    for (int j = 0; numeros[j] != 0 && j < 10; j++) {
+    for (int j = 0; numeros[j] != 0 && j < len + 1; j++) {
 		if (numeros[j+1] == 0 || j == 9) {
 			printf("%d", numeros[j]);
 		} else {
@@ -157,6 +154,53 @@ int main() {
 		}
     }
 	printf("]");
+}
+
+void invertirArr(int numeros[], int len) {
+    int x = 0;
+    int y = (len-1);
+    while (x < (len-1)/2) {
+        int temp = numeros[x];
+        numeros[x] = numeros[y];
+        numeros[y] = temp;
+        x++;
+        y--;
+    }
+}
+
+int main() {
+    // int numeros[10];
+    // cargaArr(numeros);
+    int numeros[10] = {5, 1, 3, 2, 4};
+
+    int len = 0;
+    for(int u = 0; numeros[u] != 0 && u < 10 ; u++) {
+        len++;
+    }    
+
+    imprimirArr(numeros, len);
+
+
+    // printf("\nEl numero de elementos en la array es: %d\n", len);
+
+    // printf("\n%d, %d", (len-1), numeros[len-1]);
+    // printf("\n%d, %d\n", (len-1)/2, numeros[(len-1)/2]);
+
+    for(int x = 0; numeros[x] != 0 && x < len-1; x++) {
+        for(int y = x + 1; numeros[y] != 0 && y < len; y++) {
+            // printf("%d y %d\n", numeros[x], numeros[y]);
+            if(numeros[x] > numeros[y]) {
+                int temp = numeros[x];
+                numeros[x] = numeros[y];
+                numeros[y] = temp;
+            }
+        }
+    }
+
+    // invertirArr(numeros, len);
+
+    imprimirArr(numeros, len);
 
     return 0;
 }
+
