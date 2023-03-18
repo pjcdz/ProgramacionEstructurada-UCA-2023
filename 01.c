@@ -211,11 +211,23 @@
 
 // ############################# EJ 05 #######################################################################################
 
-int estaEnArr(numeros[10], int i) {
+void imprimirArr(int numeros[100]) {
+    printf("El array ingresado es: [");
+    for (int j = 0; numeros[j] != 0 && j < 100 + 1; j++) {
+		if (numeros[j+1] == 0 || j == 99) {
+			printf("%d", numeros[j]);
+		} else {
+			printf("%d, ", numeros[j]);
+		}
+    }
+	printf("]\n");
+}
+
+int estaEnArr(int numerostemp[100], int i) {
     int rt = 0;
 
-    for(int u = 0; numeros[u] != 0 && u < 10 ; u++) {
-        if (numeros[i] == numeros[u]) {
+    for(int u = 0; u < i; u++) { // Solo revisar hasta el último número ingresado
+        if (numerostemp[u] == numerostemp[i]) {
             rt = 1;
         }
     }
@@ -223,14 +235,46 @@ int estaEnArr(numeros[10], int i) {
     return rt;
 }
 
-int main() {
-    int numeros[10];
+int esPos(int numerostemp[100], int i) {
+    int rt = 1;
 
+    if (numerostemp[i] < 0) {
+            rt = 0;
+    }
+
+    return rt;
+}
+
+void cargarArrPNR(int numeros[100], int numerostemp[100]) {
     int i = 0;
+    int j = 0;
     do {
         printf("Ingrese un numero: ");
-        scanf("%d", &numeros[i]);
-    } while(estaEnArr(numeros, i) == 0 && esPos(numeros, i) == 1 && i < 10);
+        scanf("%d", &numerostemp[i]);
+
+        // imprimirArr(numerostemp);    
+        // printf("\nEl numero fue: %d, esta en arr? %d, es positivo? %d\n", numerostemp[i], estaEnArr(numerostemp, i), esPos(numerostemp, i));
+        if (estaEnArr(numerostemp, i) == 0 && esPos(numerostemp, i) == 1) {
+            numeros[j] = numerostemp[i];
+            // printf("yeiii\n");
+            j++;
+        }
+
+        i++;
+    } while(numerostemp[i-1] != 0 && i < 100);
+
+    // int numerostemp[10] = {1, -1, -1};
+    // printf("%d", esPos(numerostemp, 1));
+}
+
+int main() {
+    int numeros[100] = {0};
+    int numerostemp[100] = {0};
+
+    cargarArrPNR(numeros, numerostemp);
+    
+    imprimirArr(numerostemp);
+    imprimirArr(numeros);
 
     return 0;
 }
