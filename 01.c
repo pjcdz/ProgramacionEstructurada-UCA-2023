@@ -280,3 +280,52 @@
 // }
 
 // ############################# EJ 06 #######################################################################################
+
+void cargarTexto(char texto[100]) {
+    printf("Ingrese un texto: ");
+    fgets(texto, 100, stdin);  // Read a line of input including spaces
+}
+
+void imprimirTexto(char texto[100]) {
+    printf("El texto ingresado es: ");
+    for(int x = 0; texto[x] != '\0'; x++) {
+        printf("%c", texto[x]);
+    }
+}
+
+void normalizar(char texto[100], char normal[100]) {
+    if (texto[0] >= 'a' && texto[0] <= 'z') {
+        texto[0] = texto[0] - 32;
+    }
+
+    int y = 0;
+    for(int x = 0; texto[x] != '\0'; x++) {
+        if (texto[x] != ' ') {
+            normal[y] = texto[x];
+            y++;
+        } else if (texto[x-1] != ' ' && texto[x] == ' ') {
+            normal[y] = ' ';
+            y++;
+        }
+        
+        if (texto[x+1] == '\0') {
+            // printf("\n%c\n", normal[y-2]);
+            normal[y-1] = '.';
+        }
+    }
+}
+
+
+int main() {
+    char texto[100];
+    char normal[100] = " ";
+
+    cargarTexto(texto);
+    imprimirTexto(texto);
+
+    normalizar(texto, normal);
+
+    imprimirTexto(normal);
+
+    return 0;
+}
