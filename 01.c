@@ -346,6 +346,62 @@
 
 // ############################# EJ 07 #######################################################################################
 
+// #define F 3
+// #define C 3
+
+// void cargarMat(int mat[F][C]) {
+//     int f = 0, c = 0;
+
+//     for(f=0; f<F; f++) {
+//         for(c=0; c<C; c++) {
+//             int num;
+//             printf("Ingrese un numero en la posicion [%d][%d]: ", f, c);
+//             scanf("%d", &num);
+//             mat[f][c] = num;
+//         }
+//     }
+// }
+
+// void imprimirMat(int mat[F][C]) {
+//     int f = 0, c = 0;
+
+//     for(f=0; f<F; f++) {
+//         for(c=0; c<C; c++) {
+//             printf("%4d", mat[f][c]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// float promMat(int mat[F][C]) {
+//     int f = 0, c = 0;
+//     float prom = 0;
+//     int cant = 0;
+
+//     for(f=0; f<F; f++) {
+//         for(c=0; c<C; c++) {
+//             prom += mat[f][c];
+//             cant++;
+//         }
+//     }
+
+//     prom = prom / cant;
+//     return prom;
+// }
+
+// int main() {
+//     int mat[F][C] = {0};
+//     cargarMat(mat);
+//     printf("\n");
+//     imprimirMat(mat);
+//     printf("\n");
+//     printf("El promedio de los valores de la matriz es de: %.2f",promMat(mat));
+
+//     return 0;
+// }
+
+// ############################# EJ 08 #######################################################################################
+
 #define F 3
 #define C 3
 
@@ -373,20 +429,18 @@ void imprimirMat(int mat[F][C]) {
     }
 }
 
-float promMat(int mat[F][C]) {
+void transponerMat(int mat[F][C]) {
     int f = 0, c = 0;
-    float prom = 0;
-    int cant = 0;
 
     for(f=0; f<F; f++) {
-        for(c=0; c<C; c++) {
-            prom += mat[f][c];
-            cant++;
+        for(c=f; c<C; c++) {        
+            // printf("[%2d, %2d]", mat[f][c], mat[c][f]);
+            int aux = mat[f][c];
+            mat[f][c] = mat[c][f];
+            mat[c][f] = aux;
         }
+        // printf("\n");
     }
-
-    prom = prom / cant;
-    return prom;
 }
 
 int main() {
@@ -395,7 +449,8 @@ int main() {
     printf("\n");
     imprimirMat(mat);
     printf("\n");
-    printf("El promedio de los valores de la matriz es de: %.2f",promMat(mat));
+    transponerMat(mat);
+    imprimirMat(mat);
 
     return 0;
 }
