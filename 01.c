@@ -281,51 +281,121 @@
 
 // ############################# EJ 06 #######################################################################################
 
-void cargarTexto(char texto[100]) {
-    printf("Ingrese un texto: ");
-    fgets(texto, 100, stdin);  // Read a line of input including spaces
-}
+// void cargarTexto(char texto[100]) {
+//     printf("Ingrese un texto: ");
+    
+//     int i = 0;
+//     char aux;
+//     if (i<100-1) {
+//         aux = getchar();
+//     }
+//     while (aux!='\n' && i<100-1) {
+//         texto[i] = aux;
+//         i++;
+//         if(i<100-1) {
+//             aux = getchar();
+//         }
+//     }
+//     texto[i] = '\0';
+    
+// }
 
-void imprimirTexto(char texto[100]) {
-    printf("El texto ingresado es: ");
-    for(int x = 0; texto[x] != '\0'; x++) {
-        printf("%c", texto[x]);
-    }
-}
+// void imprimirTexto(char texto[100]) {
+//     printf("El texto ingresado es: ");
+//     for(int x = 0; texto[x] != '\0'; x++) {
+//         printf("%c", texto[x]);
+//     }
+// }
 
-void normalizar(char texto[100], char normal[100]) {
-    if (texto[0] >= 'a' && texto[0] <= 'z') {
-        texto[0] = texto[0] - 32;
-    }
+// void normalizar(char texto[100], char normal[100]) {
+//     if (texto[0] >= 'a' && texto[0] <= 'z') {
+//         texto[0] = texto[0] - 32;
+//     }
 
-    int y = 0;
-    for(int x = 0; texto[x] != '\0'; x++) {
-        if (texto[x] != ' ') {
-            normal[y] = texto[x];
-            y++;
-        } else if (texto[x-1] != ' ' && texto[x] == ' ') {
-            normal[y] = ' ';
-            y++;
-        }
+//     int y = 0;
+//     for(int x = 0; texto[x] != '\0'; x++) {
+//         if (texto[x] != ' ') {
+//             normal[y] = texto[x];
+//             y++;
+//         } else if (texto[x-1] != ' ' && texto[x] == ' ') {
+//             normal[y] = ' ';
+//             y++;
+//         }
         
-        if (texto[x+1] == '\0') {
-            // printf("\n%c\n", normal[y-2]);
-            normal[y-1] = '.';
+//         if (texto[x+1] == '\0') {
+//             // printf("\n%c\n", normal[y-2]);
+//             normal[y] = '.';
+//         }
+//     }
+// }
+
+
+// int main() {
+//     char texto[100];
+//     char normal[100] = " ";
+
+//     cargarTexto(texto);
+//     imprimirTexto(texto);
+
+//     normalizar(texto, normal);
+
+//     imprimirTexto(normal);
+
+//     return 0;
+// }
+
+// ############################# EJ 07 #######################################################################################
+
+#define F 3
+#define C 3
+
+void cargarMat(int mat[F][C]) {
+    int f = 0, c = 0;
+
+    for(f=0; f<F; f++) {
+        for(c=0; c<C; c++) {
+            int num;
+            printf("Ingrese un numero en la posicion [%d][%d]: ", f, c);
+            scanf("%d", &num);
+            mat[f][c] = num;
         }
     }
 }
 
+void imprimirMat(int mat[F][C]) {
+    int f = 0, c = 0;
+
+    for(f=0; f<F; f++) {
+        for(c=0; c<C; c++) {
+            printf("%4d", mat[f][c]);
+        }
+        printf("\n");
+    }
+}
+
+float promMat(int mat[F][C]) {
+    int f = 0, c = 0;
+    float prom = 0;
+    int cant = 0;
+
+    for(f=0; f<F; f++) {
+        for(c=0; c<C; c++) {
+            prom += mat[f][c];
+            cant++;
+        }
+    }
+
+    prom = prom / cant;
+    return prom;
+}
 
 int main() {
-    char texto[100];
-    char normal[100] = " ";
-
-    cargarTexto(texto);
-    imprimirTexto(texto);
-
-    normalizar(texto, normal);
-
-    imprimirTexto(normal);
+    int mat[F][C] = {0};
+    cargarMat(mat);
+    printf("\n");
+    imprimirMat(mat);
+    printf("\n");
+    printf("El promedio de los valores de la matriz es de: %.2f",promMat(mat));
 
     return 0;
 }
