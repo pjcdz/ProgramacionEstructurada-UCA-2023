@@ -457,89 +457,120 @@
 
 // ############################# EJ 09 #######################################################################################
 
-// Desarrollar las funciones cargarMatText​, imprimirMatText​, y ordenarMatText​.
-// cargarMatText​: carga desde teclado una matriz de char de F x C pasada por
-// parámetro. Por cada fila carga un texto el cual debe contener el ‘\0’ al final de los
-// caracteres útiles (concepto de string). Para marcar el fin de las filas útiles deberá
-// agregar en la siguiente fila (a la última útil) un‘\0’( en la columna cero) [nota1].
-// imprimirMatText​: Imprime la matriz de char de F x C pasada por parámetro.
-// ordenarMatText​: recibe una matriz de char de F x C . La función deberá ordenar la
-// matriz en orden alfabético ascendente. Tener en cuenta que los contenidos de la matriz
-// pueden tener tanto letras mayúsculas como minúsculas.
-// Desarrollar el programa principal que cargue una matriz, luego la muestre en pantalla. A
-// continuación ordenar la matriz y luego volver a imprimirla para verificar el orden.
-// Nota1: (Método). Un ‘\0’ en una fila (y cualquier columna) determinará el fin de los
-// caracteres útiles de dicha fila. Y un ’\0’ en columna 0 (cero) en una fila cualquiera,
-// determinará el fin de las filas útiles de la matriz.
-// Este método (ad hoc) adoptado no permite identificar en la matriz cadena de caracteres
-// vacías (sólo la última).
+// #include <string.h>
+// #define F 3
+// #define C 20
 
-#include <string.h>
-#define F 3
-#define C 20
+// void cargarMatText(char mat[F][C]) {
+//     int f = 0, c = 0;
 
-void cargarMatText(char mat[F][C]) {
+//     for (f=0; f<F; f++) {
+//         char aux;
+//         printf("Ingrese un texto: ");
+//         if (c < C-1) {
+//             aux = getchar();
+//         }
+//         while(aux != '\n' && c < C-1) {
+//             mat[f][c] = aux;
+//             c++;
+//             if (c < C-1) {
+//                 aux = getchar();
+//             }
+//         }
+//         mat[f][c] = '\0';
+//     }
+// }
+
+// void imprimirMatText(char mat[F][C]) {
+//     int u = 0, i = 0;
+
+//     for(u = 0; u < F; u++) {
+//         for(i = 0; i < C; i++) {
+//             printf("%c", mat[u][i]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// void ordenarMatText(char mat[F][C]) {
+//     int f = 0, i = 0;
+
+//     for(f=0; f<F; f++) {
+//         for(i=f; i<F; i++) {
+//             // char aux1 = mat[f][0];
+//             // char aux2 = mat[i][0];
+//             // if(mat[f][0] >= 'a' && mat[f][0] <= 'z') {
+//             //     aux1 = mat[F][0] + 32;
+//             // }
+//             // if(mat[i][0] >= 'a' && mat[i][0] <= 'z') {
+//             //     aux2 = mat[F][0] + 32;
+//             // }
+//             // printf("%c, %c\n", mat[f][0], mat[i][0]);
+//             // printf("%c, %c\n", aux1, aux2);
+//             if (mat[f][0] > mat[i][0]) {
+//                 char tmp[C];
+//                 strcpy(tmp, mat[f]);
+//                 strcpy(mat[f], mat[i]);
+//                 strcpy(mat[i], tmp);
+//             }
+//         }
+//     }
+// }
+
+// int main() {
+//     char matText[F][C] = {{'m', 'u', 'n', 'd', 'o', '\0'}, {'h', 'o', 'l', 'a', '\0'}, {'c', 'o', 'm', 'o', '\0'}};
+//     // cargarMatText(matText);
+//     imprimirMatText(matText);
+//     ordenarMatText(matText);
+//     imprimirMatText(matText);
+
+//     return 0;
+// }
+
+// ############################# EJ 10 #######################################################################################
+
+#define F 5
+#define C 15
+
+void cargarMatTexDeArch(int mat[F][C]) {
     int f = 0, c = 0;
+    int car = 0;
 
-    for (f=0; f<F; f++) {
-        char aux;
-        printf("Ingrese un texto: ");
-        if (c < C-1) {
-            aux = getchar();
-        }
-        while(aux != '\n' && c < C-1) {
-            mat[f][c] = aux;
-            c++;
-            if (c < C-1) {
-                aux = getchar();
+    FILE * arch;
+    arch = fopen("01-10.txt", "r");
+
+    if (arch != NULL) {
+        while ((car = fgetc(arch)) != EOF) {
+            if (car != '\n') {
+                mat[f][c] = car;
+                c++;
+            } else {
+                f++;
+                c = 0;
             }
         }
-        mat[f][c] = '\0';
+        fclose(arch);
+    } else {
+        printf("No se pudo abrir el archivo");
     }
 }
 
-void imprimirMatText(char mat[F][C]) {
-    int u = 0, i = 0;
 
-    for(u = 0; u < F; u++) {
-        for(i = 0; i < C; i++) {
-            printf("%c", mat[u][i]);
+void imprimirMat(int mat[F][C]) {
+    int f = 0, c = 0;
+
+    for(f=0; f<F; f++) {
+        for(c=0; c<C; c++) {
+            printf("%c", mat[f][c]);
         }
         printf("\n");
     }
 }
 
-void ordenarMatText(char mat[F][C]) {
-    int f = 0, i = 0;
-
-    for(f=0; f<F; f++) {
-        for(i=f; i<F; i++) {
-            // char aux1 = mat[f][0];
-            // char aux2 = mat[i][0];
-            // if(mat[f][0] >= 'a' && mat[f][0] <= 'z') {
-            //     aux1 = mat[F][0] + 32;
-            // }
-            // if(mat[i][0] >= 'a' && mat[i][0] <= 'z') {
-            //     aux2 = mat[F][0] + 32;
-            // }
-            // printf("%c, %c\n", mat[f][0], mat[i][0]);
-            // printf("%c, %c\n", aux1, aux2);
-            if (mat[f][0] > mat[i][0]) {
-                char tmp[C];
-                strcpy(tmp, mat[f]);
-                strcpy(mat[f], mat[i]);
-                strcpy(mat[i], tmp);
-            }
-        }
-    }
-}
-
 int main() {
-    char matText[F][C] = {{'M', 'u', 'n', 'd', 'o', '\0'}, {'h', 'o', 'l', 'a', '\0'}, {'c', 'o', 'm', 'o', '\0'}};
-    // cargarMatText(matText);
-    imprimirMatText(matText);
-    ordenarMatText(matText);
-    imprimirMatText(matText);
-
+    int mat[F][C] = {0};
+    cargarMatTexDeArch(mat);
+    imprimirMat(mat);
     return 0;
 }
+

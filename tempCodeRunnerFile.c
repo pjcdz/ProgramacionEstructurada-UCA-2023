@@ -1,2 +1,1 @@
-at[F][C]) {
-// }
+imprimirMat(mat);
