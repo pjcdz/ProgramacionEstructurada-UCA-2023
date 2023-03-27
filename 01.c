@@ -642,4 +642,32 @@
 
 // ############################# EJ 12 #######################################################################################
 
-#include <string.h>
+#define F 5
+#define C 15
+
+int main() {
+    int p, pj, pg, pe, pp, gf, gc, dg;
+    int r;
+
+    FILE* arch;
+    arch = fopen("01-11.txt", "r");
+
+    if(arch==NULL) {
+        return -1;
+    }
+
+    r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &p, &pj, &pg, &pe, &pp, &gf, &gc, &dg);
+    while(r != EOF) {
+        printf("%-5d %-5d %-5d %-5d %-5d %-5d %-5d", p, pj, pg, pe, pp, gf, gc, dg);
+        if(dg>0) {
+            printf("+%-5d\n", dg);
+        } else {
+            printf("%-5d\n", dg);
+        }
+        r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &p, &pj, &pg, &pe, &pp, &gf, &gc, &dg);
+    }
+
+    fclose(arch);
+
+    return 0;
+}
