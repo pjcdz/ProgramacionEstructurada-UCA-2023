@@ -529,50 +529,117 @@
 
 // ############################# EJ 10 #######################################################################################
 
-#define F 5
-#define C 15
+// #define F 5
+// #define C 15
 
-void cargarMatTexDeArch(int mat[F][C]) {
-    int f = 0, c = 0;
-    int car = 0;
+// void cargarMatTexDeArch(char mat[F][C]) {
+//     int f = 0, c = 0;
+//     int car = 0;
 
-    FILE * arch;
-    arch = fopen("01-10.txt", "r");
+//     FILE * arch;
+//     arch = fopen("01-10.txt", "r");
 
-    if (arch != NULL) {
-        while ((car = fgetc(arch)) != EOF) {
-            if (car != '\n') {
-                mat[f][c] = car;
-                c++;
-            } else {
-                mat[f][c] = '\0';
-                f++;
-                c = 0;
-            }
-        }
-        fclose(arch);
-    } else {
-        printf("No se pudo abrir el archivo");
-    }
-}
+//     if (arch != NULL) {
+//         while ((car = fgetc(arch)) != EOF) {
+//             if (car != '\n') {
+//                 mat[f][c] = car;
+//                 c++;
+//             } else {
+//                 mat[f][c] = '\0';
+//                 f++;
+//                 c = 0;
+//             }
+//         }
+//         fclose(arch);
+//     } else {
+//         printf("No se pudo abrir el archivo");
+//     }
+// }
 
+// void imprimirMat(char mat[F][C]) {
+//     int f = 0, c = 0;
 
-void imprimirMat(int mat[F][C]) {
-    int f = 0, c = 0;
+//     for(f=0; f<F; f++) {
+//         for(c=0; c<C; c++) {
+//             printf("%c", mat[f][c]);
+//         }
+//         printf("\n");
+//     }
+// }
 
-    for(f=0; f<F; f++) {
-        for(c=0; c<C; c++) {
-            printf("%c", mat[f][c]);
-        }
-        printf("\n");
-    }
-}
-
-int main() {
-    int mat[F][C] = {0};
-    cargarMatTexDeArch(mat);
-    imprimirMat(mat);
-    return 0;
-}
+// int main() {
+//     char mat[F][C] = {0};
+//     cargarMatTexDeArch(mat);
+//     imprimirMat(mat);
+//     return 0;
+// }
 
 // ############################# EJ 11 #######################################################################################
+
+// #include <string.h>
+// #define F 5
+// #define C 15
+
+// void cargarMatTexDeArch(char mat[F][C]) {
+//     int f = 0, c = 0;
+//     int car = 0;
+
+//     FILE * arch;
+//     arch = fopen("01-10.txt", "r");
+
+//     if (arch != NULL) {
+//         while ((car = fgetc(arch)) != EOF) {
+//             if (car != '\n') {
+//                 mat[f][c] = car;
+//                 c++;
+//             } else {
+//                 mat[f][c] = '\0';
+//                 f++;
+//                 c = 0;
+//             }
+//         }
+//         fclose(arch);
+//     } else {
+//         printf("No se pudo abrir el archivo");
+//     }
+// }
+
+// void imprimirMat(char mat[F][C]) {
+//     int f = 0, c = 0;
+
+//     for(f=0; f<F; f++) {
+//         for(c=0; c<C; c++) {
+//             printf("%c", mat[f][c]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// void ordenarTexto(char mat[F][C]) {
+//     int f = 0, i = 0;
+//     for (f = 0; f < F; f++) {
+//         for (i = f + 1; i < F; i++) {
+//             if (strcmp(mat[f], mat[i]) > 0) {
+//                 char tmp[C];
+//                 strcpy(tmp, mat[f]);
+//                 strcpy(mat[f], mat[i]);
+//                 strcpy(mat[i], tmp);
+//             }
+//         }
+//     }
+// }
+
+// int main() {
+//     char mat[F][C] = {0};
+//     cargarMatTexDeArch(mat);
+//     imprimirMat(mat);
+//     printf("\n");
+//     ordenarTexto(mat);
+//     imprimirMat(mat);
+
+//     return 0;
+// }
+
+// ############################# EJ 12 #######################################################################################
+
+#include <string.h>
