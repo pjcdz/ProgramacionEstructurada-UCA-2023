@@ -642,11 +642,75 @@
 
 // ############################# EJ 12 #######################################################################################
 
-#define F 5
+// #define F 5
+// #define C 8
+
+// int cargaMatInt(int mat[F][C]) {
+//     int pts, pj, pg, pe, pp, gf, gc, dif;
+//     int r;
+
+//     FILE* arch;
+//     arch = fopen("01-11.txt", "r");
+
+//     if(arch==NULL) {
+//         return -1;
+//     }
+//     int f = 0;
+//     r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &pts, &pj, &pg, &pe, &pp, &gf, &gc, &dif);
+//     while(r != EOF) {
+//         int lst[8] = {pts, pj, pg, pe, pp, gf, gc, dif};
+//         int i = 0;
+//         int c = 0;
+//         while(i<8) {
+//             // printf("%-5d", lst[i]);
+//             mat[f][c] = lst[i];
+//             // printf("[%-2d, %d;%d]", mat[f][c], f, c);
+//             c++;
+//             i++;
+//         }
+//         // printf("\n");
+//         // printf("%d;%d", f, c);
+//         // printf("\n");
+//         f++;
+
+//         r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &pts, &pj, &pg, &pe, &pp, &gf, &gc, &dif);
+//     }
+
+//     fclose(arch);
+
+//     return 0;
+// }
+
+// void imprimirMatInt(int mat[F][C]) {
+//     int f = 0, c = 0;
+
+//     for(f=0; f<F; f++) {
+//         for(c=0; c<C; c++) {
+//             printf("%-5d", mat[f][c]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// int cargaMatCab(char mat[F][C])
+
+// int main() {
+//     int mat[F][C] = {0};
+//     cargaMatInt(mat);
+//     imprimirMatInt(mat);
+    
+//     return 0;
+// }
+
+
+// ############################# EJ 13 #######################################################################################
+
+
+#define F 9
 #define C 15
 
-int main() {
-    int p, pj, pg, pe, pp, gf, gc, dg;
+int cargaMatInt(int mat[F][C]) {
+    int pts, pj, pg, pe, pp, gf, gc, dif;
     int r;
 
     FILE* arch;
@@ -655,19 +719,133 @@ int main() {
     if(arch==NULL) {
         return -1;
     }
-
-    r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &p, &pj, &pg, &pe, &pp, &gf, &gc, &dg);
+    int f = 0;
+    r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &pts, &pj, &pg, &pe, &pp, &gf, &gc, &dif);
     while(r != EOF) {
-        printf("%-5d %-5d %-5d %-5d %-5d %-5d %-5d", p, pj, pg, pe, pp, gf, gc, dg);
-        if(dg>0) {
-            printf("+%-5d\n", dg);
-        } else {
-            printf("%-5d\n", dg);
+        int lst[8] = {pts, pj, pg, pe, pp, gf, gc, dif};
+        int i = 0;
+        int c = 0;
+        while(i<8) {
+            // printf("%-5d", lst[i]);
+            mat[f][c] = lst[i];
+            // printf("[%-2d, %d;%d]", mat[f][c], f, c);
+            c++;
+            i++;
         }
-        r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &p, &pj, &pg, &pe, &pp, &gf, &gc, &dg);
+        // printf("\n");
+        // printf("%d;%d", f, c);
+        // printf("\n");
+        f++;
+
+        r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &pts, &pj, &pg, &pe, &pp, &gf, &gc, &dif);
     }
 
     fclose(arch);
 
     return 0;
 }
+
+void imprimirMatInt(int mat[F][C]) {
+    int f = 0, c = 0;
+
+    for(f=0; f<5; f++) {
+        for(c=0; c<8; c++) {
+            printf("%-5d", mat[f][c]);
+        }
+        printf("\n");
+    }
+}
+
+int cargaMatCar(char archivo[30], char mat[F][C]) {
+    FILE* arch;
+    arch = fopen(archivo, "r");
+
+    if(arch==NULL) {
+        return -1;
+    }
+
+    int f = 0, c = 0;
+    char car;
+
+    while ((car = fgetc(arch)) != EOF) {
+        if (car != '\n') {
+            mat[f][c] = car;
+            c++;
+        } else {
+            mat[f][c] = '\0';
+            f++;
+            c = 0;
+        }
+    }
+    fclose(arch);
+
+
+    return 0;
+}
+
+void imprimirMatCabecera(char mat[F][C]) {
+    int f = 0, c = 0;
+
+    for(f=0; f<F; f++) {
+        if (f == 0) {
+            printf("%-15s", mat[f]);
+        } else { 
+            printf("%-5s", mat[f]);
+        }
+    }
+    printf("\n-----------------------------------------------------\n");
+}
+
+void imprimirMatItems(char mat[F][C]) {
+    int f = 0, c = 0;
+
+    for(f=0; f<F &&  mat[f][c] != '\0'; f++) {
+        printf("%-15s", mat[f]);
+        printf("\n");
+    }
+}
+
+void matMerge(int matInt[F][C], char matItems[F][C], char combinado[F][C]) {
+    int f = 0, c = 0;
+
+    for(f=0; f<F; f++) {
+        for(c=0; c<C; c++) {
+            if(c==0) {
+                combinado[f][c] = matItems[f][c];
+            } else {
+                printf("%d:%d, %d\n", f, c, matInt[f][c]);
+                // combinado[f][c] = matInt[f][c];
+            }
+        }
+    }
+}
+
+
+
+int main() {
+    int matInt[F][C] = {0};
+    char matCabecera[F][C] = {0};
+    char matItems[F][C] = {0};
+    char merge[F][C] = {0};
+    cargaMatInt(matInt);
+    // imprimirMatInt(matInt);
+    char archivoCabeceras[30] = "01-13-cabeceras.txt";
+    char archivoItems[30] = "01-13-items.txt";
+    cargaMatCar(archivoCabeceras, matCabecera);
+    cargaMatCar(archivoItems, matItems);
+    // despues de que salga el output de carmatint en el int matint pasarlo a una nueva funcion de imprimir, lo mismo
+    // hacer con el output de los equipos, en la funcion de imprimir unir los dos chars en uno solo que conste de la 
+    // posicion c0 como el equipo y lo demas como los puntos, para asi luego pasar este nuevo char a la funcion de 
+    // ordenar y que esta funcione usando las comparaciones de string.h, con las que organice con < o > dependiendo de ascendente o descendente
+    imprimirMatCabecera(matCabecera);
+    imprimirMatItems(matItems);
+
+    matMerge(matInt, matItems, merge);
+    imprimirMatItems(merge);
+
+
+
+    return 0;
+}
+
+
