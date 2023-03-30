@@ -805,75 +805,56 @@ void imprimirMatItems(char mat[F][C]) {
     }
 }
 
-// void matMerge(int matInt[F][C], char matItems[F][C], char combinado[F][C]) {
-//     int f = 0, c = 0;
-
-
-//     for(f=0; f<5; f++) {
-//         strcpy(combinado[f], matItems[f]);
-//         int i = 0;
-//         for(c=0; c<8; c++) {
-//             combinado[f][c+14] = matInt[f][c];
-//             if (i==0) {
-//                 printf("%-15s", combinado[f]);
-//                 i++;
-//             }
-//             printf("%-5d", combinado[f][c+14]);
-//             // printf("%d:%d ", matInt[f][c], combinado[f][c+14]);
-//             // printf("%c:%c ", combinado[f][c+14]);
-//         }
-//         printf("\n");
-//     }
-
-// }
-
-// void ordenarTabla(char combinado[F][C], int colum, int orden) {
-//     int f = 0, c = 0;
-
-//     for(f=0; f<F; f++) {
-//         for(int i=f+1; i<F; i++) {
-//             char aux[C];
-//             if (strcmp(&combinado[f][13+colum], &combinado[i][13+colum]) > 0) {
-//                 // printf("Intercambiando filas %d y %d. Comparando: %d:%d\n", f, i, combinado[f][13+colum], combinado[i][13+colum]);
-//                 // printf("%s",combinado[f]);
-//                 strcpy(aux, combinado[f]);
-//                 strcpy(combinado[f], combinado[i]);
-//                 strcpy(combinado[i], aux);
-//                 // printf("%s",combinado[f]);
-//             }
-//         }
-//     }
-
-//     printf("\n");
-
-//     f = 0;
-//     for(f=0; f<5; f++) {
-//         int i = 0;
-//         for(c=0; c<8; c++) {
-//             if (i==0) {
-//                 printf("%-15s", combinado[f]);
-//                 i++;
-//             }
-//             printf("%-5d", combinado[f][c+14]);
-//         }
-//         printf("\n");
-//     }
-    
-// }
-
 void ordenarTabla(int matInt[F][C], char matItems[F][C], int colum, int orden) {
     int f = 0, c = 0;
 
-    for(f=0; f<4; f++) {
-        int aux[C] = {0};
-        if (orden==0) {
-            // printf("%d:%d \n", matInt[f][colum], matInt[f+1][colum]);
-            if (matInt[f][colum] > matInt[f+1][colum]) {
-                strcpy(aux, matInt[f]);
-                strcpy(matInt[f], matInt[f+1]);
-                strcpy(matInt[f+1], aux);
+    for(f=0; f<5; f++) {
+        for(int g = f+1; g<5; g++) {
+            if (orden==0) {
+                // printf("%d:%d \n", matInt[f][colum], matInt[f+1][colum]);
+                if (matInt[f][colum] > matInt[g][colum]) {
+                    int aux[C] = {0};
+                    for(int u = 0; u<8; u++) {
+                        aux[u] = matInt[f][u];
+                    }
+                    for(int i = 0; i<8; i++) {
+                        matInt[f][i] = matInt[g][i];
+                    }
+                    for(int o = 0; o<8; o++) {
+                        matInt[g][o] = aux[o];
+                    }
+
+                    char aux2[C] = {0};
+                    strcpy(aux2, matItems[f]);
+                    strcpy(matItems[f], matItems[g]);
+                    strcpy(matItems[g], aux2);
+                }
             }
         }
+    }
+}
+
+void imprimirTabla(int matInt[F][C], char matItems[F][C], char matCabecera[F][C]) {
+    int f = 0, c = 0;
+
+    for(f=0; f<F; f++) {
+        if (f == 0) {
+            printf("%-15s", matCabecera[f]);
+        } else { 
+            printf("%-5s", matCabecera[f]);
+        }
+    }
+    printf("\n-----------------------------------------------------\n");
+    
+    f = 0;
+    c = 0;
+
+    for(f=0; f<5; f++) {
+        printf("%-15s", matItems[f]);
+        for(c=0; c<8; c++) {
+            printf("%-5d", matInt[f][c]);
+        }
+        printf("\n");
     }
 }
 
@@ -889,20 +870,17 @@ int main() {
     char archivoItems[30] = "01-13-items.txt";
     cargaMatCar(archivoCabeceras, matCabecera);
     cargaMatCar(archivoItems, matItems);
-    // despues de que salga el output de carmatint en el int matint pasarlo a una nueva funcion de imprimir, lo mismo
-    // hacer con el output de los equipos, en la funcion de imprimir unir los dos chars en uno solo que conste de la 
-    // posicion c0 como el equipo y lo demas como los puntos, para asi luego pasar este nuevo char a la funcion de 
-    // ordenar y que esta funcione usando las comparaciones de string.h, con las que organice con < o > dependiendo de ascendente o descendente
-    imprimirMatCabecera(matCabecera);
+
+    // imprimirMatCabecera(matCabecera);
     // imprimirMatItems(matItems);
 
-    // matMerge(matInt, matItems, merge);
-    imprimirMatInt(matInt);
+    // imprimirMatInt(matInt);
+    imprimirTabla(matInt, matItems, matCabecera);
     ordenarTabla(matInt, matItems, 0, 0);
-    imprimirMatInt(matInt);
-    // imprimirMatItems(merge);
-
-
+    printf("\n");
+    imprimirTabla(matInt, matItems, matCabecera);
+    // imprimirMatItems(matItems);
+    // imprimirMatInt(matInt);
 
     return 0;
 }
