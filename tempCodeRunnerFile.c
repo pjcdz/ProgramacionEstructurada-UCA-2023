@@ -1,1 +1,1 @@
-imprimirMat(mat);
+imprimirMatItems(matItems);
