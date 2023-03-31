@@ -916,7 +916,7 @@ int cargarTemp(float matTemp[F][C]) {
 
 
     FILE* arch;
-    arch = fopen("01-14-test.txt", "r");
+    arch = fopen("01-14-copy.txt", "r");
 
     if(arch==NULL) {
         return -1;
@@ -933,12 +933,14 @@ int cargarTemp(float matTemp[F][C]) {
     //             &matTemp[f][20], &matTemp[f][21], &matTemp[f][22], &matTemp[f][23], &matTemp[f][24],
     //             &matTemp[f][25], &matTemp[f][26], &matTemp[f][27], &matTemp[f][28], &matTemp[f][29],
     //             &matTemp[f][30]);
-    while (fscanf(arch, "%f", &matTemp[f][i]) == 1) {
-        i++;
-    }
+    // while (fscanf(arch, "%f", &matTemp[f][i]) == 1) {
+    //     i++;
+    // }
     
-    for(int u = 0; u<31; u++) {  
-        printf("%d ", matTemp[0][u]);
+    fscanf(arch, "%f,%f,%f\n", &matTemp[0][0], &matTemp[0][1], &matTemp[0][2]);
+    
+    for(int u = 0; u<3; u++) {  
+        printf("%f ", matTemp[0][u]);
     }
 
     fclose(arch);
