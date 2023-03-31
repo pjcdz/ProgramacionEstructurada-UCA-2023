@@ -705,184 +705,262 @@
 
 // ############################# EJ 13 #######################################################################################
 
-#include <string.h>
-#define F 9
-#define C 40
+// #include <string.h>
+// #define F 9
+// #define C 40
 
-int cargaMatInt(int mat[F][C]) {
-    int pts, pj, pg, pe, pp, gf, gc, dif;
-    int r;
+// int cargaMatInt(int mat[F][C]) {
+//     int pts, pj, pg, pe, pp, gf, gc, dif;
+//     int r;
 
-    FILE* arch;
-    arch = fopen("01-11.txt", "r");
+//     FILE* arch;
+//     arch = fopen("01-11.txt", "r");
 
-    if(arch==NULL) {
-        return -1;
-    }
-    int f = 0;
-    r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &pts, &pj, &pg, &pe, &pp, &gf, &gc, &dif);
-    while(r != EOF) {
-        int lst[8] = {pts, pj, pg, pe, pp, gf, gc, dif};
-        int i = 0;
-        int c = 0;
-        while(i<8) {
-            // printf("%-5d", lst[i]);
-            mat[f][c] = lst[i];
-            // printf("[%-2d, %d;%d]", mat[f][c], f, c);
-            c++;
-            i++;
-        }
-        // printf("\n");
-        // printf("%d;%d", f, c);
-        // printf("\n");
-        f++;
+//     if(arch==NULL) {
+//         return -1;
+//     }
+//     int f = 0;
+//     r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &pts, &pj, &pg, &pe, &pp, &gf, &gc, &dif);
+//     while(r != EOF) {
+//         int lst[8] = {pts, pj, pg, pe, pp, gf, gc, dif};
+//         int i = 0;
+//         int c = 0;
+//         while(i<8) {
+//             // printf("%-5d", lst[i]);
+//             mat[f][c] = lst[i];
+//             // printf("[%-2d, %d;%d]", mat[f][c], f, c);
+//             c++;
+//             i++;
+//         }
+//         // printf("\n");
+//         // printf("%d;%d", f, c);
+//         // printf("\n");
+//         f++;
 
-        r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &pts, &pj, &pg, &pe, &pp, &gf, &gc, &dif);
-    }
+//         r = fscanf(arch, "%d, %d, %d, %d, %d, %d, %d, %d\n", &pts, &pj, &pg, &pe, &pp, &gf, &gc, &dif);
+//     }
 
-    fclose(arch);
+//     fclose(arch);
 
-    return 0;
-}
+//     return 0;
+// }
 
-void imprimirMatInt(int mat[F][C]) {
-    int f = 0, c = 0;
+// void imprimirMatInt(int mat[F][C]) {
+//     int f = 0, c = 0;
 
-    for(f=0; f<5; f++) {
-        for(c=0; c<8; c++) {
-            printf("%-5d", mat[f][c]);
-        }
-        printf("\n");
-    }
-}
+//     for(f=0; f<5; f++) {
+//         for(c=0; c<8; c++) {
+//             printf("%-5d", mat[f][c]);
+//         }
+//         printf("\n");
+//     }
+// }
 
-int cargaMatCar(char archivo[30], char mat[F][C]) {
-    FILE* arch;
-    arch = fopen(archivo, "r");
+// int cargaMatCar(char archivo[30], char mat[F][C]) {
+//     FILE* arch;
+//     arch = fopen(archivo, "r");
 
-    if(arch==NULL) {
-        return -1;
-    }
+//     if(arch==NULL) {
+//         return -1;
+//     }
 
-    int f = 0, c = 0;
-    char car;
+//     int f = 0, c = 0;
+//     char car;
 
-    while ((car = fgetc(arch)) != EOF) {
-        if (car != '\n') {
-            mat[f][c] = car;
-            c++;
-        } else {
-            mat[f][c] = '\0';
-            f++;
-            c = 0;
-        }
-    }
-    fclose(arch);
+//     while ((car = fgetc(arch)) != EOF) {
+//         if (car != '\n') {
+//             mat[f][c] = car;
+//             c++;
+//         } else {
+//             mat[f][c] = '\0';
+//             f++;
+//             c = 0;
+//         }
+//     }
+//     fclose(arch);
 
 
-    return 0;
-}
+//     return 0;
+// }
 
-void imprimirMatCabecera(char mat[F][C]) {
-    int f = 0, c = 0;
+// void imprimirMatCabecera(char mat[F][C]) {
+//     int f = 0, c = 0;
 
-    for(f=0; f<F; f++) {
-        if (f == 0) {
-            printf("%-15s", mat[f]);
-        } else { 
-            printf("%-5s", mat[f]);
-        }
-    }
-    printf("\n-----------------------------------------------------\n");
-}
+//     for(f=0; f<F; f++) {
+//         if (f == 0) {
+//             printf("%-15s", mat[f]);
+//         } else { 
+//             printf("%-5s", mat[f]);
+//         }
+//     }
+//     printf("\n-----------------------------------------------------\n");
+// }
 
-void imprimirMatItems(char mat[F][C]) {
-    int f = 0, c = 0;
+// void imprimirMatItems(char mat[F][C]) {
+//     int f = 0, c = 0;
 
-    for(f=0; f<F &&  mat[f][c] != '\0'; f++) {
-        printf("%-15s", mat[f]);
-        printf("\n");
-    }
-}
+//     for(f=0; f<F &&  mat[f][c] != '\0'; f++) {
+//         printf("%-15s", mat[f]);
+//         printf("\n");
+//     }
+// }
 
-void ordenarTabla(int matInt[F][C], char matItems[F][C], int colum, int orden) {
-    int f = 0, c = 0;
+// void ordenarTabla(int matInt[F][C], char matItems[F][C], int colum, int orden) {
+//     int f = 0, c = 0;
 
-    for(f=0; f<5; f++) {
-        for(int g = f+1; g<5; g++) {
-            if (orden==0) {
-                // printf("%d:%d \n", matInt[f][colum], matInt[f+1][colum]);
-                if (matInt[f][colum] > matInt[g][colum]) {
-                    int aux[C] = {0};
-                    for(int u = 0; u<8; u++) {
-                        aux[u] = matInt[f][u];
-                    }
-                    for(int i = 0; i<8; i++) {
-                        matInt[f][i] = matInt[g][i];
-                    }
-                    for(int o = 0; o<8; o++) {
-                        matInt[g][o] = aux[o];
-                    }
+//     for(f=0; f<5; f++) {
+//         for(int g = f+1; g<5; g++) {
+//             if (orden==0) {
+//                 // printf("%d:%d \n", matInt[f][colum], matInt[f+1][colum]);
+//                 if (matInt[f][colum] > matInt[g][colum]) {
+//                     int aux[C] = {0};
+//                     for(int u = 0; u<8; u++) {
+//                         aux[u] = matInt[f][u];
+//                     }
+//                     for(int i = 0; i<8; i++) {
+//                         matInt[f][i] = matInt[g][i];
+//                     }
+//                     for(int o = 0; o<8; o++) {
+//                         matInt[g][o] = aux[o];
+//                     }
 
-                    char aux2[C] = {0};
-                    strcpy(aux2, matItems[f]);
-                    strcpy(matItems[f], matItems[g]);
-                    strcpy(matItems[g], aux2);
-                }
-            }
-        }
-    }
-}
+//                     char aux2[C] = {0};
+//                     strcpy(aux2, matItems[f]);
+//                     strcpy(matItems[f], matItems[g]);
+//                     strcpy(matItems[g], aux2);
+//                 }
+//             }
+//         }
+//     }
+// }
 
-void imprimirTabla(int matInt[F][C], char matItems[F][C], char matCabecera[F][C]) {
-    int f = 0, c = 0;
+// void imprimirTabla(int matInt[F][C], char matItems[F][C], char matCabecera[F][C]) {
+//     int f = 0, c = 0;
 
-    for(f=0; f<F; f++) {
-        if (f == 0) {
-            printf("%-15s", matCabecera[f]);
-        } else { 
-            printf("%-5s", matCabecera[f]);
-        }
-    }
-    printf("\n-----------------------------------------------------\n");
+//     for(f=0; f<F; f++) {
+//         if (f == 0) {
+//             printf("%-15s", matCabecera[f]);
+//         } else { 
+//             printf("%-5s", matCabecera[f]);
+//         }
+//     }
+//     printf("\n-----------------------------------------------------\n");
     
-    f = 0;
-    c = 0;
+//     f = 0;
+//     c = 0;
 
-    for(f=0; f<5; f++) {
-        printf("%-15s", matItems[f]);
-        for(c=0; c<8; c++) {
-            printf("%-5d", matInt[f][c]);
-        }
-        printf("\n");
+//     for(f=0; f<5; f++) {
+//         printf("%-15s", matItems[f]);
+//         for(c=0; c<8; c++) {
+//             printf("%-5d", matInt[f][c]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// int main() {
+//     int matInt[F][C] = {0};
+//     char matCabecera[F][C] = {0};
+//     char matItems[F][C] = {0};
+//     // char merge[F][C] = {0};
+
+//     cargaMatInt(matInt);
+//     // imprimirMatInt(matInt);
+//     char archivoCabeceras[30] = "01-13-cabeceras.txt";
+//     char archivoItems[30] = "01-13-items.txt";
+//     cargaMatCar(archivoCabeceras, matCabecera);
+//     cargaMatCar(archivoItems, matItems);
+
+//     // imprimirMatCabecera(matCabecera);
+//     // imprimirMatItems(matItems);
+
+//     // imprimirMatInt(matInt);
+//     imprimirTabla(matInt, matItems, matCabecera);
+//     ordenarTabla(matInt, matItems, 0, 0);
+//     printf("\n");
+//     imprimirTabla(matInt, matItems, matCabecera);
+//     // imprimirMatItems(matItems);
+//     // imprimirMatInt(matInt);
+
+//     return 0;
+// }
+
+// ############################# EJ 14 #######################################################################################
+
+#include <string.h>
+#define F 12
+#define C 31
+
+int cargarDias(int matDias[C]) {
+
+    FILE* arch;
+    arch = fopen("01-14-diasMedidos.txt", "r");
+
+    if(arch==NULL) {
+        return -1;
+        printf("Error al abrir el archivo");
     }
+
+    fscanf(arch, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n", &matDias[0], &matDias[1], &matDias[2], &matDias[3], &matDias[4], &matDias[5], &matDias[6], &matDias[7], &matDias[8], &matDias[9], &matDias[10], &matDias[11]);
+    fclose(arch);
+
+    return 0;
 }
+
+int cargarTemp(float matTemp[F][C]) {
+    for(int u = 0; u<31; u++) {  
+        printf("%d ", matTemp[0][u]);
+    }
+    printf("\n");
+
+
+
+    FILE* arch;
+    arch = fopen("01-14-test.txt", "r");
+
+    if(arch==NULL) {
+        return -1;
+        printf("Error al abrir el archivo");
+    }
+
+    int f = 0, i = 0;
+    // fscanf(arch, "%f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n", &matTemp[f][0], &matTemp[f][1], &matTemp[f][2], &matTemp[f][3], &matTemp[f][4], &matTemp[f][5], &matTemp[f][6], &matTemp[f][7], &matTemp[f][8], &matTemp[f][9], &matTemp[f][10], &matTemp[f][11], &matTemp[f][12], &matTemp[f][13], &matTemp[f][14], &matTemp[f][15], &matTemp[f][16], &matTemp[f][17], &matTemp[f][18], &matTemp[f][19], &matTemp[f][20], &matTemp[f][21], &matTemp[f][22], &matTemp[f][23], &matTemp[f][24], &matTemp[f][25], &matTemp[f][26], &matTemp[f][27], &matTemp[f][28], &matTemp[f][29], &matTemp[f][30]);
+    // fscanf(arch, "%i, %i, %i, %i, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n",
+    //             &matTemp[f][0], &matTemp[f][1], &matTemp[f][2], &matTemp[f][3], &matTemp[f][4],
+    //             &matTemp[f][5], &matTemp[f][6], &matTemp[f][7], &matTemp[f][8], &matTemp[f][9],
+    //             &matTemp[f][10], &matTemp[f][11], &matTemp[f][12], &matTemp[f][13], &matTemp[f][14],
+    //             &matTemp[f][15], &matTemp[f][16], &matTemp[f][17], &matTemp[f][18], &matTemp[f][19],
+    //             &matTemp[f][20], &matTemp[f][21], &matTemp[f][22], &matTemp[f][23], &matTemp[f][24],
+    //             &matTemp[f][25], &matTemp[f][26], &matTemp[f][27], &matTemp[f][28], &matTemp[f][29],
+    //             &matTemp[f][30]);
+    while (fscanf(arch, "%f", &matTemp[f][i]) == 1) {
+        i++;
+    }
+    
+    for(int u = 0; u<31; u++) {  
+        printf("%d ", matTemp[0][u]);
+    }
+
+    fclose(arch);
+
+    return 0;
+}
+
 
 int main() {
-    int matInt[F][C] = {0};
-    char matCabecera[F][C] = {0};
-    char matItems[F][C] = {0};
-    // char merge[F][C] = {0};
+    float matTemp[F][C] = {0};
+    int matDias[C] = {0};
+    cargarDias(matDias);
 
-    cargaMatInt(matInt);
-    // imprimirMatInt(matInt);
-    char archivoCabeceras[30] = "01-13-cabeceras.txt";
-    char archivoItems[30] = "01-13-items.txt";
-    cargaMatCar(archivoCabeceras, matCabecera);
-    cargaMatCar(archivoItems, matItems);
-
-    // imprimirMatCabecera(matCabecera);
-    // imprimirMatItems(matItems);
-
-    // imprimirMatInt(matInt);
-    imprimirTabla(matInt, matItems, matCabecera);
-    ordenarTabla(matInt, matItems, 0, 0);
+    for(int i = 0; i<12; i++) {
+        printf("%d ", matDias[i]);
+    }
     printf("\n");
-    imprimirTabla(matInt, matItems, matCabecera);
-    // imprimirMatItems(matItems);
-    // imprimirMatInt(matInt);
 
-    return 0;
+    cargarTemp(matTemp);
+    // for(int u = 0; u<31; u++) {  
+    //     printf("%d ", matTemp[0][u]);
+    // }
+    // return 0;
 }
-
 
