@@ -891,7 +891,7 @@
 #define F 12
 #define C 31
 
-int cargarDias(int matDias[C]) {
+int cargarDias(int matDias[F]) {
 
     FILE* arch;
     arch = fopen("01-14-diasMedidos.txt", "r");
@@ -907,59 +907,105 @@ int cargarDias(int matDias[C]) {
     return 0;
 }
 
-int cargarTemp(float matTemp[F][C]) {
-    for(int u = 0; u<31; u++) {  
-        printf("%d ", matTemp[0][u]);
-    }
-    printf("\n");
-
-
-
+int cargarTemp(int matDias[F], float matTemp[F][C]) {
     FILE* arch;
-    arch = fopen("01-14-copy.txt", "r");
+    arch = fopen("01-14-temperaturas.txt", "r");
 
     if(arch==NULL) {
         return -1;
         printf("Error al abrir el archivo");
     }
 
-    int f = 0, i = 0;
-    // fscanf(arch, "%f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n", &matTemp[f][0], &matTemp[f][1], &matTemp[f][2], &matTemp[f][3], &matTemp[f][4], &matTemp[f][5], &matTemp[f][6], &matTemp[f][7], &matTemp[f][8], &matTemp[f][9], &matTemp[f][10], &matTemp[f][11], &matTemp[f][12], &matTemp[f][13], &matTemp[f][14], &matTemp[f][15], &matTemp[f][16], &matTemp[f][17], &matTemp[f][18], &matTemp[f][19], &matTemp[f][20], &matTemp[f][21], &matTemp[f][22], &matTemp[f][23], &matTemp[f][24], &matTemp[f][25], &matTemp[f][26], &matTemp[f][27], &matTemp[f][28], &matTemp[f][29], &matTemp[f][30]);
-    // fscanf(arch, "%i, %i, %i, %i, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n",
-    //             &matTemp[f][0], &matTemp[f][1], &matTemp[f][2], &matTemp[f][3], &matTemp[f][4],
-    //             &matTemp[f][5], &matTemp[f][6], &matTemp[f][7], &matTemp[f][8], &matTemp[f][9],
-    //             &matTemp[f][10], &matTemp[f][11], &matTemp[f][12], &matTemp[f][13], &matTemp[f][14],
-    //             &matTemp[f][15], &matTemp[f][16], &matTemp[f][17], &matTemp[f][18], &matTemp[f][19],
-    //             &matTemp[f][20], &matTemp[f][21], &matTemp[f][22], &matTemp[f][23], &matTemp[f][24],
-    //             &matTemp[f][25], &matTemp[f][26], &matTemp[f][27], &matTemp[f][28], &matTemp[f][29],
-    //             &matTemp[f][30]);
-    // while (fscanf(arch, "%f", &matTemp[f][i]) == 1) {
-    //     i++;
-    // }
-    
-    fscanf(arch, "%f,%f,%f\n", &matTemp[0][0], &matTemp[0][1], &matTemp[0][2]);
-    
-    for(int u = 0; u<3; u++) {  
-        printf("%f ", matTemp[0][u]);
-    }
+    int f = 0, i = 0, u = 0;
 
+    int r = fscanf(arch, "%f", &matTemp[f][0]);
+    for (int i = 1; i < matDias[u]; i++) {
+        r = fscanf(arch, ", %f", &matTemp[f][i]);
+    }
+    r = fscanf(arch, "\n");
+
+    while (r != EOF && f<F) {
+        f++;
+
+        int r = fscanf(arch, "%f", &matTemp[f][0]);
+        for (int i = 1; i < matDias[u]; i++) {
+            r = fscanf(arch, ", %f", &matTemp[f][i]);
+        }
+        r = fscanf(arch, "\n");
+    }
+    
     fclose(arch);
 
     return 0;
 }
 
+void prints(int matDias[F], float matTemp[F][C]) {
+    int u = 0;
+    // Valor de temperatura mínima anual, máxima anual y promedio anual.
+    int k = 0;
+    float max = 0, min = 999, sum = 0, prom = 0;
+    float kMeses = 0, sumMeses[F] = {0}, promMeses[F] = {0};
+    float maxMes = 0, minMes = 999;
+    int numMaxMes = 0, numMinMes = 0;
+    
+    for (int f = 0; f < F; f++) {
+        for(int c = 0; c<matDias[u]; c++) {  
+            // printf("%.1f ", matTemp[f][c]);
+            k++;
+            if (matTemp[f][c] != 0) {
+                sum += matTemp[f][c];
+            }
+            if (matTemp[f][c] > max) {
+                max = matTemp[f][c];
+            }
+            if (matTemp[f][c] < min && matTemp[f][c] != 0) {
+                min = matTemp[f][c];
+            }
+            kMeses++;
+            sumMeses[f] += matTemp[f][c];
+        }
+
+        promMeses[f] = sumMeses[f] / kMeses;
+        if (promMeses[f] > maxMes) {
+            maxMes = promMeses[f];
+            numMaxMes = f;
+        }
+        if (promMeses[f] < minMes) {
+            minMes = promMeses[f];
+            numMinMes = f;
+        }
+        kMeses = 0;
+        u++;
+        // printf("\n");
+    }
+
+    prom = sum / k;
+    printf("Valor de temperatura minima anual: %.1f; maxima anual: %.1f; y promedio anual: %.1f", min, max, prom);
+    printf("\n");
+    printf("Valores promedio mensual de temperaturas mensuales: %.1f, %.1f, %.1f, %.1f, %.1f, %.1f, %.1f, %.1f, %.1f, %.1f, %.1f, %.1f", 
+    promMeses[0], promMeses[1], promMeses[2], promMeses[3], promMeses[4], promMeses[5], promMeses[6], promMeses[7], promMeses[8], promMeses[9], promMeses[10], promMeses[11]);
+    printf("\n");
+    printf("Mes mas caluroso (en promedio) fue el numero %d y valor de dicho promedio fue: %.1f", numMaxMes+1, maxMes);
+    printf("\n");
+    printf("Mes mas frio (en promedio) fue el numero %d y valor de dicho promedio fue: %.1f", numMinMes+1, minMes);
+    printf("\n");
+    printf("Cantidad total de dias medidos: %d", k);
+}
 
 int main() {
     float matTemp[F][C] = {0};
     int matDias[C] = {0};
     cargarDias(matDias);
 
-    for(int i = 0; i<12; i++) {
-        printf("%d ", matDias[i]);
-    }
-    printf("\n");
+    // for(int i = 0; i<12; i++) {
+    //     printf("%d ", matDias[i]);
+    // }
+    // printf("\n");
 
-    cargarTemp(matTemp);
+    cargarTemp(matDias, matTemp);
+    printf("\n");
+    prints(matDias, matTemp);
+    printf("\n.");
     // for(int u = 0; u<31; u++) {  
     //     printf("%d ", matTemp[0][u]);
     // }
