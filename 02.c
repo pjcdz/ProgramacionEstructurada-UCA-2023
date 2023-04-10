@@ -131,37 +131,102 @@ int func(char archItems[30], char archDatos[30], dataEquipos arrE[F]) {
     FILE * arch1;
     arch1 = fopen("02-03-items.txt", "r");
 
-    // FILE * arch2;
-    // arch2 = fopen("02-03-datos.txt", "r");
-
     if (arch1 == NULL) {
+        printf("Error al abrir el archivo arch1");
+        return -1;
+    }
+
+    int f = 0, c = 0;
+    char car;
+
+    while ((car = fgetc(arch1)) != EOF) {
+        if (car != '\n') {
+            arrE[f].equipo[c] = car;
+            c++;
+        } else {
+            arrE[f].equipo[c] = '\0';
+            f++;
+            c = 0;
+        }
+    }
+
+    fclose(arch1);
+
+
+    FILE * arch2;
+    arch2 = fopen("02-03-datos.txt", "r");
+
+    f = 0;
+
+    if (arch2 == NULL) {
+        printf("Error al abrir el archivo arch2");
+        return -1;
+    }
+
+    fscanf(arch2, "%d, %d, %d, %d, %d", &arrE[f].pg, &arrE[f].pe, &arrE[f].pp, &arrE[f].gf, &arrE[f].gc);
+    f++;
+
+    while (f<F) {
+        fscanf(arch2, "%d, %d, %d, %d, %d", &arrE[f].pg, &arrE[f].pe, &arrE[f].pp, &arrE[f].gf, &arrE[f].gc);
+        f++;
+    }
+
+    return 0;
+}
+
+// #include <string.h>
+
+int order(char archCabecera[30], dataEquipos arrE[F]) {
+    FILE * arch;
+    arch = fopen(archCabecera, "r");
+
+    if (arch == NULL) {
         printf("Error al abrir el archivo");
         return -1;
     }
 
-    int f = 1, c = 0;
+    int f = 0, c = 0;
 
-    fscanf(arch1, "%s\n", arrE[0].equipo);
+    char cabecera[10][10] = {};
+    char car;
 
-    while(f<F) {
-        fscanf(arch1, "%s\n", arrE[f].equipo);
-        f++;
+    while((car = fgetc(arch)) != EOF) {
+        if(car!='\n') {
+            cabecera[f][c] = car;
+            c++;
+        } else {
+            cabecera[f][c] = '\0';
+            f++;
+            c = 0;
+        }
     }
 
-    fclose(arch1);
+    int i = 0;
+    printf("%-15s ", cabecera[i]);
+    for (i = 1; i < 6; i++) {
+        printf("%5s ", cabecera[i]);
+    }
+    printf("\n---------------------------------------------\n");
+    
 
     return 0;
 }
 
 int main() {
-    dataEquipos arrE[4];
+    dataEquipos arrE[F];
     func("02-03-items.txt", "02-03-datos.txt", arrE);
+    order("02-03-cabeceras.txt", arrE);
 
-    printf("%s", arrE[2].equipo);
+    // strcpy(arrE[0].equipo, " ");
+    // arrE[0].equipo[0] = 'a';
+    // arrE[0].equipo[1] = '\0';
+    // arrE[0].equipo[2] = 'c';
+    // arrE[0].equipo[3] = '\0';
+    // printf("%s", arrE[0].equipo);
 
-    // for(int x = 0; x<F; x++) {
-    //     printf("%s", arrE[x].equipo);
-    // }
+    for(int x = 0; x<F; x++) {
+        printf("%-15s %5d %5d %5d %5d %5d\n", arrE[x].equipo, arrE[x].pg, arrE[x].pe, arrE[x].pp, arrE[x].gf, arrE[x].gc);
+    }
 
     return 0;
 }
