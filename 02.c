@@ -233,6 +233,86 @@
 
 // ############################# EJ 04 #######################################################################################
 
+// #define F 5
+// #define C 30
+
+// struct dataPersonas {
+//     int dni;
+//     char nombre[30];
+//     char pais[30];
+// };
+
+// typedef struct dataPersonas dataPersonas;
+
+// void ingreso(dataPersonas arrP[F]) {
+//     FILE *arch;
+
+//     arch=fopen("02-03-personas.csv", "a");
+
+//     printf("Ingrese el DNI: ");
+//     int dniTemp;
+//     scanf("%d", &dniTemp);
+
+//     for(int f = 0; dniTemp != 0 && f<F; f++) {
+//         arrP[0].dni = 1;
+//         if (dniTemp < 100000000 && dniTemp != 0) {
+//             arrP[f].dni = dniTemp;
+//         }
+
+//         // printf("%d", arrP[f].dni);
+//         char buffer = getchar();
+
+//         printf("Ingrese el nombre: ");
+        
+//         int i = 0;
+//         char aux;
+//         if (i<100-1) {
+//             aux = getchar();
+//         }
+//         while (aux!='\n' && i<100-1) {
+//             arrP[f].nombre[i] = aux;
+//             i++;
+//             if(i<100-1) {
+//                 aux = getchar();
+//             }
+//         }
+//         arrP[f].nombre[i] = '\0';
+
+//         printf("Ingrese el pais: ");
+        
+//         i = 0;
+//         if (i<100-1) {
+//             aux = getchar();
+//         }
+//         while (aux!='\n' && i<100-1) {
+//             arrP[f].pais[i] = aux;
+//             i++;
+//             if(i<100-1) {
+//                 aux = getchar();
+//             }
+//         }
+//         arrP[f].pais[i] = '\0';
+
+//         fprintf(arch ,"%d,%s,%s\n", arrP[f].dni, arrP[f].nombre, arrP[f].pais);
+
+//         printf("---------------------------------------------\n");
+
+//         printf("Ingrese el DNI: ");
+//         scanf("%d", &dniTemp);
+//     }
+
+//     fclose(arch);
+// }
+
+// int main() {
+//     dataPersonas arrP[F];
+//     ingreso(arrP);
+
+//     return 0;
+// }
+
+// ############################# EJ 05 #######################################################################################
+
 #define F 5
 #define C 30
 
@@ -244,70 +324,31 @@ struct dataPersonas {
 
 typedef struct dataPersonas dataPersonas;
 
-void ingreso(dataPersonas arrP[F]) {
+int impresion(dataPersonas arrP[F]) {
     FILE *arch;
 
-    arch=fopen("02-03-personas.csv", "a");
+    arch = fopen("02-03-personas.csv", "r");
 
-    printf("Ingrese el DNI: ");
-    int dniTemp;
-    scanf("%d", &dniTemp);
-
-    for(int f = 0; dniTemp != 0 && f<F; f++) {
-        arrP[0].dni = 1;
-        if (dniTemp < 100000000 && dniTemp != 0) {
-            arrP[f].dni = dniTemp;
-        }
-
-        // printf("%d", arrP[f].dni);
-        char buffer = getchar();
-
-        printf("Ingrese el nombre: ");
-        
-        int i = 0;
-        char aux;
-        if (i<100-1) {
-            aux = getchar();
-        }
-        while (aux!='\n' && i<100-1) {
-            arrP[f].nombre[i] = aux;
-            i++;
-            if(i<100-1) {
-                aux = getchar();
-            }
-        }
-        arrP[f].nombre[i] = '\0';
-
-        printf("Ingrese el pais: ");
-        
-        i = 0;
-        if (i<100-1) {
-            aux = getchar();
-        }
-        while (aux!='\n' && i<100-1) {
-            arrP[f].pais[i] = aux;
-            i++;
-            if(i<100-1) {
-                aux = getchar();
-            }
-        }
-        arrP[f].pais[i] = '\0';
-
-        fprintf(arch ,"%d,%s,%s\n", arrP[f].dni, arrP[f].nombre, arrP[f].pais);
-
-        printf("---------------------------------------------\n");
-
-        printf("Ingrese el DNI: ");
-        scanf("%d", &dniTemp);
+    if (arch == NULL) {
+        printf("Error al abrir el archivo");
+        return -1;
     }
 
-    fclose(arch);
-}
+    printf("%-15s %-15s %-15s\n", "Documento", "Nombre", "Pais");
+    printf("---------------------------------------------\n");
 
-int main() {
-    dataPersonas arrP[F];
-    ingreso(arrP);
+    int r;	
+    while((r = fscanf(arch, "%d, %[^,], %s", &arrP[0].dni, arrP[0].nombre, arrP[0].pais))!=EOF){
+        printf("%-15d %-15s %-15s\n", arrP[0].dni, arrP[0].nombre, arrP[0].pais);  
+    }	
+
+    fclose(arch);
 
     return 0;
 }
 
+int main() {
+    dataPersonas arrP[F];
+    impresion(arrP);
+    return 0;
+}
