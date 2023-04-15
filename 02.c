@@ -337,9 +337,13 @@ int impresion(dataPersonas arrP[F]) {
     printf("%-15s %-15s %-15s\n", "Documento", "Nombre", "Pais");
     printf("---------------------------------------------\n");
 
-    int r;	
-    while((r = fscanf(arch, "%d, %[^,], %s", &arrP[0].dni, arrP[0].nombre, arrP[0].pais))!=EOF){
-        printf("%-15d %-15s %-15s\n", arrP[0].dni, arrP[0].nombre, arrP[0].pais);  
+    int r;
+    int f = 0;
+    r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);		
+    while(r!=EOF){
+        printf("%-15d %-15s %-15s\n", arrP[f].dni, arrP[f].nombre, arrP[f].pais);  
+        f++;
+        r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);	
     }	
 
     fclose(arch);
