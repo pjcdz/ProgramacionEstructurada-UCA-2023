@@ -313,7 +313,53 @@
 
 // ############################# EJ 05 #######################################################################################
 
-#define F 5
+// #define F 5
+// #define C 30
+
+// struct dataPersonas {
+//     int dni;
+//     char nombre[30];
+//     char pais[30];
+// };
+
+// typedef struct dataPersonas dataPersonas;
+
+// int impresion(dataPersonas arrP[F]) {
+//     FILE *arch;
+
+//     arch = fopen("02-03-personas.csv", "r");
+
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
+
+//     printf("%-15s %-15s %-15s\n", "Documento", "Nombre", "Pais");
+//     printf("---------------------------------------------\n");
+
+//     int r;
+//     int f = 0;
+//     r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);		
+//     while(r!=EOF){
+//         printf("%-15d %-15s %-15s\n", arrP[f].dni, arrP[f].nombre, arrP[f].pais);  
+//         f++;
+//         r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);	
+//     }	
+
+//     fclose(arch);
+
+//     return 0;
+// }
+
+// int main() {
+//     dataPersonas arrP[F];
+//     impresion(arrP);
+//     return 0;
+// }
+
+// ############################# EJ 06 #######################################################################################
+
+#define F 3
 #define C 30
 
 struct dataPersonas {
@@ -324,7 +370,7 @@ struct dataPersonas {
 
 typedef struct dataPersonas dataPersonas;
 
-int impresion(dataPersonas arrP[F]) {
+int cargar(dataPersonas arrP[F]) {
     FILE *arch;
 
     arch = fopen("02-03-personas.csv", "r");
@@ -334,14 +380,10 @@ int impresion(dataPersonas arrP[F]) {
         return -1;
     }
 
-    printf("%-15s %-15s %-15s\n", "Documento", "Nombre", "Pais");
-    printf("---------------------------------------------\n");
-
     int r;
     int f = 0;
     r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);		
     while(r!=EOF){
-        printf("%-15d %-15s %-15s\n", arrP[f].dni, arrP[f].nombre, arrP[f].pais);  
         f++;
         r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);	
     }	
@@ -351,8 +393,86 @@ int impresion(dataPersonas arrP[F]) {
     return 0;
 }
 
+#include <string.h>
+
+void ordenarNombre(dataPersonas arrP[F]) {
+    dataPersonas aux;
+
+    for(int x = 0; x<F-1; x++) {
+        for(int u = x + 1; u<F; u++) {
+            if (strcmp(arrP[x].nombre, arrP[u].nombre) > 0) {
+                aux = arrP[x];
+                arrP[x] = arrP[u];
+                arrP[u] = aux;
+            }
+        }
+    }
+}
+
+void ordenarDocumento(dataPersonas arrP[F]) {
+    dataPersonas aux;
+
+    for(int x = 0; x<F-1; x++) {
+        for(int u = x + 1; u<F; u++) {
+            if (arrP[x].dni > arrP[u].dni) {
+                aux = arrP[x];
+                arrP[x] = arrP[u];
+                arrP[u] = aux;
+            }
+        }
+    }
+}
+
+void ordenarPais(dataPersonas arrP[F]) {
+    dataPersonas aux;
+
+    for(int x = 0; x<F-1; x++) {
+        for(int u = x + 1; u<F; u++) {
+            if (strcmp(arrP[x].pais, arrP[u].pais) > 0) {
+                aux = arrP[x];
+                arrP[x] = arrP[u];
+                arrP[u] = aux;
+            }
+        }
+    }
+}
+
+void imprimir(dataPersonas arrP[F]) {
+    printf("%-15s %-15s %-15s\n", "Documento", "Nombre", "Pais");
+    printf("---------------------------------------------\n");
+
+    for(int f = 0; f<F; f++) {
+        printf("%-15d %-15s %-15s\n", arrP[f].dni, arrP[f].nombre, arrP[f].pais);  
+    }
+}
+
 int main() {
     dataPersonas arrP[F];
-    impresion(arrP);
+    cargar(arrP);
+    imprimir(arrP);
+
+    printf("1- Ver listado ordenado por nombre\n");
+    printf("2- Ver listado ordenado por documento\n");
+    printf("3- Ver listado ordenado por pais\n");
+    printf("4- Salir del programa\n");
+
+    int opcion;
+    printf("Seleccion: ");
+    scanf("%d", &opcion);
+    if (opcion == 1) {
+        ordenarNombre(arrP);
+        imprimir(arrP);
+    } else if (opcion == 2) {
+        ordenarDocumento(arrP);
+        imprimir(arrP);
+    } else if (opcion == 3) {
+        ordenarPais(arrP);
+        imprimir(arrP);
+    } else if (opcion == 4) {
+        printf("Saliendo del programa");
+    } else {
+        printf("Opcion incorrecta");
+    }
+
     return 0;
 }
