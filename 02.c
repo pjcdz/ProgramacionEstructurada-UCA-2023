@@ -506,12 +506,10 @@ int cargarAlumnos() {
     FILE *arch;
     arch = fopen("02-07-alumnos.csv", "a");
 
-    if (arch = NULL) {
+    if (arch == NULL) {
         printf("Error al abrir el archivo");
         return -1;
     }
-
-
 
     int legajo;
     printf("Ingrese el legajo del alumno: ");
@@ -530,21 +528,36 @@ int cargarAlumnos() {
         } nombre[i] = '\0';
 
         int materias[30];
+        int num_materias = 0;
         int cod_materia;
+        int u = 0;
         do { 
             printf("Ingrese las materias del alumno: ");
             scanf("%d", &cod_materia);
-
+            
             if (cod_materia != 0) {
-                materias[i] = cod_materia;
-                i++;
+                materias[u] = cod_materia;
+                num_materias++;
+                u++;
             }
-        } while (cod_materia != 0 && i < 30);
+        } while (cod_materia != 0 && u < 30);
 
+        fprintf(arch, "%d,%s,", legajo, nombre);
+        for (int x = 0; x < num_materias; x++) {
+            if (x == num_materias - 1) {
+                fprintf(arch, "%d", materias[x]);
+            } else {
+                fprintf(arch, "%d,", materias[x]);
+            }
+        }
+        fprintf(arch, "\n");
+
+        printf("---------------------------------------------\n");
         printf("Ingrese el legajo del alumno: ");
         scanf("%d", &legajo);
     }
-    
+
+    fclose(arch);   
     return 0;
 }
 
