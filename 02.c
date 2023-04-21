@@ -511,33 +511,40 @@ int cargarAlumnos() {
         return -1;
     }
 
+
+
     int legajo;
     printf("Ingrese el legajo del alumno: ");
     scanf("%d", &legajo);
 
-    char buffer = getchar();
-    char nombre[100];
-    printf("Ingrese el nombre del alumno: ");
-    
-    char c;
-    int i = 0;
-    while((c = getchar()) != '\n' && i < 99) {
-        nombre[i] = c;
-        i++;
-    } nombre[i] = '\0';
-
-    int materias[30];
-    int cod_materia;
-    do { 
-        printf("Ingrese las materias del alumno: ");
-        scanf("%d", &cod_materia);
-
-        if (cod_materia != 0) {
-            materias[i] = cod_materia;
+    while (legajo != 0) {
+        char buffer = getchar();
+        char nombre[100];
+        printf("Ingrese el nombre del alumno: ");
+        
+        char c;
+        int i = 0;
+        while((c = getchar()) != '\n' && i < 99) {
+            nombre[i] = c;
             i++;
-        }
-    } while (cod_materia != 0 && i < 30);
+        } nombre[i] = '\0';
 
+        int materias[30];
+        int cod_materia;
+        do { 
+            printf("Ingrese las materias del alumno: ");
+            scanf("%d", &cod_materia);
+
+            if (cod_materia != 0) {
+                materias[i] = cod_materia;
+                i++;
+            }
+        } while (cod_materia != 0 && i < 30);
+
+        printf("Ingrese el legajo del alumno: ");
+        scanf("%d", &legajo);
+    }
+    
     return 0;
 }
 
