@@ -501,8 +501,9 @@ int cod_materia,nota;
 t_nota;
 
 #define MAX_ALUMNOS 10
+#define MAX_MATERIAS 10
 
-int cargarAlumnos() {
+int ingresoAlumnos() {
     FILE *arch;
     arch = fopen("02-07-alumnos.csv", "a");
 
@@ -514,8 +515,9 @@ int cargarAlumnos() {
     int legajo;
     printf("Ingrese el legajo del alumno: ");
     scanf("%d", &legajo);
+    int num_alumnos = 0;
 
-    while (legajo != 0) {
+    while (legajo != 0 && num_alumnos < MAX_ALUMNOS) {
         char buffer = getchar();
         char nombre[100];
         printf("Ingrese el nombre del alumno: ");
@@ -555,15 +557,107 @@ int cargarAlumnos() {
         printf("---------------------------------------------\n");
         printf("Ingrese el legajo del alumno: ");
         scanf("%d", &legajo);
+
+        num_alumnos++;
     }
 
     fclose(arch);   
     return 0;
 }
 
+int ingresoMaterias() {
+    FILE *arch;
+    arch = fopen("02-07-materias.csv", "a");
+
+    if (arch == NULL) {
+        printf("Error al abrir el archivo");
+        return -1;
+    }
+
+    int cod_materia;
+    printf("Ingrese el codigo de la materia: ");
+    scanf("%d", &cod_materia);
+    int num_materias = 0;
+
+    while (cod_materia != 0 && num_materias < MAX_MATERIAS) {
+        char buffer = getchar();
+        char nombre_materia[100];
+        printf("Ingrese el nombre de la materia: ");
+        
+        char c;
+        int i = 0;
+        while((c = getchar()) != '\n' && i < 99) {
+            nombre_materia[i] = c;
+            i++;
+        } nombre_materia[i] = '\0';
+
+        fprintf(arch, "%d,%s\n", cod_materia, nombre_materia);
+
+        printf("---------------------------------------------\n");
+        printf("Ingrese el codigo de la materia: ");
+        scanf("%d", &cod_materia);
+
+        num_materias++;
+    }
+
+    fclose(arch);   
+    return 0;
+}
+
+// int cargarAlumnos(t_alumno arrAlumnos[MAX_ALUMNOS]) {
+//     FILE *arch;
+//     arch = fopen("02-07-alumnos.csv", "r");
+
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
+
+//     int r;
+    
+//     int f = 0;
+//     r = fscanf(arch, "%d,%[^,]", &arrAlumnos[f].legajo, arrAlumnos[f].nombre);
+//     while (r != EOF && f < MAX_ALUMNOS) {
+//         printf("%d,%s", arrAlumnos[f].legajo, arrAlumnos[f].nombre);
+//         f++;
+//         r = fscanf(arch, "%d,%[^,]", &arrAlumnos[f].legajo, arrAlumnos[f].nombre);
+//     }
+
+//     fclose(arch);   
+//     return 0;
+// }
+
+int cargarMaterias(t_materia arrMaterias[MAX_MATERIAS]) {
+    FILE *arch;
+    arch = fopen("02-07-materias.csv", "r");
+
+    if (arch == NULL) {
+        printf("Error al abrir el archivo");
+        return -1;
+    }
+
+    int r;
+    
+    int f = 0;
+    r = fscanf(arch, "%d,%[^\n]", &arrMaterias[f].codigo, arrMaterias[f].nombre);
+    while (r != EOF && f < MAX_ALUMNOS) {
+        printf("%d,%s\n", arrMaterias[f].codigo, arrMaterias[f].nombre);
+        f++;
+        r = fscanf(arch, "%d,%[^\n]", &arrMaterias[f].codigo, arrMaterias[f].nombre);
+    }
+
+    fclose(arch);   
+    return 0;
+}
 
 int main() {
-    cargarAlumnos();
+    // ingresoAlumnos();
+    // ingresoMaterias();
+
+    t_alumno arrAlumnos[MAX_ALUMNOS];
+    // cargarAlumnos(arrAlumnos);
+    t_materia arrMaterias[MAX_MATERIAS];
+    cargarMaterias(arrMaterias);
 
     return 0;
 }
