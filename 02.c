@@ -359,120 +359,191 @@
 
 // ############################# EJ 06 #######################################################################################
 
-#define F 3
-#define C 30
+// #define F 3
+// #define C 30
 
-struct dataPersonas {
-    int dni;
-    char nombre[30];
-    char pais[30];
-};
+// struct dataPersonas {
+//     int dni;
+//     char nombre[30];
+//     char pais[30];
+// };
 
-typedef struct dataPersonas dataPersonas;
+// typedef struct dataPersonas dataPersonas;
 
-int cargar(dataPersonas arrP[F]) {
+// int cargar(dataPersonas arrP[F]) {
+//     FILE *arch;
+
+//     arch = fopen("02-03-personas.csv", "r");
+
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
+
+//     int r;
+//     int f = 0;
+//     r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);		
+//     while(r!=EOF){
+//         f++;
+//         r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);	
+//     }	
+
+//     fclose(arch);
+
+//     return 0;
+// }
+
+// #include <string.h>
+
+// void ordenarNombre(dataPersonas arrP[F]) {
+//     dataPersonas aux;
+
+//     for(int x = 0; x<F-1; x++) {
+//         for(int u = x + 1; u<F; u++) {
+//             if (strcmp(arrP[x].nombre, arrP[u].nombre) > 0) {
+//                 aux = arrP[x];
+//                 arrP[x] = arrP[u];
+//                 arrP[u] = aux;
+//             }
+//         }
+//     }
+// }
+
+// void ordenarDocumento(dataPersonas arrP[F]) {
+//     dataPersonas aux;
+
+//     for(int x = 0; x<F-1; x++) {
+//         for(int u = x + 1; u<F; u++) {
+//             if (arrP[x].dni > arrP[u].dni) {
+//                 aux = arrP[x];
+//                 arrP[x] = arrP[u];
+//                 arrP[u] = aux;
+//             }
+//         }
+//     }
+// }
+
+// void ordenarPais(dataPersonas arrP[F]) {
+//     dataPersonas aux;
+
+//     for(int x = 0; x<F-1; x++) {
+//         for(int u = x + 1; u<F; u++) {
+//             if (strcmp(arrP[x].pais, arrP[u].pais) > 0) {
+//                 aux = arrP[x];
+//                 arrP[x] = arrP[u];
+//                 arrP[u] = aux;
+//             }
+//         }
+//     }
+// }
+
+// void imprimir(dataPersonas arrP[F]) {
+//     printf("%-15s %-15s %-15s\n", "Documento", "Nombre", "Pais");
+//     printf("---------------------------------------------\n");
+
+//     for(int f = 0; f<F; f++) {
+//         printf("%-15d %-15s %-15s\n", arrP[f].dni, arrP[f].nombre, arrP[f].pais);  
+//     }
+// }
+
+// int main() {
+//     dataPersonas arrP[F];
+//     cargar(arrP);
+//     imprimir(arrP);
+
+//     printf("1- Ver listado ordenado por nombre\n");
+//     printf("2- Ver listado ordenado por documento\n");
+//     printf("3- Ver listado ordenado por pais\n");
+//     printf("4- Salir del programa\n");
+
+//     int opcion;
+//     printf("Seleccion: ");
+//     scanf("%d", &opcion);
+//     if (opcion == 1) {
+//         ordenarNombre(arrP);
+//         imprimir(arrP);
+//     } else if (opcion == 2) {
+//         ordenarDocumento(arrP);
+//         imprimir(arrP);
+//     } else if (opcion == 3) {
+//         ordenarPais(arrP);
+//         imprimir(arrP);
+//     } else if (opcion == 4) {
+//         printf("Saliendo del programa");
+//     } else {
+//         printf("Opcion incorrecta");
+//     }
+
+//     return 0;
+// }
+
+// ############################# EJ 07 #######################################################################################
+
+typedef struct
+{
+char nombre[100];
+int legajo, materias[30];
+}
+t_alumno;
+
+typedef struct
+{
+char nombre[100];
+int codigo;
+}
+t_materia;
+
+typedef struct
+{
+int legajo_alumno;
+int cod_materia,nota;
+}
+t_nota;
+
+#define MAX_ALUMNOS 10
+
+int cargarAlumnos() {
     FILE *arch;
+    arch = fopen("02-07-alumnos.csv", "a");
 
-    arch = fopen("02-03-personas.csv", "r");
-
-    if (arch == NULL) {
+    if (arch = NULL) {
         printf("Error al abrir el archivo");
         return -1;
     }
 
-    int r;
-    int f = 0;
-    r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);		
-    while(r!=EOF){
-        f++;
-        r = fscanf(arch, "%d, %[^,], %s", &arrP[f].dni, arrP[f].nombre, arrP[f].pais);	
-    }	
+    int legajo;
+    printf("Ingrese el legajo del alumno: ");
+    scanf("%d", &legajo);
 
-    fclose(arch);
+    char buffer = getchar();
+    char nombre[100];
+    printf("Ingrese el nombre del alumno: ");
+    
+    char c;
+    int i = 0;
+    while((c = getchar()) != '\n' && i < 99) {
+        nombre[i] = c;
+        i++;
+    } nombre[i] = '\0';
+
+    int materias[30];
+    int cod_materia;
+    do { 
+        printf("Ingrese las materias del alumno: ");
+        scanf("%d", &cod_materia);
+
+        if (cod_materia != 0) {
+            materias[i] = cod_materia;
+            i++;
+        }
+    } while (cod_materia != 0 && i < 30);
 
     return 0;
 }
 
-#include <string.h>
-
-void ordenarNombre(dataPersonas arrP[F]) {
-    dataPersonas aux;
-
-    for(int x = 0; x<F-1; x++) {
-        for(int u = x + 1; u<F; u++) {
-            if (strcmp(arrP[x].nombre, arrP[u].nombre) > 0) {
-                aux = arrP[x];
-                arrP[x] = arrP[u];
-                arrP[u] = aux;
-            }
-        }
-    }
-}
-
-void ordenarDocumento(dataPersonas arrP[F]) {
-    dataPersonas aux;
-
-    for(int x = 0; x<F-1; x++) {
-        for(int u = x + 1; u<F; u++) {
-            if (arrP[x].dni > arrP[u].dni) {
-                aux = arrP[x];
-                arrP[x] = arrP[u];
-                arrP[u] = aux;
-            }
-        }
-    }
-}
-
-void ordenarPais(dataPersonas arrP[F]) {
-    dataPersonas aux;
-
-    for(int x = 0; x<F-1; x++) {
-        for(int u = x + 1; u<F; u++) {
-            if (strcmp(arrP[x].pais, arrP[u].pais) > 0) {
-                aux = arrP[x];
-                arrP[x] = arrP[u];
-                arrP[u] = aux;
-            }
-        }
-    }
-}
-
-void imprimir(dataPersonas arrP[F]) {
-    printf("%-15s %-15s %-15s\n", "Documento", "Nombre", "Pais");
-    printf("---------------------------------------------\n");
-
-    for(int f = 0; f<F; f++) {
-        printf("%-15d %-15s %-15s\n", arrP[f].dni, arrP[f].nombre, arrP[f].pais);  
-    }
-}
 
 int main() {
-    dataPersonas arrP[F];
-    cargar(arrP);
-    imprimir(arrP);
-
-    printf("1- Ver listado ordenado por nombre\n");
-    printf("2- Ver listado ordenado por documento\n");
-    printf("3- Ver listado ordenado por pais\n");
-    printf("4- Salir del programa\n");
-
-    int opcion;
-    printf("Seleccion: ");
-    scanf("%d", &opcion);
-    if (opcion == 1) {
-        ordenarNombre(arrP);
-        imprimir(arrP);
-    } else if (opcion == 2) {
-        ordenarDocumento(arrP);
-        imprimir(arrP);
-    } else if (opcion == 3) {
-        ordenarPais(arrP);
-        imprimir(arrP);
-    } else if (opcion == 4) {
-        printf("Saliendo del programa");
-    } else {
-        printf("Opcion incorrecta");
-    }
+    cargarAlumnos();
 
     return 0;
 }
