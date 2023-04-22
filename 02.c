@@ -763,6 +763,7 @@ void notasMaterias(t_alumno arrAlumnos[MAX_ALUMNOS], t_materia arrMaterias[MAX_M
         }
     }
 }
+
 int main() {
     // ingresoAlumnos(num_mat);
     // ingresoMaterias();
