@@ -764,7 +764,6 @@ void notasMaterias(t_alumno arrAlumnos[MAX_ALUMNOS], t_materia arrMaterias[MAX_M
     }
 }
 int main() {
-    int num_mat[MAX_MATERIAS] = {4,4,5};
     // ingresoAlumnos(num_mat);
     // ingresoMaterias();
 
