@@ -807,29 +807,55 @@
 
 // ############################# EJ 09 #######################################################################################
 
-void code(unsigned char c) {
-    unsigned char mask = 1;
-    int i = 7;
+// void code(unsigned char c) {
+//     unsigned char mask = 1;
+//     int i = 7;
+//     while(i>=0) {
+//         if((c&(mask<<i)) != 0) {
+//             printf("1");
+//         } else {
+//             printf("0");
+//         }
+//         i--;
+//     }
+// }
+
+// int main() {
+//     unsigned char c = 'a';
+//     printf("El char es '%d', y su binario es: ", c);
+//     code(c);
+//     printf("\n");
+//     c = c >> 3;
+//     printf("El char es '%d', y su binario es: ", c);
+//     code(c);
+//     printf("\n");
+
+
+//     return 0;
+// }
+
+// ############################# EJ 10 #######################################################################################
+
+#include <math.h>
+
+int main() {
+    unsigned int num = 2023;
+    unsigned int mask = 1;
+
+    printf("El num es %d, y su binario: ", num);
+    int i = 31;
+    int count = 0;
     while(i>=0) {
-        if((c&(mask<<i)) != 0) {
+        if ((num&(mask<<i)) != 0) {
             printf("1");
+            count++;
         } else {
             printf("0");
         }
         i--;
     }
-}
-
-int main() {
-    unsigned char c = 'a';
-    printf("El char es '%d', y su binario es: ", c);
-    code(c);
-    printf("\n");
-    c = c >> 3;
-    printf("El char es '%d', y su binario es: ", c);
-    code(c);
-    printf("\n");
-
+    printf("\nEl num de veces que aparecio el 1 fueron: %d", count);
+    
 
     return 0;
 }
