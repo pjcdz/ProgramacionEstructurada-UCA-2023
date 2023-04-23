@@ -836,26 +836,71 @@
 
 // ############################# EJ 10 #######################################################################################
 
-#include <math.h>
+// int main() {
+//     unsigned int num = 2023;
+//     unsigned int mask = 1;
 
-int main() {
-    unsigned int num = 2023;
-    unsigned int mask = 1;
+//     printf("El num es %d, y su binario: ", num);
+//     int i = 31;
+//     int count = 0;
+//     while(i>=0) {
+//         if ((num&(mask<<i)) != 0) {
+//             printf("1");
+//             count++;
+//         } else {
+//             printf("0");
+//         }
+//         i--;
+//     }
+//     printf("\nEl num de veces que aparecio el 1 fueron: %d", count);
+    
 
-    printf("El num es %d, y su binario: ", num);
+//     return 0;
+// }
+
+// ############################# EJ 11 #######################################################################################
+
+void imprimir(unsigned int var) {
+    unsigned int mask;
     int i = 31;
-    int count = 0;
     while(i>=0) {
-        if ((num&(mask<<i)) != 0) {
+        if ((var&(mask<<i)) != 0) {
             printf("1");
-            count++;
         } else {
             printf("0");
         }
         i--;
     }
-    printf("\nEl num de veces que aparecio el 1 fueron: %d", count);
-    
+}
 
+int main() {
+    unsigned char h = 'h';
+    unsigned char o = 'o';
+    unsigned char l = 'l';
+    unsigned char a = 'a';
+
+    unsigned int var = 0;
+    imprimir(var);
+    var = h;
+    printf("\n");
+    imprimir(var);
+
+    var = var << 8;
+    var = var | o;
+    printf("\n");
+    imprimir(var);
+    
+    var = var << 8;
+    var = var | l;
+    printf("\n");
+    imprimir(var);
+
+    var = var << 8;
+    var = var | a;
+    printf("\n");
+    imprimir(var);
+
+    printf("\nEl valor de retorno es: %d", var);
+    
     return 0;
 }
