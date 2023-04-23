@@ -860,11 +860,59 @@
 
 // ############################# EJ 11 #######################################################################################
 
-void imprimir(unsigned int var) {
-    unsigned int mask;
-    int i = 31;
+// void imprimir(unsigned int var) {
+//     unsigned int mask;
+//     int i = 31;
+//     while(i>=0) {
+//         if ((var&(mask<<i)) != 0) {
+//             printf("1");
+//         } else {
+//             printf("0");
+//         }
+//         i--;
+//     }
+// }
+
+// int main() {
+//     unsigned char h = 'h';
+//     unsigned char o = 'o';
+//     unsigned char l = 'l';
+//     unsigned char a = 'a';
+
+//     unsigned int var = 0;
+//     imprimir(var);
+//     var = h;
+//     printf("\n");
+//     imprimir(var);
+
+//     var = var << 8;
+//     var = var | o;
+//     printf("\n");
+//     imprimir(var);
+    
+//     var = var << 8;
+//     var = var | l;
+//     printf("\n");
+//     imprimir(var);
+
+//     var = var << 8;
+//     var = var | a;
+//     printf("\n");
+//     imprimir(var);
+
+//     printf("\nEl valor de retorno es: %d", var);
+
+//     return 0;
+// }
+
+// ############################# EJ 12 #######################################################################################
+
+void imprimirChar(unsigned char c) {
+    unsigned char mask = 1;
+    int i = 7;
+
     while(i>=0) {
-        if ((var&(mask<<i)) != 0) {
+        if((c&(mask<<i)) != 0) {
             printf("1");
         } else {
             printf("0");
@@ -873,34 +921,31 @@ void imprimir(unsigned int var) {
     }
 }
 
+unsigned char change(unsigned char c, unsigned char mask) {
+    return c = (c^(mask<<5));
+}
+
 int main() {
-    unsigned char h = 'h';
-    unsigned char o = 'o';
-    unsigned char l = 'l';
     unsigned char a = 'a';
-
-    unsigned int var = 0;
-    imprimir(var);
-    var = h;
+    unsigned char mask = 1;
+    imprimirChar(a);
     printf("\n");
-    imprimir(var);
+    // imprimirChar(mask);
+    // printf("\n");
+    // mask = mask<<5;
+    // imprimirChar(mask);
+    // printf("\n");
+    // a = (a^mask);
+    a = change(a, mask);
+    imprimirChar(a);
+    printf("\n%c\n\n", a);
 
-    var = var << 8;
-    var = var | o;
+    unsigned char am = 'A';
+    imprimirChar(am);
     printf("\n");
-    imprimir(var);
-    
-    var = var << 8;
-    var = var | l;
-    printf("\n");
-    imprimir(var);
+    am = change(am, mask);
+    imprimirChar(am);
+    printf("\n%c\n", am);
 
-    var = var << 8;
-    var = var | a;
-    printf("\n");
-    imprimir(var);
-
-    printf("\nEl valor de retorno es: %d", var);
-    
     return 0;
 }
