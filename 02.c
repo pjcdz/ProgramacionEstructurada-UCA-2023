@@ -785,11 +785,33 @@
 
 // ############################# EJ 08 #######################################################################################
 
+// void code(unsigned char c) {
+//     unsigned char mask = 1;
+//     int i = 7;
+//     while(i >= 0) {
+//         if ((c&(mask<<i))!=0) {
+//             printf("1");
+//         } else {
+//             printf("0");
+//         }
+//         i--;
+//     }
+// }
+
+// int main() {
+//     unsigned char c = 'a';
+//     code(c);
+
+//     return 0;
+// }
+
+// ############################# EJ 09 #######################################################################################
+
 void code(unsigned char c) {
     unsigned char mask = 1;
     int i = 7;
-    while(i >= 0) {
-        if ((c&(mask<<i))!=0) {
+    while(i>=0) {
+        if((c&(mask<<i)) != 0) {
             printf("1");
         } else {
             printf("0");
@@ -800,16 +822,14 @@ void code(unsigned char c) {
 
 int main() {
     unsigned char c = 'a';
+    printf("El char es '%d', y su binario es: ", c);
     code(c);
+    printf("\n");
+    c = c >> 3;
+    printf("El char es '%d', y su binario es: ", c);
+    code(c);
+    printf("\n");
+
 
     return 0;
 }
-
-// ############################# EJ 09 #######################################################################################
-
-// int main() {
-//     unsigned char c = 'a';
-
-
-//     return 0;
-// }
