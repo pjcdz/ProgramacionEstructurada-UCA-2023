@@ -479,306 +479,337 @@
 
 // ############################# EJ 07 #######################################################################################
 
-typedef struct
-{
-char nombre[100];
-int legajo, materias[30];
-}
-t_alumno;
+// typedef struct
+// {
+// char nombre[100];
+// int legajo, materias[30];
+// }
+// t_alumno;
 
-typedef struct
-{
-char nombre[100];
-int codigo;
-}
-t_materia;
+// typedef struct
+// {
+// char nombre[100];
+// int codigo;
+// }
+// t_materia;
 
-typedef struct
-{
-int legajo_alumno;
-int cod_materia,nota;
-}
-t_nota;
+// typedef struct
+// {
+// int legajo_alumno;
+// int cod_materia,nota;
+// }
+// t_nota;
 
-#define MAX_ALUMNOS 3
-#define MAX_MATERIAS 4
+// #define MAX_ALUMNOS 3
+// #define MAX_MATERIAS 4
 
-int ingresoAlumnos(int num_mat[MAX_MATERIAS]) {
-    FILE *arch;
-    arch = fopen("02-07-alumnos.csv", "a");
+// int ingresoAlumnos(int num_mat[MAX_MATERIAS]) {
+//     FILE *arch;
+//     arch = fopen("02-07-alumnos.csv", "a");
 
-    if (arch == NULL) {
-        printf("Error al abrir el archivo");
-        return -1;
-    }
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
 
-    int legajo;
-    printf("Ingrese el legajo del alumno: ");
-    scanf("%d", &legajo);
-    int num_alumnos = 0;
-    int q = 0;
+//     int legajo;
+//     printf("Ingrese el legajo del alumno: ");
+//     scanf("%d", &legajo);
+//     int num_alumnos = 0;
+//     int q = 0;
 
-    while (legajo != 0 && num_alumnos < MAX_ALUMNOS) {
-        char buffer = getchar();
-        char nombre[100];
-        printf("Ingrese el nombre del alumno: ");
+//     while (legajo != 0 && num_alumnos < MAX_ALUMNOS) {
+//         char buffer = getchar();
+//         char nombre[100];
+//         printf("Ingrese el nombre del alumno: ");
         
-        char c;
-        int i = 0;
-        while((c = getchar()) != '\n' && i < 99) {
-            nombre[i] = c;
-            i++;
-        } nombre[i] = '\0';
+//         char c;
+//         int i = 0;
+//         while((c = getchar()) != '\n' && i < 99) {
+//             nombre[i] = c;
+//             i++;
+//         } nombre[i] = '\0';
 
-        int materias[30];
-        int num_materias = 0;
-        int cod_materia;
-        int u = 0;
-        do { 
-            printf("Ingrese las materias del alumno: ");
-            scanf("%d", &cod_materia);
+//         int materias[30];
+//         int num_materias = 0;
+//         int cod_materia;
+//         int u = 0;
+//         do { 
+//             printf("Ingrese las materias del alumno: ");
+//             scanf("%d", &cod_materia);
             
-            if (cod_materia != 0) {
-                materias[u] = cod_materia;
-                num_materias++;
-                u++;
-            }
-        } while (cod_materia != 0 && u < 30 && num_materias < MAX_MATERIAS);
+//             if (cod_materia != 0) {
+//                 materias[u] = cod_materia;
+//                 num_materias++;
+//                 u++;
+//             }
+//         } while (cod_materia != 0 && u < 30 && num_materias < MAX_MATERIAS);
 
-        num_mat[q] = num_materias;
-        q++;
+//         num_mat[q] = num_materias;
+//         q++;
 
-        fprintf(arch, "%d,%s,", legajo, nombre);
-        for (int x = 0; x < num_materias; x++) {
-            if (x == num_materias - 1) {
-                fprintf(arch, "%d", materias[x]);
-            } else {
-                fprintf(arch, "%d,", materias[x]);
-            }
-        }
-        fprintf(arch, "\n");
+//         fprintf(arch, "%d,%s,", legajo, nombre);
+//         for (int x = 0; x < num_materias; x++) {
+//             if (x == num_materias - 1) {
+//                 fprintf(arch, "%d", materias[x]);
+//             } else {
+//                 fprintf(arch, "%d,", materias[x]);
+//             }
+//         }
+//         fprintf(arch, "\n");
 
-        printf("---------------------------------------------\n");
-        printf("Ingrese el legajo del alumno: ");
-        scanf("%d", &legajo);
+//         printf("---------------------------------------------\n");
+//         printf("Ingrese el legajo del alumno: ");
+//         scanf("%d", &legajo);
 
-        num_alumnos++;
-    }
+//         num_alumnos++;
+//     }
 
-    fclose(arch);   
-    return 0;
-}
+//     fclose(arch);   
+//     return 0;
+// }
 
-int ingresoMaterias() {
-    FILE *arch;
-    arch = fopen("02-07-materias.csv", "a");
+// int ingresoMaterias() {
+//     FILE *arch;
+//     arch = fopen("02-07-materias.csv", "a");
 
-    if (arch == NULL) {
-        printf("Error al abrir el archivo");
-        return -1;
-    }
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
 
-    int cod_materia;
-    printf("Ingrese el codigo de la materia: ");
-    scanf("%d", &cod_materia);
-    int num_materias = 0;
+//     int cod_materia;
+//     printf("Ingrese el codigo de la materia: ");
+//     scanf("%d", &cod_materia);
+//     int num_materias = 0;
 
-    while (cod_materia != 0 && num_materias < MAX_MATERIAS) {
-        char buffer = getchar();
-        char nombre_materia[100];
-        printf("Ingrese el nombre de la materia: ");
+//     while (cod_materia != 0 && num_materias < MAX_MATERIAS) {
+//         char buffer = getchar();
+//         char nombre_materia[100];
+//         printf("Ingrese el nombre de la materia: ");
         
-        char c;
-        int i = 0;
-        while((c = getchar()) != '\n' && i < 99) {
-            nombre_materia[i] = c;
-            i++;
-        } nombre_materia[i] = '\0';
+//         char c;
+//         int i = 0;
+//         while((c = getchar()) != '\n' && i < 99) {
+//             nombre_materia[i] = c;
+//             i++;
+//         } nombre_materia[i] = '\0';
 
-        fprintf(arch, "%d,%s\n", cod_materia, nombre_materia);
+//         fprintf(arch, "%d,%s\n", cod_materia, nombre_materia);
 
-        printf("---------------------------------------------\n");
-        printf("Ingrese el codigo de la materia: ");
-        scanf("%d", &cod_materia);
+//         printf("---------------------------------------------\n");
+//         printf("Ingrese el codigo de la materia: ");
+//         scanf("%d", &cod_materia);
 
-        num_materias++;
-    }
+//         num_materias++;
+//     }
 
-    fclose(arch);   
-    return 0;
-}
+//     fclose(arch);   
+//     return 0;
+// }
 
-int cargarAlumnos(t_alumno arrAlumnos[MAX_ALUMNOS]) {
-    FILE *arch;
-    arch = fopen("02-07-alumnos.csv", "r");
+// int cargarAlumnos(t_alumno arrAlumnos[MAX_ALUMNOS]) {
+//     FILE *arch;
+//     arch = fopen("02-07-alumnos.csv", "r");
 
-    if (arch == NULL) {
-        printf("Error al abrir el archivo");
-        return -1;
-    }
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
 
-    int r;
-    int f = 0;
+//     int r;
+//     int f = 0;
 
-    r = fscanf(arch, "%d,%[^,]", &arrAlumnos[f].legajo, arrAlumnos[f].nombre);
-    r = fscanf(arch, ",%d", &arrAlumnos[f].materias[0]);
-    for(int x = 1; x < MAX_MATERIAS; x++) {
-        r = fscanf(arch, ",%d", &arrAlumnos[f].materias[x]);
-    }
+//     r = fscanf(arch, "%d,%[^,]", &arrAlumnos[f].legajo, arrAlumnos[f].nombre);
+//     r = fscanf(arch, ",%d", &arrAlumnos[f].materias[0]);
+//     for(int x = 1; x < MAX_MATERIAS; x++) {
+//         r = fscanf(arch, ",%d", &arrAlumnos[f].materias[x]);
+//     }
 
-    while (r != EOF && f < MAX_ALUMNOS) {
-        // printf("%d,%s", arrAlumnos[f].legajo, arrAlumnos[f].nombre);
-        // for(int u = 0; u < MAX_MATERIAS; u++) {
-        //     printf(",%d", arrAlumnos[f].materias[u]);
-        // } printf("\n");
+//     while (r != EOF && f < MAX_ALUMNOS) {
+//         // printf("%d,%s", arrAlumnos[f].legajo, arrAlumnos[f].nombre);
+//         // for(int u = 0; u < MAX_MATERIAS; u++) {
+//         //     printf(",%d", arrAlumnos[f].materias[u]);
+//         // } printf("\n");
 
-        f++;
+//         f++;
 
-        r = fscanf(arch, "%d,%[^,]", &arrAlumnos[f].legajo, arrAlumnos[f].nombre);
-        r = fscanf(arch, ",%d", &arrAlumnos[f].materias[0]);
-        for(int x = 1; x < MAX_MATERIAS; x++) {
-            r = fscanf(arch, ",%d", &arrAlumnos[f].materias[x]);
-        }
-    }
+//         r = fscanf(arch, "%d,%[^,]", &arrAlumnos[f].legajo, arrAlumnos[f].nombre);
+//         r = fscanf(arch, ",%d", &arrAlumnos[f].materias[0]);
+//         for(int x = 1; x < MAX_MATERIAS; x++) {
+//             r = fscanf(arch, ",%d", &arrAlumnos[f].materias[x]);
+//         }
+//     }
 
-    fclose(arch);   
-    return 0;
-}
+//     fclose(arch);   
+//     return 0;
+// }
 
-int cargarMaterias(t_materia arrMaterias[MAX_MATERIAS]) {
-    FILE *arch;
-    arch = fopen("02-07-materias.csv", "r");
+// int cargarMaterias(t_materia arrMaterias[MAX_MATERIAS]) {
+//     FILE *arch;
+//     arch = fopen("02-07-materias.csv", "r");
 
-    if (arch == NULL) {
-        printf("Error al abrir el archivo");
-        return -1;
-    }
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
 
-    int r;
+//     int r;
     
-    int f = 0;
-    r = fscanf(arch, "%d,%[^\n]", &arrMaterias[f].codigo, arrMaterias[f].nombre);
-    while (r != EOF && f < MAX_ALUMNOS) {
-        // printf("%d,%s\n", arrMaterias[f].codigo, arrMaterias[f].nombre);
-        f++;
-        r = fscanf(arch, "%d,%[^\n]", &arrMaterias[f].codigo, arrMaterias[f].nombre);
-    }
+//     int f = 0;
+//     r = fscanf(arch, "%d,%[^\n]", &arrMaterias[f].codigo, arrMaterias[f].nombre);
+//     while (r != EOF && f < MAX_ALUMNOS) {
+//         // printf("%d,%s\n", arrMaterias[f].codigo, arrMaterias[f].nombre);
+//         f++;
+//         r = fscanf(arch, "%d,%[^\n]", &arrMaterias[f].codigo, arrMaterias[f].nombre);
+//     }
 
-    fclose(arch);   
-    return 0;
-}
+//     fclose(arch);   
+//     return 0;
+// }
 
-int ingresoNotas(t_alumno arrAlumnos[MAX_ALUMNOS], t_materia arrMaterias[MAX_MATERIAS]) {
-    FILE *arch;
-    arch = fopen("02-07-notas.csv", "a");
+// int ingresoNotas(t_alumno arrAlumnos[MAX_ALUMNOS], t_materia arrMaterias[MAX_MATERIAS]) {
+//     FILE *arch;
+//     arch = fopen("02-07-notas.csv", "a");
 
-    if (arch == NULL) {
-        printf("Error al abrir el archivo");
-        return -1;
-    }
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
 
-    int legajo_alumno;
-    int cod_materia,nota;
+//     int legajo_alumno;
+//     int cod_materia,nota;
 
-    for (int i = 0; i < MAX_ALUMNOS; i++) {
-        printf("El alumno: %s, de legajo: %d\n", arrAlumnos[i].nombre, arrAlumnos[i].legajo);
-        for(int u = 0; u < MAX_MATERIAS; u++) {
-            printf("Cursa la materia: %s, con codigo: %d\n", arrMaterias[u].nombre, arrMaterias[u].codigo);
+//     for (int i = 0; i < MAX_ALUMNOS; i++) {
+//         printf("El alumno: %s, de legajo: %d\n", arrAlumnos[i].nombre, arrAlumnos[i].legajo);
+//         for(int u = 0; u < MAX_MATERIAS; u++) {
+//             printf("Cursa la materia: %s, con codigo: %d\n", arrMaterias[u].nombre, arrMaterias[u].codigo);
 
-            int nota;
-            printf("Ingrese la nota: ");
-            scanf("%d", &nota);
+//             int nota;
+//             printf("Ingrese la nota: ");
+//             scanf("%d", &nota);
 
-            fprintf(arch, "%d,%d,%d\n", arrAlumnos[i].legajo, arrMaterias[u].codigo, nota);
-        }
-    }
+//             fprintf(arch, "%d,%d,%d\n", arrAlumnos[i].legajo, arrMaterias[u].codigo, nota);
+//         }
+//     }
     
-    return 0;
-}
+//     return 0;
+// }
 
-int cargarNotas(t_nota arrNotas[MAX_ALUMNOS*MAX_MATERIAS]) {
-    FILE *arch;
-    arch = fopen("02-07-notas.csv", "r");
+// int cargarNotas(t_nota arrNotas[MAX_ALUMNOS*MAX_MATERIAS]) {
+//     FILE *arch;
+//     arch = fopen("02-07-notas.csv", "r");
 
-    if (arch == NULL) {
-        printf("Error al abrir el archivo");
-        return -1;
-    }
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//         return -1;
+//     }
 
-    int f = 0;
-    int r = fscanf(arch, "%d,%d,%d", &arrNotas[f].legajo_alumno, &arrNotas[f].cod_materia, &arrNotas[f].nota);
-    while (r != EOF && f < MAX_ALUMNOS*MAX_MATERIAS) {
-        // printf("%d,%d,%d\n", arrNotas[f].legajo_alumno, arrNotas[f].cod_materia, arrNotas[f].nota);
-        f++;
-        r = fscanf(arch, "%d,%d,%d", &arrNotas[f].legajo_alumno, &arrNotas[f].cod_materia, &arrNotas[f].nota);
-    }
+//     int f = 0;
+//     int r = fscanf(arch, "%d,%d,%d", &arrNotas[f].legajo_alumno, &arrNotas[f].cod_materia, &arrNotas[f].nota);
+//     while (r != EOF && f < MAX_ALUMNOS*MAX_MATERIAS) {
+//         // printf("%d,%d,%d\n", arrNotas[f].legajo_alumno, arrNotas[f].cod_materia, arrNotas[f].nota);
+//         f++;
+//         r = fscanf(arch, "%d,%d,%d", &arrNotas[f].legajo_alumno, &arrNotas[f].cod_materia, &arrNotas[f].nota);
+//     }
 
-    return 0;
-}
+//     return 0;
+// }
 
-void notasAlumno(t_alumno arrAlumnos[MAX_ALUMNOS], t_materia arrMaterias[MAX_MATERIAS], t_nota arrNotas[MAX_ALUMNOS*MAX_MATERIAS]) {
-    int legajo_sel;
-    printf("Ingrese el legajo del alumno: ");
-    scanf("%d", &legajo_sel);
+// void notasAlumno(t_alumno arrAlumnos[MAX_ALUMNOS], t_materia arrMaterias[MAX_MATERIAS], t_nota arrNotas[MAX_ALUMNOS*MAX_MATERIAS]) {
+//     int legajo_sel;
+//     printf("Ingrese el legajo del alumno: ");
+//     scanf("%d", &legajo_sel);
 
-    for(int i = 0; i < MAX_ALUMNOS; i++) {
-        if (arrAlumnos[i].legajo == legajo_sel) {
-            printf("El alumno: %s, de legajo: %d\n", arrAlumnos[i].nombre, arrAlumnos[i].legajo);
-            printf("Cursa las siguientes materias:\n");
-            for(int u = 0; u < MAX_MATERIAS; u++) {
-                if (arrAlumnos[i].materias[u] == arrMaterias[u].codigo) {
-                    printf("Materia: %s, con codigo: %d\n", arrMaterias[u].nombre, arrMaterias[u].codigo);
-                    for(int x = 0; x < MAX_ALUMNOS*MAX_MATERIAS; x++) {
-                        if (arrNotas[x].legajo_alumno == arrAlumnos[i].legajo && arrNotas[x].cod_materia == arrMaterias[u].codigo) {
-                            printf("Nota: %d\n", arrNotas[x].nota);
-                        }
-                    }
-                }
-            }
+//     for(int i = 0; i < MAX_ALUMNOS; i++) {
+//         if (arrAlumnos[i].legajo == legajo_sel) {
+//             printf("El alumno: %s, de legajo: %d\n", arrAlumnos[i].nombre, arrAlumnos[i].legajo);
+//             printf("Cursa las siguientes materias:\n");
+//             for(int u = 0; u < MAX_MATERIAS; u++) {
+//                 if (arrAlumnos[i].materias[u] == arrMaterias[u].codigo) {
+//                     printf("Materia: %s, con codigo: %d\n", arrMaterias[u].nombre, arrMaterias[u].codigo);
+//                     for(int x = 0; x < MAX_ALUMNOS*MAX_MATERIAS; x++) {
+//                         if (arrNotas[x].legajo_alumno == arrAlumnos[i].legajo && arrNotas[x].cod_materia == arrMaterias[u].codigo) {
+//                             printf("Nota: %d\n", arrNotas[x].nota);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// void notasMaterias(t_alumno arrAlumnos[MAX_ALUMNOS], t_materia arrMaterias[MAX_MATERIAS], t_nota arrNotas[MAX_ALUMNOS*MAX_MATERIAS]) {
+//     int codigo_sel;
+//     printf("Ingrese el codigo de la materia: ");
+//     scanf("%d", &codigo_sel);
+
+//     for(int i = 0; i < MAX_MATERIAS; i++) {
+//         if(arrMaterias[i].codigo == codigo_sel) {
+//             printf("La materia seleccionada es %s, de codigo %d\n", arrMaterias[i].nombre, arrMaterias[i].codigo);
+//             printf("Los alumnos que tienen esta materia son:\n");
+//             for(int u = 0; u < MAX_ALUMNOS; u++) {
+//                 for(int x = 0; x < MAX_MATERIAS; x++) {
+//                     if(arrAlumnos[u].materias[x] == arrMaterias[i].codigo) {
+//                         printf("%s - ", arrAlumnos[u].nombre);
+//                         for(int o = 0; o < MAX_ALUMNOS * MAX_MATERIAS; o++) {
+//                             if(arrNotas[o].legajo_alumno == arrAlumnos[u].legajo && arrNotas[o].cod_materia == arrAlumnos[u].materias[x]) {
+//                                 printf("Nota: %d\n", arrNotas[o].nota);
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// int main() {
+//     // ingresoAlumnos(num_mat);
+//     // ingresoMaterias();
+
+//     t_alumno arrAlumnos[MAX_ALUMNOS];
+//     cargarAlumnos(arrAlumnos);
+//     t_materia arrMaterias[MAX_MATERIAS];
+//     cargarMaterias(arrMaterias);
+//     printf("\n");
+//     // ingresoNotas(arrAlumnos, arrMaterias);
+//     t_nota arrNotas[MAX_ALUMNOS*MAX_MATERIAS];
+//     cargarNotas(arrNotas);
+//     printf("\n");
+//     // notasAlumno(arrAlumnos, arrMaterias, arrNotas);
+//     notasMaterias(arrAlumnos, arrMaterias, arrNotas);
+
+//     return 0;
+// }
+
+// ############################# EJ 08 #######################################################################################
+
+void code(unsigned char c) {
+    unsigned char mask = 1;
+    int i = 7;
+    while(i >= 0) {
+        if ((c&(mask<<i))!=0) {
+            printf("1");
+        } else {
+            printf("0");
         }
-    }
-}
-
-void notasMaterias(t_alumno arrAlumnos[MAX_ALUMNOS], t_materia arrMaterias[MAX_MATERIAS], t_nota arrNotas[MAX_ALUMNOS*MAX_MATERIAS]) {
-    int codigo_sel;
-    printf("Ingrese el codigo de la materia: ");
-    scanf("%d", &codigo_sel);
-
-    for(int i = 0; i < MAX_MATERIAS; i++) {
-        if(arrMaterias[i].codigo == codigo_sel) {
-            printf("La materia seleccionada es %s, de codigo %d\n", arrMaterias[i].nombre, arrMaterias[i].codigo);
-            printf("Los alumnos que tienen esta materia son:\n");
-            for(int u = 0; u < MAX_ALUMNOS; u++) {
-                for(int x = 0; x < MAX_MATERIAS; x++) {
-                    if(arrAlumnos[u].materias[x] == arrMaterias[i].codigo) {
-                        printf("%s - ", arrAlumnos[u].nombre);
-                        for(int o = 0; o < MAX_ALUMNOS * MAX_MATERIAS; o++) {
-                            if(arrNotas[o].legajo_alumno == arrAlumnos[u].legajo && arrNotas[o].cod_materia == arrAlumnos[u].materias[x]) {
-                                printf("Nota: %d\n", arrNotas[o].nota);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        i--;
     }
 }
 
 int main() {
-    // ingresoAlumnos(num_mat);
-    // ingresoMaterias();
-
-    t_alumno arrAlumnos[MAX_ALUMNOS];
-    cargarAlumnos(arrAlumnos);
-    t_materia arrMaterias[MAX_MATERIAS];
-    cargarMaterias(arrMaterias);
-    printf("\n");
-    // ingresoNotas(arrAlumnos, arrMaterias);
-    t_nota arrNotas[MAX_ALUMNOS*MAX_MATERIAS];
-    cargarNotas(arrNotas);
-    printf("\n");
-    // notasAlumno(arrAlumnos, arrMaterias, arrNotas);
-    notasMaterias(arrAlumnos, arrMaterias, arrNotas);
+    unsigned char c = 'a';
+    code(c);
 
     return 0;
 }
+
+// ############################# EJ 09 #######################################################################################
+
+// int main() {
+//     unsigned char c = 'a';
+
+
+//     return 0;
+// }
