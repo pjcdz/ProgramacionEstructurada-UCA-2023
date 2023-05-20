@@ -235,39 +235,39 @@
 
 // ############################# EJ 06 #######################################################################################
 
-#include <stdio.h>
-#include <stdlib.h>
+// #include <stdio.h>
+// #include <stdlib.h>
 
-typedef struct {
-    int n, o , p;
-    char p1[26], p2[50];
-    double a, b, c;
-} t_varios;
+// typedef struct {
+//     int n, o , p;
+//     char p1[26], p2[50];
+//     double a, b, c;
+// } t_varios;
 
-void imprimir(t_varios *var) {
-    printf("var: %d %d %d %s %s %.2f %.2f %.2f\n", var->n, var->o, var->p, var->p1, var->p2, var->a, var->b, var->c);
-}
+// void imprimir(t_varios *var) {
+//     printf("var: %d %d %d %s %s %.2f %.2f %.2f\n", var->n, var->o, var->p, var->p1, var->p2, var->a, var->b, var->c);
+// }
 
-void intercambiar(t_varios *var1, t_varios *var2) {
-    t_varios temp = *var1;
-    *var1 = *var2;
-    *var2 = temp;
-}
+// void intercambiar(t_varios *var1, t_varios *var2) {
+//     t_varios temp = *var1;
+//     *var1 = *var2;
+//     *var2 = temp;
+// }
 
-int main() {
-    t_varios var1 = {1, 2, 3, "Hola", "Mundo", 1.23, 4.56, 7.89};
-    t_varios var2 = {4, 5, 6, "Adios", "Bing", 9.87, 6.54, 3.21};
+// int main() {
+//     t_varios var1 = {1, 2, 3, "Hola", "Mundo", 1.23, 4.56, 7.89};
+//     t_varios var2 = {4, 5, 6, "Adios", "Bing", 9.87, 6.54, 3.21};
 
-    imprimir(&var1);
-    imprimir(&var2);
+//     imprimir(&var1);
+//     imprimir(&var2);
 
-    intercambiar(&var1, &var2);
+//     intercambiar(&var1, &var2);
 
-    printf("------------------------------------\n");
+//     printf("------------------------------------\n");
 
-    imprimir(&var1);
-    imprimir(&var2);
-}
+//     imprimir(&var1);
+//     imprimir(&var2);
+// }
 
 // ############################# EJ 07 #######################################################################################
 
