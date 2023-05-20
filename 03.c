@@ -3,14 +3,16 @@
 // #include <stdio.h>
 // #include <stdlib.h>
 
-// void intercambio(int* a, int* b) {
-//     a = 10;
-//     b = 20;
+// void intercambio(int *a, int *b) {
+//     int temp = *a;
+//     *a = 10;
+//     *b = 20;
 // }
 
 // int main() {
 //     int a = 1;
 //     int b = 2;
+//     printf("%d, %d\n", a, b);
 //     intercambio(&a,&b);
 //     printf("%d, %d", a, b);
 
@@ -36,6 +38,42 @@
 //     dameMem2(&txt,10);
 //     strcpy(txt,"hola");
 //     printf("%s\n",txt);
+//     return 0;
+// }
+
+// ############################# EJ 02 #######################################################################################
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// int* nMem(int *arrI, int num) {
+//     return &arrI[num];
+// }
+
+// int main() {
+//     int arrI[10] = {0,1,2,3,4};
+
+//     printf("%p\n", nMem(arrI, 1));
+//     printf("%p\n", arrI+1);
+
+//     return 0;
+// }
+
+// ############################# EJ 03 #######################################################################################
+
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// int* nMem(int *arrI, int num) {
+//     return &arrI[num];
+// }
+
+// int main() {
+//     int arrI[10] = {0,1,2,3,4};
+
+//     printf("%p\n", nMem(arrI, 1));
+//     printf("%p\n", arrI+1);
+
 //     return 0;
 // }
 
@@ -81,30 +119,71 @@
 
 // ############################# EJ EJEMPLO #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// struct s_punto {
+//     int x, y;
+//     char* nom;
+// };
+
+// typedef struct s_punto t_punto;
+
+// int main() {
+//     t_punto* arrP = NULL;
+//     arrP = malloc(sizeof(struct s_punto));
+//     (*(arrP+0)).x = 10;
+//     (*(arrP+0)).y = 20;
+//     (*(arrP+0)).nom = malloc(sizeof(char)*10);
+//     strcpy((*(arrP+0)).nom, "juancito");
+//     printf("%d, %d, %s\n", (*(arrP+0)).x, (*(arrP+0)).y, (*(arrP+0)).nom);
+//     printf("%s\n", (*(arrP+0)).nom);
+//     printf("%s\n", (arrP+0)->nom);
+//     printf("%c\n", (arrP+0)->nom[0]);
+
+//     return 0;
+// }
+
+
+// ########## A ############
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-struct s_punto {
-    int x, y;
-    char* nom;
+struct s_nodo {
+    int val;
+    struct s_nodo* sig;
 };
 
-typedef struct s_punto t_punto;
+typedef struct s_nodo* t_nodo;
 
-int main() {
-    t_punto* arrP = NULL;
-    arrP = malloc(sizeof(struct s_punto));
-    (*(arrP+0)).x = 10;
-    (*(arrP+0)).y = 20;
-    (*(arrP+0)).nom = malloc(sizeof(char)*10);
-    strcpy((*(arrP+0)).nom, "juancito");
-    printf("%d, %d, %s\n", (*(arrP+0)).x, (*(arrP+0)).y, (*(arrP+0)).nom);
-    printf("%s\n", (*(arrP+0)).nom);
-    printf("%s\n", (arrP+0)->nom);
-    printf("%c\n", (arrP+0)->nom[0]);
-
-    return 0;
+void append(t_nodo* nodo,int val){// agregar a lo ultimo
+    if (*nodo == NULL){
+        // crear el nodo
+        *nodo =  malloc(sizeof(struct s_nodo));
+        (*nodo)->val=val;           // cargar el contenido
+        (*nodo)->sig=NULL;          //colocar null al puntero
+    }    
+    else{
+        append( &((*nodo)->sig), val);
+    }
+        
 }
 
+void imprimirListaR(t_nodo ls){
+    // Imprimir Recursivo
+    if(ls!=NULL){
+        printf("\n valor=%4d, dirNodo:<%p>, dirSig:<%p>",(ls)->val,ls,ls->sig);
+        imprimirListaR(ls->sig);
+    }
+}
 
+int main() {
+    t_nodo ls = NULL;
+    append(&ls, 10);
+    append(&ls, 20);
+    append(&ls, 30);
+    imprimirListaR(ls);
+    return 0;
+}
