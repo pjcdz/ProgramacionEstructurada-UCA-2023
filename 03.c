@@ -309,6 +309,81 @@
 //     return 0;
 // }
 
+// ############################# EJ 08 #######################################################################################
+
+#include <stdio.h>
+#include <stdlib.h>
+
+char* cargarStrDin1() {
+    char c;
+    int i = 0;
+    char* txt = NULL;
+    txt = (char*) malloc(sizeof(char));
+
+    if (txt!=NULL) {
+        while( ((c=getchar())!='\n') && txt != NULL ) {
+            txt[i] = c;
+            i++;
+            txt = (char*) realloc(txt, (i+1)*sizeof(char));
+        } txt[i] = '\0';
+    }
+
+    return txt;
+}
+
+void cargarStrDin2 (char** pTxt) {
+    char c;
+    int i = 0;
+    *pTxt = (char*) malloc(sizeof(char));
+    // (*pTxt)[i] = 'a';
+    // (*pTxt)[i+1] = '\0';
+    if (*pTxt != NULL) {
+        while ( ( (c=getchar())!='\n' ) && *pTxt!=NULL ) {
+            (*pTxt)[i] = c;
+            i++;
+            *pTxt = (char*) realloc (*pTxt, (i+1)*sizeof(char));
+        } (*pTxt)[i] = '\0';
+    }
+}
+
+void escribirArch(char * nomArch, char * txt) {
+    FILE* arch;
+    arch = fopen(nomArch, "w");
+
+    if (arch == NULL) {
+        printf("Error al abrir el archivo");
+    }
+
+    fprintf(arch, "%s\n", txt);
+    fclose(arch);
+}
+
+void imprimirArch(char * nomArch) {
+    FILE* arch;
+    arch = fopen(nomArch, "r");
+
+    if (arch == NULL) {
+        printf("Error al abrir el archivo");
+    }
+
+    char c;
+    while((c = fgetc(arch)) != EOF) {
+        printf("%c", c);
+    }
+
+    fclose(arch);
+}
+
+int main() {
+    char* str = NULL;
+    // str = cargarStrDin1();
+    cargarStrDin2(&str);
+    escribirArch("03-08-frase.txt", str);
+    imprimirArch("03-08-frase.txt");
+    // printf("%s\n", str);
+    free(str);
+}
+
 // ############################# EJ EJEMPLO #######################################################################################
 
 // #include <stdio.h>
