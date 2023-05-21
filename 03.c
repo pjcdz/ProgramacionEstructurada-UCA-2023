@@ -311,77 +311,153 @@
 
 // ############################# EJ 08 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// char* cargarStrDin1() {
+//     char c;
+//     int i = 0;
+//     char* txt = NULL;
+//     txt = (char*) malloc(sizeof(char));
+
+//     if (txt!=NULL) {
+//         while( ((c=getchar())!='\n') && txt != NULL ) {
+//             txt[i] = c;
+//             i++;
+//             txt = (char*) realloc(txt, (i+1)*sizeof(char));
+//         } txt[i] = '\0';
+//     }
+
+//     return txt;
+// }
+
+// void cargarStrDin2 (char** pTxt) {
+//     char c;
+//     int i = 0;
+//     *pTxt = (char*) malloc(sizeof(char));
+//     // (*pTxt)[i] = 'a';
+//     // (*pTxt)[i+1] = '\0';
+//     if (*pTxt != NULL) {
+//         while ( ( (c=getchar())!='\n' ) && *pTxt!=NULL ) {
+//             (*pTxt)[i] = c;
+//             i++;
+//             *pTxt = (char*) realloc (*pTxt, (i+1)*sizeof(char));
+//         } (*pTxt)[i] = '\0';
+//     }
+// }
+
+// void escribirArch(char * nomArch, char * txt) {
+//     FILE* arch;
+//     arch = fopen(nomArch, "w");
+
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//     }
+
+//     fprintf(arch, "%s\n", txt);
+//     fclose(arch);
+// }
+
+// void imprimirArch(char * nomArch) {
+//     FILE* arch;
+//     arch = fopen(nomArch, "r");
+
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//     }
+
+//     char c;
+//     while((c = fgetc(arch)) != EOF) {
+//         printf("%c", c);
+//     }
+
+//     fclose(arch);
+// }
+
+// int main() {
+//     char* str = NULL;
+//     // str = cargarStrDin1();
+//     cargarStrDin2(&str);
+//     escribirArch("03-08-frase.txt", str);
+//     imprimirArch("03-08-frase.txt");
+//     // printf("%s\n", str);
+//     free(str);
+// }
+
+// ############################# EJ 09 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-char* cargarStrDin1() {
-    char c;
-    int i = 0;
-    char* txt = NULL;
-    txt = (char*) malloc(sizeof(char));
-
-    if (txt!=NULL) {
-        while( ((c=getchar())!='\n') && txt != NULL ) {
-            txt[i] = c;
-            i++;
-            txt = (char*) realloc(txt, (i+1)*sizeof(char));
-        } txt[i] = '\0';
-    }
-
-    return txt;
-}
-
-void cargarStrDin2 (char** pTxt) {
-    char c;
-    int i = 0;
-    *pTxt = (char*) malloc(sizeof(char));
-    // (*pTxt)[i] = 'a';
-    // (*pTxt)[i+1] = '\0';
-    if (*pTxt != NULL) {
-        while ( ( (c=getchar())!='\n' ) && *pTxt!=NULL ) {
-            (*pTxt)[i] = c;
-            i++;
-            *pTxt = (char*) realloc (*pTxt, (i+1)*sizeof(char));
-        } (*pTxt)[i] = '\0';
-    }
-}
-
-void escribirArch(char * nomArch, char * txt) {
-    FILE* arch;
-    arch = fopen(nomArch, "w");
-
-    if (arch == NULL) {
-        printf("Error al abrir el archivo");
-    }
-
-    fprintf(arch, "%s\n", txt);
-    fclose(arch);
-}
-
-void imprimirArch(char * nomArch) {
+char* leerArch(char * nomArch) {
     FILE* arch;
     arch = fopen(nomArch, "r");
 
-    if (arch == NULL) {
+    if (arch == NULL){
         printf("Error al abrir el archivo");
     }
 
+    char* str = NULL;
+    str = (char*) malloc(sizeof(char));
+
     char c;
-    while((c = fgetc(arch)) != EOF) {
-        printf("%c", c);
+    int i = 0;
+    while ( (c=fgetc(arch)) != EOF ) {
+        str[i] = c;
+        i++;
+        str = (char*) realloc(str, (i+1)*sizeof(char));
     }
 
-    fclose(arch);
+    return str;
+}
+
+char* subcadena (char* str, int i, int n) {
+    // printf("%s", *str);
+    char* subStr = NULL;
+    subStr = malloc(sizeof(char));
+
+    int x = 0;
+    int count = 0;
+    int countrev = -n;
+    int rev = 0;
+    
+    if (n<0) {
+        subStr = realloc(subStr, (countrev+1)*sizeof(char));
+    } else if (n==0) {
+        subStr[0] = '\0';
+    }
+
+    while (x<strlen(str)) {
+        // printf("%c", str[x]);
+        if (n<0) {
+            if ( x >= (i-countrev) && countrev > 0) {
+                // printf("%c", str[x]);
+                subStr[rev] = str[x];
+                rev++;
+                countrev--;    
+            } subStr[rev] = '\0';  
+        } else if (n>0) {
+            if (x >= i && count < n) {
+            subStr = realloc(subStr, (count+1)*sizeof(char));
+            // printf("%c", str[x]);
+            subStr[count] = str[x];
+            count++;
+            } subStr[count] = '\0';    
+        }
+        x++;
+    }
+
+    return subStr;
 }
 
 int main() {
     char* str = NULL;
-    // str = cargarStrDin1();
-    cargarStrDin2(&str);
-    escribirArch("03-08-frase.txt", str);
-    imprimirArch("03-08-frase.txt");
-    // printf("%s\n", str);
-    free(str);
+    char* subStr = NULL;
+    int i = 8, n = 5;
+    str = leerArch("03-08-frase.txt");
+    subStr = subcadena (str, 8, 5);
+    printf("%s", subStr);
 }
 
 // ############################# EJ EJEMPLO #######################################################################################
