@@ -457,6 +457,7 @@ int main() {
     int i = 8, n = 5;
     str = leerArch("03-08-frase.txt");
     subStr = subcadena (str, 8, 5);
+    // SI COLOCAS UN NUMERO MENOR A i SE ROMPE
     printf("%s", subStr);
 }
 
