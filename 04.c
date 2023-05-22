@@ -129,38 +129,90 @@
 
 // ############################# EJ 05 #######################################################################################
 
+// void imprimir (int* arr) {
+//     for (int x = 0; arr[x] != 0; x++) {
+//         printf("%d ", arr[x]);
+//     }
+// }
+
+// int max (int* arr, int currentMax) {
+//     // Condición de parada: si el puntero es nulo o apunta a un cero, retornar el máximo actual
+//     if (arr == NULL || *arr == 0) {
+//         return currentMax;
+//     }
+//     // Caso recursivo: comparar el valor apuntado por arr con el máximo actual y actualizarlo si es necesario
+//     if (*arr > currentMax) {
+//         currentMax = *arr;
+//     }
+//     // Llamar a la función max con el siguiente elemento del arreglo y el máximo actual
+//     return max(arr + 1, currentMax);
+// }
+
+// int direccionMax(int* arr, int* currentMax) {
+//     // Condición de parada: si el puntero es nulo o apunta a un cero, retornar el máximo actual
+//     if (arr == NULL || *arr == 0) {
+//         return *currentMax;
+//     }
+//     // Caso recursivo: comparar el valor apuntado por arr con el máximo actual y actualizarlo si es necesario
+//     if (*arr > *currentMax) {
+//         *currentMax = *arr;
+//     }
+//     // Llamar a la función direccionMax con el siguiente elemento del arreglo y el máximo actual
+//     return direccionMax(arr + 1, currentMax);
+// }
+
+
+// int main() {
+//     int* arr = NULL;
+//     arr = malloc(6 * sizeof(int));
+//     arr[0] = 6;
+//     arr[1] = 2;
+//     arr[2] = 7;
+//     arr[3] = 1;
+//     arr[4] = 8;
+//     arr[5] = 0;
+
+//     imprimir(arr);
+//     int maximo = max(arr, 0);
+//     printf("\n%d", maximo);
+
+//     int direccionMaximo = direccionMax(arr, &arr[0]);
+//     printf("\n%p", &direccionMaximo);
+
+//     free(arr);
+
+//     return 0;
+// }
+
+// ############################# EJ 06 #######################################################################################
+
 void imprimir (int* arr) {
     for (int x = 0; arr[x] != 0; x++) {
         printf("%d ", arr[x]);
-    }
+    } printf("\n");
 }
 
-int max (int* arr, int currentMax) {
-    // Condición de parada: si el puntero es nulo o apunta a un cero, retornar el máximo actual
-    if (arr == NULL || *arr == 0) {
-        return currentMax;
-    }
-    // Caso recursivo: comparar el valor apuntado por arr con el máximo actual y actualizarlo si es necesario
-    if (*arr > currentMax) {
-        currentMax = *arr;
-    }
-    // Llamar a la función max con el siguiente elemento del arreglo y el máximo actual
-    return max(arr + 1, currentMax);
-}
+int ordenarRecursivo(int* arr, int n, int currentMin) {
+    if (n > 1) {
+        if (arr[n - 1] < currentMin) {
+            currentMin = arr[n - 1];
+        }
 
-int direccionMax(int* arr, int* currentMax) {
-    // Condición de parada: si el puntero es nulo o apunta a un cero, retornar el máximo actual
-    if (arr == NULL || *arr == 0) {
-        return *currentMax;
+        currentMin = ordenarRecursivo(arr, n - 1, currentMin);
     }
-    // Caso recursivo: comparar el valor apuntado por arr con el máximo actual y actualizarlo si es necesario
-    if (*arr > *currentMax) {
-        *currentMax = *arr;
-    }
-    // Llamar a la función direccionMax con el siguiente elemento del arreglo y el máximo actual
-    return direccionMax(arr + 1, currentMax);
-}
 
+    int last = arr[n - 1];
+    int j = n - 2;
+
+    while (j >= 0 && arr[j] > last) {
+        arr[j + 1] = arr[j];
+        j--;
+    }
+
+    arr[j + 1] = last;
+
+    return currentMin;
+}
 
 int main() {
     int* arr = NULL;
@@ -173,13 +225,9 @@ int main() {
     arr[5] = 0;
 
     imprimir(arr);
-    int maximo = max(arr, 0);
-    printf("\n%d", maximo);
-
-    int direccionMaximo = direccionMax(arr, &arr[0]);
-    printf("\n%p", &direccionMaximo);
+    int min = ordenarRecursivo(arr, 5, 999);
+    printf("Min: %d\n", min);
+    imprimir(arr);
 
     free(arr);
-
-    return 0;
 }
