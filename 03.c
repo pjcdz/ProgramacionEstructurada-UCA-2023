@@ -516,36 +516,136 @@
 
 // ############################# EJ 11 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// typedef struct {
+//     int a, b;
+// } t_dosint;
+
+// void swap(int *a, int *b) {
+//     int temp = *a;
+//     *a = *b;
+//     *b = temp;
+// }
+
+// int main() {
+//     t_dosint* arr = NULL;
+//     arr = malloc(sizeof(t_dosint));
+
+//     if (arr != NULL) {
+//         arr->a = 10;
+//         arr->b = 20;
+//         printf("%d, %d\n", arr->a, arr->b);
+//         swap(&arr->a, &arr->b);
+//         printf("%d, %d\n", arr->a, arr->b);
+//     }
+
+//     free(arr);
+
+//     return 0;
+// }
+
+// ############################# EJ 12 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-typedef struct {
-    int a, b;
-} t_dosint;
+struct s_texto {
+    char * txt;
+    int longitud;
+}; typedef struct s_texto t_texto;
 
-void swap(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
+// a)
 
-int main() {
-    t_dosint* arr = NULL;
-    arr = malloc(sizeof(t_dosint));
+t_texto* cargarTexto() {
+    t_texto* texto = malloc(sizeof(t_texto));
 
-    if (arr != NULL) {
-        arr->a = 10;
-        arr->b = 20;
-        printf("%d, %d\n", arr->a, arr->b);
-        swap(&arr->a, &arr->b);
-        printf("%d, %d\n", arr->a, arr->b);
+    if (texto != NULL) {
+        texto->txt = malloc(sizeof(char));
+        int i = 0;
+        char c;
+        
+        printf("Ingresa frase: ");
+
+        if (texto->txt != NULL) {
+            while( (c=getchar())!='\n' && texto->txt != NULL) {
+                (texto->txt)[i] = c;
+                i++;
+                texto->txt = realloc(texto->txt, (i+1)*sizeof(char));
+            } (texto->txt)[i] = '\0';
+            texto->longitud = i;
+        }
     }
     
-    free(arr);
+    printf("%d, %s\n", texto->longitud, texto->txt);
 
-    return 0;
+    return texto;
 }
 
+t_texto** cargarFrases() {
+    t_texto** frases = NULL;
+    frases = malloc(sizeof(t_texto*));
+    int i = 0;
+    t_texto* fraseTemp = NULL;
+    if (frases != NULL) {
+        while ( ( (fraseTemp = cargarTexto())->longitud ) != 0 ) {
+            frases[i] = fraseTemp;
+            i++;
+        } frases[i] = NULL;
+    }
+    return frases;
+}
+
+// b)
+
+void ordenarFrases(t_texto*** frases) {
+    for (int x = 0; (*frases)[x] != NULL ; x++) {
+        for (int u = x + 1; (*frases)[u] != NULL ; u++) {
+            if ( strcmp( (*frases)[u]->txt , (*frases)[x]->txt ) < 0 ) {
+                t_texto* temp = (*frases)[u];
+                (*frases)[u] = (*frases)[x];
+                (*frases)[x] = temp;
+            }
+        }
+    }
+}
+
+// c)
+
+void imprimirFrases(t_texto*** frases) {
+    for (int x = 0; (*frases)[x] != NULL; x++) {
+        printf("%s\n", (*frases)[x]->txt);
+    }
+}
+
+// d)
+
+void escribirArchTex(const char * nomArch, t_texto*** frases) {
+    FILE* arch;
+    arch = fopen(nomArch, "w");
+
+    if (arch == NULL) {
+        printf("Error al abrir el archivo");
+    }
+
+    for (int x = 0; (*frases)[x] != NULL; x++) {
+        fprintf(arch, "%d, %s\n", (*frases)[x]->longitud, (*frases)[x]->txt);
+    }
+    fclose(arch);
+}
+
+
+int main() {
+    t_texto** frases = cargarFrases();
+    imprimirFrases(&frases);
+    ordenarFrases(&frases);
+    printf("--------------------\n");
+    imprimirFrases(&frases);
+    escribirArchTex("03-12-frases_con_longitud.csv", &frases);
+    return 0;
+}
 
 // ############################# EJ EJEMPLO #######################################################################################
 
