@@ -91,38 +91,95 @@
 
 // ############################# EJ 04 #######################################################################################
 
-void imprimirArr(int* arr, int cant) {
-    for (int x = 0; x < cant; x++) {
-        printf("%d, ", arr[x]);
-    } printf("\n");
-}
+// void imprimirArr(int* arr, int cant) {
+//     for (int x = 0; x < cant; x++) {
+//         printf("%d, ", arr[x]);
+//     } printf("\n");
+// }
 
-void invertir(int* arr, int num) {
-    // printf("%d\n", *(arr));
-    if (num > 0) {
-        // printf("%d\n", *(arr+(num-1)));
-        // printf("%d\n", *(arr+1));
-        // printf("%d\n", *(arr+1+(num-2-1)));
-        int temp = *(arr+(num-1));
-        *(arr+(num-1)) = *(arr);
-        *(arr) = temp;
-        invertir(arr+1, num-2);
+// void invertir(int* arr, int num) {
+//     // printf("%d\n", *(arr));
+//     if (num > 0) {
+//         // printf("%d\n", *(arr+(num-1)));
+//         // printf("%d\n", *(arr+1));
+//         // printf("%d\n", *(arr+1+(num-2-1)));
+//         int temp = *(arr+(num-1));
+//         *(arr+(num-1)) = *(arr);
+//         *(arr) = temp;
+//         invertir(arr+1, num-2);
+//     }
+// }
+
+// int main() {
+//     int* arr = NULL;
+//     arr = malloc(5 * sizeof(int));
+//     arr[0] = 6;
+//     arr[1] = 2;
+//     arr[2] = 7;
+//     arr[3] = 1;
+//     arr[4] = 8;
+
+//     // printf("%d, ", *(arr+0));
+//     imprimirArr(arr, 5);
+//     invertir(arr, 5);
+//     imprimirArr(arr, 5);
+
+//     return 0;
+// }
+
+// ############################# EJ 05 #######################################################################################
+
+void imprimir (int* arr) {
+    for (int x = 0; arr[x] != 0; x++) {
+        printf("%d ", arr[x]);
     }
 }
 
+int max (int* arr, int currentMax) {
+    // Condición de parada: si el puntero es nulo o apunta a un cero, retornar el máximo actual
+    if (arr == NULL || *arr == 0) {
+        return currentMax;
+    }
+    // Caso recursivo: comparar el valor apuntado por arr con el máximo actual y actualizarlo si es necesario
+    if (*arr > currentMax) {
+        currentMax = *arr;
+    }
+    // Llamar a la función max con el siguiente elemento del arreglo y el máximo actual
+    return max(arr + 1, currentMax);
+}
+
+int direccionMax(int* arr, int* currentMax) {
+    // Condición de parada: si el puntero es nulo o apunta a un cero, retornar el máximo actual
+    if (arr == NULL || *arr == 0) {
+        return *currentMax;
+    }
+    // Caso recursivo: comparar el valor apuntado por arr con el máximo actual y actualizarlo si es necesario
+    if (*arr > *currentMax) {
+        *currentMax = *arr;
+    }
+    // Llamar a la función direccionMax con el siguiente elemento del arreglo y el máximo actual
+    return direccionMax(arr + 1, currentMax);
+}
+
+
 int main() {
     int* arr = NULL;
-    arr = malloc(5 * sizeof(int));
+    arr = malloc(6 * sizeof(int));
     arr[0] = 6;
     arr[1] = 2;
     arr[2] = 7;
     arr[3] = 1;
     arr[4] = 8;
+    arr[5] = 0;
 
-    // printf("%d, ", *(arr+0));
-    imprimirArr(arr, 5);
-    invertir(arr, 5);
-    imprimirArr(arr, 5);
+    imprimir(arr);
+    int maximo = max(arr, 0);
+    printf("\n%d", maximo);
+
+    int direccionMaximo = direccionMax(arr, &arr[0]);
+    printf("\n%p", &direccionMaximo);
+
+    free(arr);
 
     return 0;
 }
