@@ -465,51 +465,83 @@
 
 // ############################# EJ 10 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// struct s_texto {
+//     char * txt;
+//     int longitud;
+// }; typedef struct s_texto t_texto;
+
+// t_texto* cargarTexto() {
+//     t_texto* texto = malloc(sizeof(t_texto));
+
+//     if (texto != NULL) {
+//         texto->txt = malloc(sizeof(char));
+//         int i = 0;
+//         char c;
+        
+//         if (texto->txt != NULL) {
+//             while( (c=getchar())!='\n' && texto->txt != NULL) {
+//                 (texto->txt)[i] = c;
+//                 i++;
+//                 texto->txt = realloc(texto->txt, (i+1)*sizeof(char));
+//             } (texto->txt)[i] = '\0';
+//             texto->longitud = i;
+//         }
+//     }
+    
+//     printf("%d, %s", texto->longitud, texto->txt);
+
+//     return texto;
+// }
+
+// void escribirArchTex(const char * nomArch, t_texto * texto) {
+//     FILE* arch;
+//     arch = fopen(nomArch, "w");
+
+//     if (arch == NULL) {
+//         printf("Error al abrir el archivo");
+//     }
+
+//     fprintf(arch, "%d, %s", texto->longitud, texto->txt);
+//     fclose(arch);
+// }
+
+// int main() {
+//     escribirArchTex("03-08-frases_con_longitud.csv", cargarTexto());
+
+//     return 0;
+// }
+
+// ############################# EJ 11 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
 
-struct s_texto {
-    char * txt;
-    int longitud;
-}; typedef struct s_texto t_texto;
+typedef struct {
+    int a, b;
+} t_dosint;
 
-t_texto* cargarTexto() {
-    t_texto* texto = malloc(sizeof(t_texto));
-
-    if (texto != NULL) {
-        texto->txt = malloc(sizeof(char));
-        int i = 0;
-        char c;
-        
-        if (texto->txt != NULL) {
-            while( (c=getchar())!='\n' && texto->txt != NULL) {
-                (texto->txt)[i] = c;
-                i++;
-                texto->txt = realloc(texto->txt, (i+1)*sizeof(char));
-            } (texto->txt)[i] = '\0';
-            texto->longitud = i;
-        }
-    }
-    
-    printf("%d, %s", texto->longitud, texto->txt);
-
-    return texto;
-}
-
-void escribirArchTex(const char * nomArch, t_texto * texto) {
-    FILE* arch;
-    arch = fopen(nomArch, "w");
-
-    if (arch == NULL) {
-        printf("Error al abrir el archivo");
-    }
-
-    fprintf(arch, "%d, %s", texto->longitud, texto->txt);
-    fclose(arch);
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 int main() {
-    escribirArchTex("03-08-frases_con_longitud.csv", cargarTexto());
+    t_dosint* arr = NULL;
+    arr = malloc(sizeof(t_dosint));
+
+    if (arr != NULL) {
+        arr->a = 10;
+        arr->b = 20;
+        printf("%d, %d\n", arr->a, arr->b);
+        swap(&arr->a, &arr->b);
+        printf("%d, %d\n", arr->a, arr->b);
+    }
+    
+    free(arr);
 
     return 0;
 }
