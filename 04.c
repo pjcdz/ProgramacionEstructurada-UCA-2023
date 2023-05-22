@@ -186,48 +186,69 @@
 
 // ############################# EJ 06 #######################################################################################
 
-void imprimir (int* arr) {
-    for (int x = 0; arr[x] != 0; x++) {
-        printf("%d ", arr[x]);
-    } printf("\n");
-}
+// void imprimir (int* arr) {
+//     for (int x = 0; arr[x] != 0; x++) {
+//         printf("%d ", arr[x]);
+//     } printf("\n");
+// }
 
-int ordenarRecursivo(int* arr, int n, int currentMin) {
-    if (n > 1) {
-        if (arr[n - 1] < currentMin) {
-            currentMin = arr[n - 1];
-        }
+// int ordenarRecursivo(int* arr, int n, int currentMin) {
+//     if (n > 1) {
+//         if (arr[n - 1] < currentMin) {
+//             currentMin = arr[n - 1];
+//         }
 
-        currentMin = ordenarRecursivo(arr, n - 1, currentMin);
+//         currentMin = ordenarRecursivo(arr, n - 1, currentMin);
+//     }
+
+//     int last = arr[n - 1];
+//     int j = n - 2;
+
+//     while (j >= 0 && arr[j] > last) {
+//         arr[j + 1] = arr[j];
+//         j--;
+//     }
+
+//     arr[j + 1] = last;
+
+//     return currentMin;
+// }
+
+// int main() {
+//     int* arr = NULL;
+//     arr = malloc(6 * sizeof(int));
+//     arr[0] = 6;
+//     arr[1] = 2;
+//     arr[2] = 7;
+//     arr[3] = 1;
+//     arr[4] = 8;
+//     arr[5] = 0;
+
+//     imprimir(arr);
+//     int min = ordenarRecursivo(arr, 5, 999);
+//     printf("Min: %d\n", min);
+//     imprimir(arr);
+
+//     free(arr);
+// }
+
+// ############################# EJ 07 #######################################################################################
+
+unsigned int contar_vocales(char* str) {
+    if ( *str != '\0') {
+        int esVocal =  (*str == 'a' || *str == 'e' || *str == 'i' || 
+                        *str == 'o' || *str == 'u' || *str == 'A' || 
+                        *str == 'E' || *str == 'I' || *str == 'O' || 
+                        *str == 'U');
+        
+        return esVocal + contar_vocales( str+1 );
     }
-
-    int last = arr[n - 1];
-    int j = n - 2;
-
-    while (j >= 0 && arr[j] > last) {
-        arr[j + 1] = arr[j];
-        j--;
-    }
-
-    arr[j + 1] = last;
-
-    return currentMin;
 }
 
 int main() {
-    int* arr = NULL;
-    arr = malloc(6 * sizeof(int));
-    arr[0] = 6;
-    arr[1] = 2;
-    arr[2] = 7;
-    arr[3] = 1;
-    arr[4] = 8;
-    arr[5] = 0;
+    char texto[] = "Hola, este es un ejemplo de texto";
+    int cantidadVocales = contar_vocales(texto);
+    printf("Cantidad de vocales: %u\n", cantidadVocales);
 
-    imprimir(arr);
-    int min = ordenarRecursivo(arr, 5, 999);
-    printf("Min: %d\n", min);
-    imprimir(arr);
-
-    free(arr);
+    return 0;
 }
