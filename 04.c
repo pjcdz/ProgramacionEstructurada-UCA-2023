@@ -26,18 +26,64 @@
 
 // ############################# EJ 02 #######################################################################################
 
-int cociente(int a, int b) {
+// int cociente(int a, int b) {
+//     int num = 0;
+//     if (a >= b) {
+//         num = 1 + cociente(a-b, b);
+//     } else {
+//         num = 0;
+//     }
+//     return num;
+// }
+
+// int main() {
+//     int num = cociente(9, 3);
+//     printf("%d", num);
+
+//     return 0;
+// }
+
+// ############################# EJ 03 #######################################################################################
+
+int resto(int a, int b) {
     int num = 0;
-    if (a >= b) {
-        num = 1 + cociente(a-b, b);
+    if ( a>=b ) {
+        num = resto(a-b, b);
     } else {
-        num = 0;
-    }
-    return num;
+        num = a;
+    } return num;
 }
 
+// int resto(10, 3) {
+//     if (10>3) {
+//         return 1 + resto(7, 3);
+//     }
+// }
+
+// int resto(7, 3) {
+//     if (7>3) {
+//         return 1 + resto(4, 3);
+//     }
+// }
+
+// int resto(4, 3) {
+//     if (4>3) {
+//         return 1 + resto(1, 3);
+//     }
+// }
+
+// num = 3
+
+// int resto(1, 3) {
+//     if (1>3) {
+//         no
+//     } else {
+//         num = 1
+//     }
+// }
+
 int main() {
-    int num = cociente(9, 3);
+    int num = resto(10, 3);
     printf("%d", num);
 
     return 0;
