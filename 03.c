@@ -386,80 +386,134 @@
 
 // ############################# EJ 09 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// char* leerArch(char * nomArch) {
+//     FILE* arch;
+//     arch = fopen(nomArch, "r");
+
+//     if (arch == NULL){
+//         printf("Error al abrir el archivo");
+//     }
+
+//     char* str = NULL;
+//     str = (char*) malloc(sizeof(char));
+
+//     char c;
+//     int i = 0;
+//     while ( (c=fgetc(arch)) != EOF ) {
+//         str[i] = c;
+//         i++;
+//         str = (char*) realloc(str, (i+1)*sizeof(char));
+//     }
+
+//     return str;
+// }
+
+// char* subcadena (char* str, int i, int n) {
+//     // printf("%s", *str);
+//     char* subStr = NULL;
+//     subStr = malloc(sizeof(char));
+
+//     int x = 0;
+//     int count = 0;
+//     int countrev = -n;
+//     int rev = 0;
+    
+//     if (n<0) {
+//         subStr = realloc(subStr, (countrev+1)*sizeof(char));
+//     } else if (n==0) {
+//         subStr[0] = '\0';
+//     }
+
+//     while (x<strlen(str)) {
+//         // printf("%c", str[x]);
+//         if (n<0) {
+//             if ( x >= (i-countrev) && countrev > 0) {
+//                 // printf("%c", str[x]);
+//                 subStr[rev] = str[x];
+//                 rev++;
+//                 countrev--;    
+//             } subStr[rev] = '\0';  
+//         } else if (n>0) {
+//             if (x >= i && count < n) {
+//             subStr = realloc(subStr, (count+1)*sizeof(char));
+//             // printf("%c", str[x]);
+//             subStr[count] = str[x];
+//             count++;
+//             } subStr[count] = '\0';    
+//         }
+//         x++;
+//     }
+
+//     return subStr;
+// }
+
+// int main() {
+//     char* str = NULL;
+//     char* subStr = NULL;
+//     int i = 8, n = 5;
+//     str = leerArch("03-08-frase.txt");
+//     subStr = subcadena (str, 8, 5);
+//     // SI COLOCAS UN NUMERO MENOR A i SE ROMPE
+//     printf("%s", subStr);
+//     free(str);
+//     free(subStr);
+// }
+
+// ############################# EJ 10 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-char* leerArch(char * nomArch) {
+struct s_texto {
+    char * txt;
+    int longitud;
+}; typedef struct s_texto t_texto;
+
+t_texto* cargarTexto() {
+    t_texto* texto = malloc(sizeof(t_texto));
+
+    if (texto != NULL) {
+        texto->txt = malloc(sizeof(char));
+        int i = 0;
+        char c;
+        
+        if (texto->txt != NULL) {
+            while( (c=getchar())!='\n' && texto->txt != NULL) {
+                (texto->txt)[i] = c;
+                i++;
+                texto->txt = realloc(texto->txt, (i+1)*sizeof(char));
+            } (texto->txt)[i] = '\0';
+            texto->longitud = i;
+        }
+    }
+    
+    printf("%d, %s", texto->longitud, texto->txt);
+
+    return texto;
+}
+
+void escribirArchTex(const char * nomArch, t_texto * texto) {
     FILE* arch;
-    arch = fopen(nomArch, "r");
+    arch = fopen(nomArch, "w");
 
-    if (arch == NULL){
+    if (arch == NULL) {
         printf("Error al abrir el archivo");
     }
 
-    char* str = NULL;
-    str = (char*) malloc(sizeof(char));
-
-    char c;
-    int i = 0;
-    while ( (c=fgetc(arch)) != EOF ) {
-        str[i] = c;
-        i++;
-        str = (char*) realloc(str, (i+1)*sizeof(char));
-    }
-
-    return str;
-}
-
-char* subcadena (char* str, int i, int n) {
-    // printf("%s", *str);
-    char* subStr = NULL;
-    subStr = malloc(sizeof(char));
-
-    int x = 0;
-    int count = 0;
-    int countrev = -n;
-    int rev = 0;
-    
-    if (n<0) {
-        subStr = realloc(subStr, (countrev+1)*sizeof(char));
-    } else if (n==0) {
-        subStr[0] = '\0';
-    }
-
-    while (x<strlen(str)) {
-        // printf("%c", str[x]);
-        if (n<0) {
-            if ( x >= (i-countrev) && countrev > 0) {
-                // printf("%c", str[x]);
-                subStr[rev] = str[x];
-                rev++;
-                countrev--;    
-            } subStr[rev] = '\0';  
-        } else if (n>0) {
-            if (x >= i && count < n) {
-            subStr = realloc(subStr, (count+1)*sizeof(char));
-            // printf("%c", str[x]);
-            subStr[count] = str[x];
-            count++;
-            } subStr[count] = '\0';    
-        }
-        x++;
-    }
-
-    return subStr;
+    fprintf(arch, "%d, %s", texto->longitud, texto->txt);
+    fclose(arch);
 }
 
 int main() {
-    char* str = NULL;
-    char* subStr = NULL;
-    int i = 8, n = 5;
-    str = leerArch("03-08-frase.txt");
-    subStr = subcadena (str, 8, 5);
-    // SI COLOCAS UN NUMERO MENOR A i SE ROMPE
-    printf("%s", subStr);
+    escribirArchTex("03-08-frases_con_longitud.csv", cargarTexto());
+
+    return 0;
 }
+
 
 // ############################# EJ EJEMPLO #######################################################################################
 
