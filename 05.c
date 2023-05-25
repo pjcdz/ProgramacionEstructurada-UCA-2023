@@ -233,6 +233,68 @@
 
 // ############################# EJ 02.01.01 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// struct s_nodo {
+//     int dni;
+//     char* nombre;
+//     char* apellido;
+//     struct s_nodo* sig;
+// };
+
+// typedef struct s_nodo* t_nodo;
+
+// void appendOrdenadoDni(t_nodo* ls, int dni, char* nombre, char* apellido) {
+//     if ( *ls == NULL ) {
+//         *ls = malloc( sizeof( struct s_nodo ) );
+//         (*ls)->nombre = malloc( strlen(nombre) * sizeof(char) );
+//         (*ls)->apellido = malloc( strlen(nombre) * sizeof(char) );
+//         (*ls)->dni = dni;
+//         strcpy( (*ls)->nombre, nombre );
+//         strcpy( (*ls)->apellido, apellido );
+//         (*ls)->sig = NULL;
+//     } else {
+//         if ( dni < (*ls)->dni ) {
+        //     int tempDni = (*ls)->dni;
+        //     (*ls)->dni = dni;
+        //     char* tempNombre = malloc ( strlen( (*ls)->nombre ) * sizeof(char) );
+        //     char* tempApellido = malloc ( strlen( (*ls)->apellido ) * sizeof(char) );
+        //     strcpy( tempNombre, (*ls)->nombre );
+        //     strcpy( tempApellido, (*ls)->apellido );
+        //     strcpy( (*ls)->nombre, nombre );
+        //     strcpy( (*ls)->apellido, apellido );
+
+        //     appendOrdenadoDni( &((*ls)->sig), tempDni, tempNombre, tempApellido );
+        // } else {
+//             appendOrdenadoDni( &((*ls)->sig), dni, nombre, apellido );
+//         }
+//     }
+// }
+
+// void imprimirLsRecursiva( t_nodo ls ) {
+//     if ( ls != NULL ) {
+//         printf("DNI: %d, Nombre: %s, Apellido: %s\n", ls->dni, ls->nombre, ls->apellido);
+//         printf("dirAct: <%p>, dirSig <%p>\n", ls, ls->sig);
+//         imprimirLsRecursiva( ls->sig );
+//     }
+// }
+
+// int main() {
+//     t_nodo ls = NULL;
+//     appendOrdenadoDni( &ls, 95127, "Joaquin", "Cam");
+//     appendOrdenadoDni( &ls, 45123, "Briana", "White");
+//     appendOrdenadoDni( &ls, 53677, "Pablo", "Dozocar");
+//     appendOrdenadoDni( &ls, 73253, "Manu", "Cayo");
+    
+//     imprimirLsRecursiva(ls);
+
+//     return 0;
+// }
+
+// ############################# EJ 02.01.01 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -246,29 +308,32 @@ struct s_nodo {
 
 typedef struct s_nodo* t_nodo;
 
-void appendOrdenadoDni(t_nodo* ls, int dni, char* nombre, char* apellido) {
-    if ( *ls == NULL ) {
-        *ls = malloc( sizeof( struct s_nodo ) );
-        (*ls)->nombre = malloc( strlen(nombre) * sizeof(char) );
-        (*ls)->apellido = malloc( strlen(nombre) * sizeof(char) );
+void appendOrdenadoApellido ( t_nodo* ls, int dni, char* nombre, char* apellido ) {
+    if (*ls == NULL) {
+        *ls = malloc( sizeof(struct s_nodo) );
+        (*ls)->nombre = malloc ( strlen(nombre) * sizeof(char) );
+        (*ls)->apellido = malloc ( strlen(apellido) * sizeof(char) );
+
         (*ls)->dni = dni;
         strcpy( (*ls)->nombre, nombre );
         strcpy( (*ls)->apellido, apellido );
+
         (*ls)->sig = NULL;
     } else {
-        if ( dni < (*ls)->dni ) {
+        if ( strcmp( (*ls)->apellido, apellido ) > 0 ) {
             int tempDni = (*ls)->dni;
             (*ls)->dni = dni;
             char* tempNombre = malloc ( strlen( (*ls)->nombre ) * sizeof(char) );
             char* tempApellido = malloc ( strlen( (*ls)->apellido ) * sizeof(char) );
             strcpy( tempNombre, (*ls)->nombre );
             strcpy( tempApellido, (*ls)->apellido );
+            
             strcpy( (*ls)->nombre, nombre );
             strcpy( (*ls)->apellido, apellido );
 
-            appendOrdenadoDni( &((*ls)->sig), tempDni, tempNombre, tempApellido );
+            appendOrdenadoApellido ( &((*ls)->sig), tempDni, tempNombre, tempApellido );
         } else {
-            appendOrdenadoDni( &((*ls)->sig), dni, nombre, apellido );
+            appendOrdenadoApellido ( &((*ls)->sig), dni, nombre, apellido );
         }
     }
 }
@@ -283,10 +348,10 @@ void imprimirLsRecursiva( t_nodo ls ) {
 
 int main() {
     t_nodo ls = NULL;
-    appendOrdenadoDni( &ls, 95127, "Joaquin", "Cam");
-    appendOrdenadoDni( &ls, 45123, "Briana", "White");
-    appendOrdenadoDni( &ls, 53677, "Pablo", "Dozocar");
-    appendOrdenadoDni( &ls, 73253, "Manu", "Cayo");
+    appendOrdenadoApellido( &ls, 95127, "Joaquin", "Cam");
+    appendOrdenadoApellido( &ls, 45123, "Briana", "White");
+    appendOrdenadoApellido( &ls, 53677, "Pablo", "Dozocar");
+    appendOrdenadoApellido( &ls, 73253, "Manu", "Myto");
     
     imprimirLsRecursiva(ls);
 
