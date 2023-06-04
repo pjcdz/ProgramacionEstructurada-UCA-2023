@@ -419,43 +419,109 @@
 
 // ############################# EJ 03.01 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// struct s_nodo {
+//     int valor;
+//     struct s_nodo* sig;
+// };
+
+// typedef struct s_nodo* t_nodo;
+
+// void appendUltimo(t_nodo* ls, int valor) {
+//     if ( *ls == NULL ) {
+//         *ls = malloc(sizeof(struct s_nodo));
+//         (*ls)->valor = valor;
+//         (*ls)->sig = NULL;
+//     } else {
+//         appendUltimo( &((*ls)->sig), valor );
+//     }
+// }
+
+// void imprimirRecursivo(t_nodo ls) {
+//     if (ls != NULL) {
+//         printf("%d ", ls->valor);
+//         imprimirRecursivo(ls->sig);
+//     }
+// }
+
+// void eliminarTodasOcurrencias(t_nodo* ls, int valor) {
+//     t_nodo aux = NULL;
+//     if (*ls != NULL) {
+//         if ( (*ls)->valor == valor ) {
+//             aux = (*ls);
+//             (*ls) = (*ls)->sig;
+//             free(aux);
+//             eliminarTodasOcurrencias( &(*ls), valor);
+//         } else {
+//             eliminarTodasOcurrencias( &((*ls)->sig), valor);
+//         }
+//     }
+// }
+
+// int main() {
+//     t_nodo ls = NULL;
+
+//     appendUltimo(&ls, 5);
+//     appendUltimo(&ls, 5);
+//     appendUltimo(&ls, 5);
+//     appendUltimo(&ls, 9);
+//     imprimirRecursivo(ls);
+//     printf("\n");
+//     eliminarTodasOcurrencias(&ls, 5);
+//     imprimirRecursivo(ls);
+
+//     return 0;
+// }
+
+// ############################# EJ 03.02.01 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct s_nodo {
-    int valor;
+    char* nombre;
+    char* apellido;
+    int dni;
     struct s_nodo* sig;
 };
 
 typedef struct s_nodo* t_nodo;
 
-void appendUltimo(t_nodo* ls, int valor) {
-    if ( *ls == NULL ) {
+void appendUltimo (t_nodo* ls, char* nombre, char* apellido, int dni) {
+    if (*ls == NULL) {
         *ls = malloc(sizeof(struct s_nodo));
-        (*ls)->valor = valor;
+        (*ls)->nombre = malloc( strlen(nombre) * sizeof(char));
+        (*ls)->apellido = malloc( strlen(apellido) * sizeof(char));
+
+        strcpy( (*ls)->nombre, nombre );
+        strcpy( (*ls)->apellido, apellido );
+        (*ls)->dni = dni;
         (*ls)->sig = NULL;
     } else {
-        appendUltimo( &((*ls)->sig), valor );
+        appendUltimo ( &((*ls)->sig), nombre, apellido, dni);
     }
 }
 
 void imprimirRecursivo(t_nodo ls) {
     if (ls != NULL) {
-        printf("%d ", ls->valor);
-        imprimirRecursivo(ls->sig);
+        printf("DNI: %d, Nombre: %s, Apellido: %s\n", ls->dni, ls->nombre, ls->apellido);
+        printf("dirAct: <%p>, dirSig <%p>\n", ls, ls->sig);
+        imprimirRecursivo( ls->sig );
     }
 }
 
-void eliminarTodasOcurrencias(t_nodo* ls, int valor) {
+void eliminarUnaOcurrencia(t_nodo* ls, int dni) {
     t_nodo aux = NULL;
     if (*ls != NULL) {
-        if ( (*ls)->valor == valor ) {
+        if ( (*ls)->dni == dni ) {
             aux = (*ls);
             (*ls) = (*ls)->sig;
             free(aux);
-            eliminarTodasOcurrencias( &(*ls), valor);
         } else {
-            eliminarTodasOcurrencias( &((*ls)->sig), valor);
+            eliminarUnaOcurrencia( &((*ls)->sig), dni );
         }
     }
 }
@@ -463,14 +529,15 @@ void eliminarTodasOcurrencias(t_nodo* ls, int valor) {
 int main() {
     t_nodo ls = NULL;
 
-    appendUltimo(&ls, 5);
-    appendUltimo(&ls, 5);
-    appendUltimo(&ls, 5);
-    appendUltimo(&ls, 9);
+    appendUltimo( &ls, "Joaquin", "Cam", 3451);
+    appendUltimo( &ls, "Briana", "White", 12313);
+    appendUltimo( &ls, "Pablo", "Dozocar", 9341);
+    appendUltimo( &ls, "Manu", "Myto", 45764);
     imprimirRecursivo(ls);
     printf("\n");
-    eliminarTodasOcurrencias(&ls, 5);
+    eliminarUnaOcurrencia(&ls, 9341);
     imprimirRecursivo(ls);
 
     return 0;
 }
+
