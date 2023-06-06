@@ -206,6 +206,20 @@ void eliminarTodasProducto (t_nodo* ls, char* producto) {
     }
 }
 
+void eliminarRangoPrecios (t_nodo* ls, float min, float max ) {
+    t_nodo aux = NULL;
+    if (*ls != NULL) {
+        if ( (*ls)->precio >= min && (*ls)->precio <= max ) {
+            aux = (*ls);
+            (*ls) = (*ls)->sig;
+            free(aux);
+            eliminarRangoPrecios( &(*ls), min, max );
+        } else {
+            eliminarRangoPrecios( &((*ls)->sig), min, max );
+        }
+    }
+}
+
 // ################### Main ######################################################################################
 
 int main() {
@@ -217,6 +231,7 @@ int main() {
     // eliminar1Producto(&ls, "Regla 30");
     // eliminarTodasCodigo(&ls, 1024);
     // eliminarTodasProducto(&ls, "Lapicera Bic");
+    eliminarRangoPrecios(&ls, 5, 20);
     imprimirRecursivo(ls);
     // imprimirIterativo(ls);
 
