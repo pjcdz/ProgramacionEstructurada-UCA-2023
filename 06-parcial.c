@@ -72,34 +72,43 @@ int leerArchCargaLs (t_nodo* ls, char* archivo) {
     }
 
     t_nodoAux aux;
-    int r = fscanf(arch, "%[^,], %f, %d", aux.producto, &aux.precio, &aux.codigo);
+    int r = fscanf(arch, "%[^,], %f, %d\n", aux.producto, &aux.precio, &aux.codigo);
 
     while (r != EOF) {
-        // appendUltimo( ls, aux.producto, aux.precio, aux.codigo);
-        appendOrdenadoCodigo( ls, aux.producto, aux.precio, aux.codigo);
-        // printf("%-16s | %7.01f | %6d", aux.producto, aux.precio, aux.codigo);
-        r = fscanf(arch, "%[^,], %f, %d", aux.producto, &aux.precio, &aux.codigo);
+        // printf("%-16s | %7.01f | %6d\n", aux.producto, aux.precio, aux.codigo);
+        appendUltimo( ls, aux.producto, aux.precio, aux.codigo);
+        // appendOrdenadoCodigo( ls, aux.producto, aux.precio, aux.codigo);
+        r = fscanf(arch, "%[^,], %f, %d\n", aux.producto, &aux.precio, &aux.codigo);
     }
 
     // strcpy(aux.producto, "\0");
-    // aux.precio = -1;
-    // aux.codigo = -1;
-    // appendUltimo( ls, aux.producto, aux.precio, aux.codigo);
+    aux.producto[0] = '\0';
+    aux.precio = -1;
+    aux.codigo = -1;
+    appendUltimo( ls, aux.producto, aux.precio, aux.codigo);
 
     return 0;
 }
 
-void imprimirRecursivo(t_nodo ls) {
-    if (ls != NULL) {
+// void imprimirRecursivo(t_nodo ls) {
+//     if (ls != NULL && ls->codigo != -1) {
+//         printf("%-16s | %7.01f | %6d\n", ls->producto, ls->precio, ls->codigo);
+//         imprimirRecursivo( ls->sig );
+//     }
+// }
+
+void imprimirIterativo(t_nodo ls) {
+    while (ls != NULL && ls->codigo != -1) {
         printf("%-16s | %7.01f | %6d\n", ls->producto, ls->precio, ls->codigo);
-        imprimirRecursivo( ls->sig );
+        ls = ls->sig;
     }
 }
 
 int main() {
     t_nodo ls = NULL;
     leerArchCargaLs(&ls, "06-parcial-datos.csv");
-    imprimirRecursivo(ls);
+    // imprimirRecursivo(ls);
+    imprimirIterativo(ls);
 
     return 0;
 }
