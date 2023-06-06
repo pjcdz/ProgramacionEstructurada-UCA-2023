@@ -294,22 +294,22 @@ int main() {
     // imprimirIterativo(ls);
 
     // ################### Eliminar ###################
-    // printf("-----------------------------------\n");
-    // eliminar1Codigo(&ls, 1024);
+    printf("-----------------------------------\n");
+    eliminar1Codigo(&ls, 9999);
     // eliminar1Producto(&ls, "Regla 30");
     // eliminarTodasCodigo(&ls, 1024);
     // eliminarTodasProducto(&ls, "Lapicera Bic");
     // eliminarRangoPrecios(&ls, 5, 20);
-    // imprimirRecursivo(ls);
+    imprimirRecursivo(ls);
 
     // ################### Busqueda ###################
-    printf("-----------------------------------\n");
-    t_nodo resultado = NULL;
-    // buscarCodigo(&ls, &resultado, 1024);
-    // buscarRangoPrecios(&ls, &resultado, 5, 20);
-    // printf("test: %d", vocales("palabra"));
-    busquedaPorCaracteristica(&ls, &resultado);
-    imprimirRecursivo(resultado);
+    // printf("-----------------------------------\n");
+    // t_nodo resultado = NULL;
+    // // buscarCodigo(&ls, &resultado, 1024);
+    // // buscarRangoPrecios(&ls, &resultado, 5, 20);
+    // // printf("test: %d", vocales("palabra"));
+    // busquedaPorCaracteristica(&ls, &resultado);
+    // imprimirRecursivo(resultado);
 
     return 0;
 }
