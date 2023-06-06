@@ -19,6 +19,8 @@ struct s_nodoAux {
 
 typedef struct s_nodoAux t_nodoAux;
 
+// ################### CargarArchivoEnLista ######################################################################################
+
 void appendUltimo (t_nodo* ls, char* producto, float precio, int codigo) {
     if (*ls == NULL) {
         *ls = malloc(sizeof(struct s_nodo));
@@ -132,18 +134,7 @@ int leerArchCargaLs (t_nodo* ls, char* archivo) {
     return 0;
 }
 
-void eliminar1codigo (t_nodo *ls, int codigo) {
-    t_nodo aux = NULL;
-    if (*ls != NULL) {
-        if ( (*ls)->codigo == codigo ) {
-            aux = (*ls);
-            (*ls) = (*ls)->sig;
-            free(aux);
-        } else {
-            eliminar1codigo ( &((*ls)->sig), codigo);
-        }   
-    }
-}
+// ################### ImprimirLista ######################################################################################
 
 void imprimirRecursivo(t_nodo ls) {
     if (ls != NULL && ls->codigo != -1) {
@@ -159,12 +150,73 @@ void imprimirRecursivo(t_nodo ls) {
 //     }
 // }
 
+// ################### EliminarDeLaLista ######################################################################################
+
+void eliminar1Codigo (t_nodo *ls, int codigo) {
+    t_nodo aux = NULL;
+    if (*ls != NULL) {
+        if ( (*ls)->codigo == codigo ) {
+            aux = (*ls);
+            (*ls) = (*ls)->sig;
+            free(aux);
+        } else {
+            eliminar1Codigo ( &((*ls)->sig), codigo);
+        }   
+    }
+}
+
+void eliminar1Producto (t_nodo *ls, char* producto) {
+    t_nodo aux = NULL;
+    if (*ls != NULL) {
+        if ( strcmp( (*ls)->producto, producto ) == 0 ) {
+            aux = (*ls);
+            (*ls) = (*ls)->sig;
+            free(aux);
+        } else {
+            eliminar1Producto ( &((*ls)->sig), producto );
+        }
+    }
+}
+
+void eliminarTodasCodigo (t_nodo* ls, int codigo) {
+    t_nodo aux = NULL;
+    if (*ls != NULL) {
+        if ( (*ls)->codigo == codigo ) {
+            aux = (*ls);
+            (*ls) = (*ls)->sig;
+            free(aux);
+            eliminarTodasCodigo( &(*ls), codigo );
+        } else {
+            eliminarTodasCodigo( &((*ls)->sig), codigo );
+        }
+    }
+}
+
+void eliminarTodasProducto (t_nodo* ls, char* producto) {
+    t_nodo aux = NULL;
+    if (*ls != NULL) {
+        if ( strcmp( (*ls)->producto, producto ) == 0 ) {
+            aux = (*ls);
+            (*ls) = (*ls)->sig;
+            free(aux);
+            eliminarTodasProducto( &(*ls), producto );
+        } else {
+            eliminarTodasProducto( &((*ls)->sig), producto );
+        }
+    }
+}
+
+// ################### Main ######################################################################################
+
 int main() {
     t_nodo ls = NULL;
     leerArchCargaLs(&ls, "06-parcial-datos.csv");
     imprimirRecursivo(ls);
     printf("---------------------------------------\n");
-    eliminar1codigo(&ls, 1024);
+    // eliminar1Codigo(&ls, 1024);
+    // eliminar1Producto(&ls, "Regla 30");
+    // eliminarTodasCodigo(&ls, 1024);
+    // eliminarTodasProducto(&ls, "Lapicera Bic");
     imprimirRecursivo(ls);
     // imprimirIterativo(ls);
 
