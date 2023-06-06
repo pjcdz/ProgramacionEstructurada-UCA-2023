@@ -92,6 +92,18 @@ void appendOrdenadoNombre (t_nodo* ls, char* producto, float precio, int codigo)
     }
 }
 
+void appendPrimero(t_nodo* ls, char* producto, float precio, int codigo) {
+    t_nodo aux = malloc(sizeof(struct s_nodo));
+    aux->producto = malloc( strlen(producto) + 1 );
+    aux->sig = (*ls);
+
+    strcpy(aux->producto, producto);
+    aux->precio = precio;
+    aux->codigo = codigo;
+
+    (*ls) = aux;
+}
+
 int leerArchCargaLs (t_nodo* ls, char* archivo) {
     FILE* arch;
     arch = fopen(archivo, "r");
@@ -107,7 +119,8 @@ int leerArchCargaLs (t_nodo* ls, char* archivo) {
         // printf("%-16s | %7.01f | %6d\n", aux.producto, aux.precio, aux.codigo);
         // appendUltimo( ls, aux.producto, aux.precio, aux.codigo);
         // appendOrdenadoCodigo( ls, aux.producto, aux.precio, aux.codigo);
-        appendOrdenadoNombre( ls, aux.producto, aux.precio, aux.codigo);
+        // appendOrdenadoNombre( ls, aux.producto, aux.precio, aux.codigo);
+        appendPrimero( ls, aux.producto, aux.precio, aux.codigo);
         r = fscanf(arch, "%[^,], %f, %d\n", aux.producto, &aux.precio, &aux.codigo);
     }
 
