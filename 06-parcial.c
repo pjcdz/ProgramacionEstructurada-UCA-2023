@@ -98,7 +98,7 @@ void imprimirRecursivo(t_nodo ls) {
 
 int main() {
     t_nodo ls = NULL;
-    leerArchCargaLs(&ls, "06-parcial-datos.txt");
+    leerArchCargaLs(&ls, "06-parcial-datos.csv");
     imprimirRecursivo(ls);
 
     return 0;
