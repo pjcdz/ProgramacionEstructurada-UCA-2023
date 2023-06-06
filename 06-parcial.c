@@ -220,20 +220,96 @@ void eliminarRangoPrecios (t_nodo* ls, float min, float max ) {
     }
 }
 
-// ################### Main ######################################################################################
+// ################### BuscarEnLista ######################################################################################<
+
+void buscarCodigo (t_nodo* ls, t_nodo* resultado, int codigo) {
+    if (*ls != NULL) {
+        if ( (*ls)->codigo == codigo ) {
+            appendUltimo(&(*resultado), (*ls)->producto, (*ls)->precio, (*ls)->codigo);
+            buscarCodigo ( &((*ls)->sig), &(*resultado), codigo);
+        } else {
+            buscarCodigo ( &((*ls)->sig), &(*resultado), codigo);
+        }
+    }
+}
+
+void buscarRangoPrecios (t_nodo* ls, t_nodo* resultado, float min, float max) {
+    if (*ls != NULL) {
+        if ( (*ls)->precio >= min && (*ls)->precio <= max ) {
+            appendUltimo( &(*resultado), (*ls)->producto, (*ls)->precio, (*ls)->codigo );
+            buscarRangoPrecios ( &((*ls)->sig), &(*resultado), min, max);
+        } else {
+            buscarRangoPrecios ( &((*ls)->sig), &(*resultado), min, max);
+        }
+    }
+}
+
+int vocales ( char* producto ) {
+    int num = 0;
+    int i = 0;
+    while ( i < (strlen(producto) + 1) ) {
+        if ( producto[i] == 'a' || producto[i] == 'e' || producto[i] == 'i' ||
+            producto[i] == 'o' || producto[i] == 'u' || producto[i] == 'A' || 
+            producto[i] == 'E' || producto[i] == 'I' || producto[i] == 'O' || 
+            producto[i] == 'U' ) {
+            num++;
+        }
+        i++;
+    }
+
+    return num;
+}
+
+int vocalesRecursivo ( char* str ) {
+    if ( *str != '\0' ) {
+        int esVocal =  (*str == 'a' || *str == 'e' || *str == 'i' || 
+                        *str == 'o' || *str == 'u' || *str == 'A' || 
+                        *str == 'E' || *str == 'I' || *str == 'O' || 
+                        *str == 'U');
+
+        return esVocal + vocalesRecursivo( str+1 );
+    }
+}
+
+void busquedaPorCaracteristica (t_nodo *ls, t_nodo *resultado) {
+    if (*ls != NULL) {
+        // if ( vocales( (*ls)->producto ) == 2) {
+        if ( vocalesRecursivo( (*ls)->producto ) == 2) {
+            appendUltimo( &(*resultado), (*ls)->producto, (*ls)->precio, (*ls)->codigo );
+            busquedaPorCaracteristica( &((*ls)->sig), &(*resultado) );
+        } else {
+            busquedaPorCaracteristica( &((*ls)->sig), &(*resultado) );
+        }
+    }
+}
+
+// ################### Main ######################################################################################<
 
 int main() {
     t_nodo ls = NULL;
+
+    // ################### Lectura y carga ###################
     leerArchCargaLs(&ls, "06-parcial-datos.csv");
     imprimirRecursivo(ls);
-    printf("---------------------------------------\n");
+    // imprimirIterativo(ls);
+
+    // ################### Eliminar ###################
+    // printf("-----------------------------------\n");
     // eliminar1Codigo(&ls, 1024);
     // eliminar1Producto(&ls, "Regla 30");
     // eliminarTodasCodigo(&ls, 1024);
     // eliminarTodasProducto(&ls, "Lapicera Bic");
-    eliminarRangoPrecios(&ls, 5, 20);
-    imprimirRecursivo(ls);
-    // imprimirIterativo(ls);
+    // eliminarRangoPrecios(&ls, 5, 20);
+    // imprimirRecursivo(ls);
+
+    // ################### Busqueda ###################
+    printf("-----------------------------------\n");
+    t_nodo resultado = NULL;
+    // buscarCodigo(&ls, &resultado, 1024);
+    // buscarRangoPrecios(&ls, &resultado, 5, 20);
+    // printf("test: %d", vocales("palabra"));
+    busquedaPorCaracteristica(&ls, &resultado);
+    imprimirRecursivo(resultado);
 
     return 0;
 }
