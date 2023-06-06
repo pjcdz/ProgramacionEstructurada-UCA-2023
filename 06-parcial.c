@@ -117,10 +117,10 @@ int leerArchCargaLs (t_nodo* ls, char* archivo) {
 
     while (r != EOF) {
         // printf("%-16s | %7.01f | %6d\n", aux.producto, aux.precio, aux.codigo);
-        // appendUltimo( ls, aux.producto, aux.precio, aux.codigo);
+        appendUltimo( ls, aux.producto, aux.precio, aux.codigo);
         // appendOrdenadoCodigo( ls, aux.producto, aux.precio, aux.codigo);
         // appendOrdenadoNombre( ls, aux.producto, aux.precio, aux.codigo);
-        appendPrimero( ls, aux.producto, aux.precio, aux.codigo);
+        // appendPrimero( ls, aux.producto, aux.precio, aux.codigo);
         r = fscanf(arch, "%[^,], %f, %d\n", aux.producto, &aux.precio, &aux.codigo);
     }
 
@@ -130,6 +130,19 @@ int leerArchCargaLs (t_nodo* ls, char* archivo) {
     appendUltimo( ls, aux.producto, aux.precio, aux.codigo);
 
     return 0;
+}
+
+void eliminar1codigo (t_nodo *ls, int codigo) {
+    t_nodo aux = NULL;
+    if (*ls != NULL) {
+        if ( (*ls)->codigo == codigo ) {
+            aux = (*ls);
+            (*ls) = (*ls)->sig;
+            free(aux);
+        } else {
+            eliminar1codigo ( &((*ls)->sig), codigo);
+        }   
+    }
 }
 
 void imprimirRecursivo(t_nodo ls) {
@@ -149,6 +162,9 @@ void imprimirRecursivo(t_nodo ls) {
 int main() {
     t_nodo ls = NULL;
     leerArchCargaLs(&ls, "06-parcial-datos.csv");
+    imprimirRecursivo(ls);
+    printf("---------------------------------------\n");
+    eliminar1codigo(&ls, 1024);
     imprimirRecursivo(ls);
     // imprimirIterativo(ls);
 
