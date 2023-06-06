@@ -545,63 +545,147 @@
 
 // ############################# EJ 04 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// struct s_nodo {
+//     int valor;
+//     struct s_nodo* sig;
+// };
+
+// typedef struct s_nodo* t_nodo;
+
+// void appendUltimo(t_nodo* ls, int valor) {
+//     if (*ls == NULL) {
+//         *ls = malloc(sizeof(struct s_nodo));
+//         (*ls)->valor = valor;
+//         (*ls)->sig = NULL;
+//     } else {
+//         appendUltimo( &((*ls)->sig), valor );
+//     }
+// }
+
+// void imprimirRecursivo(t_nodo ls) {
+//     if (ls != NULL) {
+//         printf("%d ", ls->valor);
+//         imprimirRecursivo(ls->sig);
+//     }
+// }
+
+// int eliminarNodoPorPosicion(t_nodo* ls, int pos) {
+//     t_nodo aux = NULL;
+//     int valor = 0;
+
+//     if (*ls != NULL) {
+//         if ( pos == 0) {
+//             aux = (*ls);
+//             valor = aux->valor;
+//             (*ls) = (*ls)->sig;
+//             free(aux);
+//         } else if ( pos > 0) {
+//             valor = eliminarNodoPorPosicion( &((*ls)->sig), pos-1 );
+//         }
+//     }
+
+//     return valor;
+// }
+
+// int main() {
+//     t_nodo ls = NULL;
+
+//     appendUltimo(&ls, 1);
+//     appendUltimo(&ls, 2);
+//     appendUltimo(&ls, 3);
+//     appendUltimo(&ls, 4);
+//     appendUltimo(&ls, 5);
+//     imprimirRecursivo(ls);
+//     printf("\n");
+//     int eliminado = eliminarNodoPorPosicion(&ls, 0);
+//     printf("Eliminado: %d\n", eliminado);
+
+//     imprimirRecursivo(ls);
+
+//     return 0;
+// }
+
+
+// ############################# EJ 04 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct s_nodo {
-    int valor;
+    char* nombre;
+    char* apellido;
+    int dni;
     struct s_nodo* sig;
 };
 
 typedef struct s_nodo* t_nodo;
 
-void appendUltimo(t_nodo* ls, int valor) {
+void appendUltimo(t_nodo* ls, char* nombre, char* apellido, int dni) {
     if (*ls == NULL) {
         *ls = malloc(sizeof(struct s_nodo));
-        (*ls)->valor = valor;
+        (*ls)->nombre = malloc( strlen(nombre) * sizeof(char));
+        (*ls)->apellido = malloc( strlen(apellido) * sizeof(char));
+
+        strcpy((*ls)->nombre, nombre);
+        strcpy((*ls)->apellido, apellido);
+        (*ls)->dni = dni;
         (*ls)->sig = NULL;
     } else {
-        appendUltimo( &((*ls)->sig), valor );
+        appendUltimo( &((*ls)->sig), nombre, apellido, dni );
     }
 }
 
 void imprimirRecursivo(t_nodo ls) {
     if (ls != NULL) {
-        printf("%d ", ls->valor);
-        imprimirRecursivo(ls->sig);
+        printf("DNI: %d, Nombre: %s, Apellido: %s\n", ls->dni, ls->nombre, ls->apellido);
+        printf("dirAct: <%p>, dirSig <%p>\n", ls, ls->sig);
+        imprimirRecursivo( ls->sig );
     }
 }
 
-int eliminarNodoPorPosicion(t_nodo* ls, int pos) {
+t_nodo eliminarPorPosicionEstructuraCompleja(t_nodo* ls, int pos) {
     t_nodo aux = NULL;
-    int valor = 0;
-
+    t_nodo output = NULL;
+    
     if (*ls != NULL) {
-        if ( pos == 0) {
+        if (pos == 0) {
             aux = (*ls);
-            valor = aux->valor;
+            
+            output = malloc(sizeof(struct s_nodo));
+            output->nombre = malloc( strlen(aux->nombre) * sizeof(char));
+            output->apellido = malloc( strlen(aux->apellido) * sizeof(char));
+            
+            strcpy(output->nombre, aux->nombre);
+            strcpy(output->apellido, aux->apellido);
+            output->dni = aux->dni;
+
             (*ls) = (*ls)->sig;
             free(aux);
-        } else if ( pos > 0) {
-            valor = eliminarNodoPorPosicion( &((*ls)->sig), pos-1 );
+        } else if (pos > 0) {
+            output = eliminarPorPosicionEstructuraCompleja( &((*ls)->sig), pos-1);
         }
     }
 
-    return valor;
+    return output;
 }
 
 int main() {
     t_nodo ls = NULL;
-
-    appendUltimo(&ls, 1);
-    appendUltimo(&ls, 2);
-    appendUltimo(&ls, 3);
-    appendUltimo(&ls, 4);
-    appendUltimo(&ls, 5);
+    appendUltimo( &ls, "Joaquin", "Cam", 3451);
+    appendUltimo( &ls, "Briana", "White", 12313);
+    appendUltimo( &ls, "Pablo", "Dozocar", 9341);
+    appendUltimo( &ls, "Manu", "Myto", 45764);
     imprimirRecursivo(ls);
     printf("\n");
-    int eliminado = eliminarNodoPorPosicion(&ls, 0);
-    printf("Eliminado: %d\n", eliminado);
+
+    t_nodo eliminado = NULL;
+    eliminado = eliminarPorPosicionEstructuraCompleja(&ls, 2);
+    printf("Eliminado:\n");
+    printf("DNI: %d, Nombre: %s, Apellido: %s\n\n", eliminado->dni, eliminado->nombre, eliminado->apellido);
 
     imprimirRecursivo(ls);
 
