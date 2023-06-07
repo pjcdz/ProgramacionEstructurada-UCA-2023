@@ -660,42 +660,101 @@
 
 // ############################# EJ 0502 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// struct s_nodo {
+//     char* producto;
+//     float precio;
+//     int codigo;
+//     struct s_nodo* sig;
+// };
+
+// typedef struct s_nodo* t_nodo;
+
+// void push (t_nodo* ls, char* producto, float precio, int codigo) {
+//     t_nodo aux = malloc(sizeof(struct s_nodo));
+//     aux->producto = malloc( strlen(producto) + 1 );
+
+//     aux->sig = (*ls);
+
+//     strcpy( aux->producto, producto );
+//     aux->precio = precio;
+//     aux->codigo = codigo;
+
+//     (*ls) = aux;
+// }
+
+// t_nodo pop(t_nodo* ls) {
+//     t_nodo output = malloc(sizeof(struct s_nodo));
+//     t_nodo aux = NULL;
+
+//     aux = (*ls);
+
+//     output->producto = malloc( strlen(aux->producto) + 1 );
+//     strcpy( output->producto, aux->producto );
+//     output->precio = aux->precio;
+//     output->codigo = aux->codigo;
+
+//     (*ls) = (*ls)->sig;
+//     free(aux);
+
+//     return output;
+// }
+
+// void imprimirRecursiva(t_nodo ls) {
+//     if (ls != NULL) {
+//         printf("%-16s || %7.1f || %6d\n", ls->producto, ls->precio, ls->codigo);
+//         imprimirRecursiva( ls->sig );
+//     }
+// }
+
+// int main() {
+//     t_nodo ls = NULL;
+//     push(&ls, "Jabon", 39.22, 213);
+//     push(&ls, "Celular", 2134.12, 1241);
+//     push(&ls, "Apple Vision Pro", 3499.99, 2033);
+//     imprimirRecursiva(ls);
+
+//     printf("-------------------------------------\n");
+//     printf("---- Pop de: ----\n");
+//     t_nodo output = pop(&ls);
+//     imprimirRecursiva(output);
+
+//     printf("-------------------------------------\n");
+//     imprimirRecursiva(ls);
+
+//     return 0;
+// }
+
+// ############################# EJ 0503 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 struct s_nodo {
-    char* producto;
-    float precio;
-    int codigo;
+    int valor;
     struct s_nodo* sig;
 };
 
 typedef struct s_nodo* t_nodo;
 
-void push (t_nodo* ls, char* producto, float precio, int codigo) {
+void push(t_nodo* ls, int valor) {
     t_nodo aux = malloc(sizeof(struct s_nodo));
-    aux->producto = malloc( strlen(producto) + 1 );
-
     aux->sig = (*ls);
 
-    strcpy( aux->producto, producto );
-    aux->precio = precio;
-    aux->codigo = codigo;
+    aux->valor = valor;
 
     (*ls) = aux;
 }
 
-t_nodo pop(t_nodo* ls) {
-    t_nodo output = malloc(sizeof(struct s_nodo));
+int pop(t_nodo* ls) {
     t_nodo aux = NULL;
+    int output = 0;
 
     aux = (*ls);
-
-    output->producto = malloc( strlen(aux->producto) + 1 );
-    strcpy( output->producto, aux->producto );
-    output->precio = aux->precio;
-    output->codigo = aux->codigo;
+    output = aux->valor;
 
     (*ls) = (*ls)->sig;
     free(aux);
@@ -703,27 +762,47 @@ t_nodo pop(t_nodo* ls) {
     return output;
 }
 
+t_nodo busqueda(t_nodo* ls, int valor) {
+    t_nodo lsAux = NULL;
+    t_nodo output = NULL;
+    int found = 0;
+
+    int encontrado = 0;
+
+    while ( found == 0) {
+        encontrado = pop(&(*ls));
+        if ( encontrado == valor ) {
+            push( &output, encontrado );
+            found++;
+        } else {
+            push( &lsAux, encontrado );
+        }
+    }
+
+    return output;
+}
+
 void imprimirRecursiva(t_nodo ls) {
     if (ls != NULL) {
-        printf("%-16s || %7.1f || %6d\n", ls->producto, ls->precio, ls->codigo);
-        imprimirRecursiva( ls->sig );
+        printf("%d ", ls->valor);
+        imprimirRecursiva(ls->sig);
     }
 }
 
 int main() {
     t_nodo ls = NULL;
-    push(&ls, "Jabon", 39.22, 213);
-    push(&ls, "Celular", 2134.12, 1241);
-    push(&ls, "Apple Vision Pro", 3499.99, 2033);
+    push(&ls, 3);
+    push(&ls, 1);
+    push(&ls, 2);
+    push(&ls, 3);
+    push(&ls, 2);
+    imprimirRecursiva(ls);
+    printf("\nPop: %d\n", pop(&ls));
     imprimirRecursiva(ls);
 
-    printf("-------------------------------------\n");
-    printf("---- Pop de: ----\n");
-    t_nodo output = pop(&ls);
-    imprimirRecursiva(output);
-
-    printf("-------------------------------------\n");
-    imprimirRecursiva(ls);
+    printf("\n--------------\n");
+    t_nodo search = busqueda(&ls, 2);
+    imprimirRecursiva(search);
 
     return 0;
 }
