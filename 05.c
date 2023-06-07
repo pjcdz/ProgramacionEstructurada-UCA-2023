@@ -545,6 +545,71 @@
 
 // ############################# EJ 04 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// struct s_nodo {
+//     int valor;
+//     struct s_nodo* sig;
+// };
+
+// typedef struct s_nodo* t_nodo;
+
+// void appendUltimo(t_nodo* ls, int valor) {
+//     if (*ls == NULL) {
+//         *ls = malloc(sizeof(struct s_nodo));
+//         (*ls)->valor = valor;
+//         (*ls)->sig = NULL;
+//     } else {
+//         appendUltimo( &((*ls)->sig), valor );
+//     }
+// }
+
+// void imprimirRecursivo(t_nodo ls) {
+//     if (ls != NULL) {
+//         printf("%d ", ls->valor);
+//         imprimirRecursivo(ls->sig);
+//     }
+// }
+
+// int eliminarNodoPorPosicion(t_nodo* ls, int pos) {
+//     t_nodo aux = NULL;
+//     int valor = 0;
+
+//     if (*ls != NULL) {
+//         if ( pos == 0) {
+//             aux = (*ls);
+//             valor = aux->valor;
+//             (*ls) = (*ls)->sig;
+//             free(aux);
+//         } else if ( pos > 0) {
+//             valor = eliminarNodoPorPosicion( &((*ls)->sig), pos-1 );
+//         }
+//     }
+
+//     return valor;
+// }
+
+// int main() {
+//     t_nodo ls = NULL;
+
+//     appendUltimo(&ls, 1);
+//     appendUltimo(&ls, 2);
+//     appendUltimo(&ls, 3);
+//     appendUltimo(&ls, 4);
+//     appendUltimo(&ls, 5);
+//     imprimirRecursivo(ls);
+//     printf("\n");
+//     int eliminado = eliminarNodoPorPosicion(&ls, 0);
+//     printf("Eliminado: %d\n", eliminado);
+
+//     imprimirRecursivo(ls);
+
+//     return 0;
+// }
+
+// ############################# EJ 04 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -555,55 +620,38 @@ struct s_nodo {
 
 typedef struct s_nodo* t_nodo;
 
-void appendUltimo(t_nodo* ls, int valor) {
-    if (*ls == NULL) {
-        *ls = malloc(sizeof(struct s_nodo));
-        (*ls)->valor = valor;
-        (*ls)->sig = NULL;
-    } else {
-        appendUltimo( &((*ls)->sig), valor );
-    }
+void push (t_nodo* ls, int valor) {
+    t_nodo aux = malloc(sizeof(struct s_nodo));
+    aux->sig = (*ls);
+    aux->valor = valor;
+    (*ls) = aux;
 }
 
-void imprimirRecursivo(t_nodo ls) {
+int pop(t_nodo *ls) {
+    int output = 0;
+    t_nodo aux = NULL;
+    aux = (*ls);
+    output = aux->valor;
+    (*ls) = (*ls)->sig;
+    free(aux);
+
+    return output;
+}
+
+void imprimirRecursiva( t_nodo ls) {
     if (ls != NULL) {
         printf("%d ", ls->valor);
-        imprimirRecursivo(ls->sig);
+        imprimirRecursiva( ls->sig );
     }
-}
-
-int eliminarNodoPorPosicion(t_nodo* ls, int pos) {
-    t_nodo aux = NULL;
-    int valor = 0;
-
-    if (*ls != NULL) {
-        if ( pos == 0) {
-            aux = (*ls);
-            valor = aux->valor;
-            (*ls) = (*ls)->sig;
-            free(aux);
-        } else if ( pos > 0) {
-            valor = eliminarNodoPorPosicion( &((*ls)->sig), pos-1 );
-        }
-    }
-
-    return valor;
 }
 
 int main() {
     t_nodo ls = NULL;
-
-    appendUltimo(&ls, 1);
-    appendUltimo(&ls, 2);
-    appendUltimo(&ls, 3);
-    appendUltimo(&ls, 4);
-    appendUltimo(&ls, 5);
-    imprimirRecursivo(ls);
-    printf("\n");
-    int eliminado = eliminarNodoPorPosicion(&ls, 0);
-    printf("Eliminado: %d\n", eliminado);
-
-    imprimirRecursivo(ls);
-
+    push(&ls, 1);
+    push(&ls, 2);
+    push(&ls, 3);
+    imprimirRecursiva(ls);
+    printf("\nPop: %d\n", pop(&ls));
+    imprimirRecursiva(ls);
     return 0;
 }
