@@ -623,6 +623,7 @@ typedef struct s_nodo* t_nodo;
 void push (t_nodo* ls, int valor) {
     t_nodo aux = malloc(sizeof(struct s_nodo));
     aux->sig = (*ls);
+    
     aux->valor = valor;
     (*ls) = aux;
 }
@@ -630,6 +631,7 @@ void push (t_nodo* ls, int valor) {
 int pop(t_nodo *ls) {
     int output = 0;
     t_nodo aux = NULL;
+
     aux = (*ls);
     output = aux->valor;
     (*ls) = (*ls)->sig;
