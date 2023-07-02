@@ -801,7 +801,7 @@ int main() {
     imprimirRecursiva(ls);
 
     printf("\n--------------\n");
-    t_nodo search = busqueda(&ls, 2);
+    t_nodo search = busqueda(&ls, 3);
     imprimirRecursiva(search);
 
     return 0;
