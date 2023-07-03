@@ -507,7 +507,95 @@
 //     return 0;
 // }
 
-// ################### LISTAS CON ESTRUCTURAS ######################################################################################
+// ################### PILAS ######################################################################################
+
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// struct sNodo {
+//     int valor;
+//     struct sNodo* sig;
+// };
+
+// typedef struct sNodo* tNodo;
+
+// void push( tNodo* pila, int valor ) {
+//     tNodo aux = malloc(sizeof(struct sNodo));
+//     aux->sig = (*pila);
+//     aux->valor = valor;
+//     (*pila) = aux;
+// }
+
+// int pop( tNodo* pila ) {
+//     int res = 0;
+
+//     tNodo aux = (*pila);
+//     res = aux->valor;
+//     (*pila) = (*pila)->sig;
+//     free(aux);
+
+//     return res;
+// }
+
+// int estaVacia(tNodo* pila) {
+//     return *pila == NULL;
+// }
+
+// // void imprimirPilaR (tNodo pila) {
+// //     if (pila!=NULL) {
+// //         printf("%d ", pila->valor);
+// //         imprimirPilaR( pila->sig );
+// //     }
+// // }
+
+// void impresionConPop(tNodo* pila) {
+//     while ( ! estaVacia( &(*pila) ) ) {
+//         printf("%d ", pop( &(*pila) ) );
+//     }
+// }
+
+// void busquedaPorRango(tNodo* pila, tNodo* resultado, int min, int max) {
+//     int extraido;
+//     tNodo pilaAux = NULL;
+
+//     while ( ! estaVacia( &(*pila) ) ) {
+//         extraido = pop( &(*pila) );
+
+//         if ( extraido > min && extraido < max ) {
+//             push(&(*resultado), extraido);
+//         } else {
+//             push(&pilaAux, extraido);
+//         }
+//     }
+
+//     while( ! estaVacia( &pilaAux ) ) {
+//         push( &(*pila), pop( &pilaAux ) );
+//     }
+// }
+
+// int main () {
+//     tNodo pila = NULL;
+
+//     push(&pila, 10);
+//     push(&pila, 140);
+//     push(&pila, 18);
+//     push(&pila, 3);
+
+//     // imprimirPilaR(pila);
+
+//     tNodo resultado = NULL;
+//     busquedaPorRango(&pila, &resultado, 5, 20);
+//     impresionConPop(&resultado);
+
+//     printf("\n-------------------------\n");
+
+//     impresionConPop(&pila);
+
+//     return 0;
+// }
+
+// ################### COLAS ######################################################################################
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -520,77 +608,60 @@ struct sNodo {
 
 typedef struct sNodo* tNodo;
 
-void push( tNodo* pila, int valor ) {
+struct sQueue {
+    tNodo head;
+    tNodo tail;
+};
+
+typedef struct sQueue tQueue;
+
+void queue(tQueue* cola, int valor) {
     tNodo aux = malloc(sizeof(struct sNodo));
-    aux->sig = (*pila);
     aux->valor = valor;
-    (*pila) = aux;
+    aux->sig = NULL;
+    if ( cola->head == NULL && cola->tail == NULL ) {
+        cola->head = aux;
+        cola->tail = aux;
+    } else {
+        cola->tail->sig = aux;
+        cola->tail = aux;
+    }
 }
 
-int pop( tNodo* pila ) {
-    int res = 0;
+int dequeue( tQueue* cola ) {
+    int res;
 
-    tNodo aux = (*pila);
+    tNodo aux = cola->head;
+    cola->head = cola->head->sig;
     res = aux->valor;
-    (*pila) = (*pila)->sig;
     free(aux);
+
+    if (cola->head == NULL) {
+        cola->tail == NULL;
+    }
 
     return res;
 }
 
-int estaVacia(tNodo* pila) {
-    return *pila == NULL;
+int estaVacio ( tQueue* cola ) {
+    return cola->head == NULL && cola->tail == NULL ;
 }
 
-// void imprimirPilaR (tNodo pila) {
-//     if (pila!=NULL) {
-//         printf("%d ", pila->valor);
-//         imprimirPilaR( pila->sig );
-//     }
-// }
-
-void impresionConPop(tNodo* pila) {
-    while ( ! estaVacia( &(*pila) ) ) {
-        printf("%d ", pop( &(*pila) ) );
+void imprimirPorDequeue( tQueue* cola ) {
+    while ( &(*cola) != NULL ) {
+        printf("%d ", dequeue( &(*cola) ) );
     }
 }
 
-void busquedaPorRango(tNodo* pila, tNodo* resultado, int min, int max) {
-    int extraido;
-    tNodo pilaAux = NULL;
+int main() {
+    tQueue cola = {NULL,NULL};
 
-    while ( ! estaVacia( &(*pila) ) ) {
-        extraido = pop( &(*pila) );
+    queue(&cola, 6);
+    queue(&cola, 3);
+    queue(&cola, 26);
+    queue(&cola, 23);
 
-        if ( extraido > min && extraido < max ) {
-            push(&(*resultado), extraido);
-        } else {
-            push(&pilaAux, extraido);
-        }
-    }
-
-    while( ! estaVacia( &pilaAux ) ) {
-        push( &(*pila), pop( &pilaAux ) );
-    }
-}
-
-int main () {
-    tNodo pila = NULL;
-
-    push(&pila, 10);
-    push(&pila, 140);
-    push(&pila, 18);
-    push(&pila, 3);
-
-    // imprimirPilaR(pila);
-
-    tNodo resultado = NULL;
-    busquedaPorRango(&pila, &resultado, 5, 20);
-    impresionConPop(&resultado);
-
-    printf("\n-------------------------\n");
-
-    impresionConPop(&pila);
+    imprimirPorDequeue(&cola);
 
     return 0;
 }
