@@ -221,289 +221,376 @@
 
 // ################### LISTAS CON ESTRUCTURAS ######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// struct sContent {
+//     char* producto;
+//     float precio;
+//     int codigo;
+// };
+
+// typedef struct sContent tContent;
+
+// struct sContentAux {
+//     char producto[50];
+//     float precio;
+//     int codigo;
+// };
+
+// typedef struct sContentAux tContentAux;
+
+// struct sNodo {
+//     tContent content;
+//     struct sNodo* sig;
+// };
+
+// typedef struct sNodo* tNodo;
+
+// void eliminarPorRangoDePrecios(tNodo* ls, float min, float max) {
+//     if ( *ls != NULL ) {
+//         if ( (*ls)->content.precio > min && (*ls)->content.precio < max ) {
+//             tNodo aux = *ls;
+//             *ls = (*ls)->sig;
+//             free(aux);
+//             eliminarPorRangoDePrecios( &(*ls), min, max );
+//         } else {
+//             eliminarPorRangoDePrecios( &((*ls)->sig), min, max );
+//         }
+//     }
+// }
+
+// void eliminarPorNombre( tNodo* ls, char* producto) {
+//     if ( *ls != NULL ) {
+//         if ( strcmp( (*ls)->content.producto, producto ) == 0 ) {
+//             tNodo aux = *ls;
+//             *ls = (*ls)->sig;
+//             free(aux);
+//             eliminarPorNombre( &(*ls), producto );
+//         } else {
+//             eliminarPorNombre( &((*ls)->sig), producto );
+//         }
+//     }
+// }
+
+// void eliminarPorCodigo( tNodo* ls, int codigo ) {
+//     if (*ls != NULL) {
+//         if ( (*ls)->content.codigo == codigo ) {
+//             tNodo aux = *ls;
+//             *ls = (*ls)->sig;
+//             free(aux);
+//             eliminarPorCodigo( &(*ls), codigo );
+//         } else {
+//             eliminarPorCodigo( &((*ls)->sig), codigo );
+//         }
+//     }
+// }
+
+// void cargarPrimero( tNodo* ls, tContentAux content ) {
+//     tNodo aux = malloc(sizeof(struct sNodo));
+//     aux->content.producto = malloc ( strlen (content.producto) + 1 );
+
+//     aux->sig = (*ls);
+
+//     strcpy(aux->content.producto, content.producto);
+//     aux->content.precio = content.precio;
+//     aux->content.codigo = content.codigo;
+
+//     (*ls) = aux;
+
+// }
+
+// int criterioDeOrden( tContent lsContent, tContentAux content, int nCampo, int asc ) {
+//     int res = 0;
+
+//     if ( nCampo == 0 ) {
+//         if (asc == 1) {
+//             if ( strcmp(lsContent.producto, content.producto) > 0 ) {
+//                 res = 1;
+//             }
+//         } else {
+//             if ( strcmp(lsContent.producto, content.producto) < 0 ) {
+//                 res = 1;
+//             }
+//         }
+//     }
+//     if ( nCampo == 1 ) {
+//         if (asc == 1) {
+//             if ( lsContent.precio > content.precio ) {
+//                 res = 1;
+//             }
+//         } else {
+//             if ( lsContent.precio < content.precio ) {
+//                 res = 1;
+//             }
+//         }
+//     }
+//     if ( nCampo == 2 ) {
+//         if (asc == 1) {
+//             if ( lsContent.codigo > content.codigo ) {
+//                 res = 1;
+//             }
+//         } else {
+//             if ( lsContent.codigo < content.codigo ) {
+//                 res = 1;
+//             }
+//         }
+//     }
+
+//     return res;
+// }
+
+// void cargarOrdenado(tNodo* ls, tContentAux content, int nCampo, int asc) {
+//     if (*ls == NULL) {
+//         *ls = malloc(sizeof(struct sNodo));
+//         (*ls)->content.producto = malloc( strlen(content.producto) + 1 );
+//         strcpy( (*ls)->content.producto, content.producto );
+//         (*ls)->content.precio = content.precio;
+//         (*ls)->content.codigo = content.codigo;
+//         (*ls)->sig = NULL;
+//     } else {
+//         if ( criterioDeOrden((*ls)->content, content, nCampo, asc) ) {
+//             tNodo aux = malloc(sizeof(struct sNodo));
+//             aux->content.producto = malloc(strlen(content.producto) + 1);
+
+//             aux->sig = (*ls);
+
+//             strcpy(aux->content.producto, content.producto);
+//             aux->content.precio = content.precio;
+//             aux->content.codigo = content.codigo;
+
+//             (*ls) = aux;
+//         } else {
+//             cargarOrdenado(&((*ls)->sig), content, nCampo, asc);
+//         }
+//     }
+// }
+
+// void imprimirListaR (tNodo ls) {
+//     if (ls != NULL) {
+//         printf("%-14s %7.1f %7d\n", ls->content.producto, ls->content.precio, ls->content.codigo);
+//         imprimirListaR( ls->sig );
+//     }
+// }
+
+// void cargarUltimo(tNodo* ls, tContentAux content) {
+//     if (*ls == NULL) {
+//         *ls = malloc(sizeof(struct sNodo));
+//         (*ls)->content.producto = malloc( strlen(content.producto) + 1 );
+//         strcpy( (*ls)->content.producto, content.producto );
+//         (*ls)->content.precio = content.precio;
+//         (*ls)->content.codigo = content.codigo;
+//         (*ls)->sig = NULL;
+//     } else {
+//         cargarUltimo( &((*ls)->sig), content );
+//     }
+// }
+
+// int cargarArchivoEnLista( tNodo* ls, char* nombreArch ) {
+//     FILE* arch;
+//     arch = fopen(nombreArch, "r");
+
+//     if (arch == NULL) {
+//         printf("error archivo");
+//         return -1;
+//     }
+
+//     tContentAux content;
+//     int r = fscanf(arch, "%[^,], %f, %d\n", content.producto, &content.precio, &content.codigo);
+//     while (r!=EOF) {
+//         // cargarUltimo(&(*ls), content); 
+//         // cargarOrdenado( &(*ls), content, 0 , 0);
+//         cargarPrimero( &(*ls), content );
+//         r = fscanf(arch, "%[^,], %f, %d\n", content.producto, &content.precio, &content.codigo);
+//     } 
+
+//     return 0;
+// }
+
+// void busquedaPorCodigo(tNodo* ls, tNodo* resultado, int codigo) {
+//     if (*ls != NULL) {
+//         if ( (*ls)->content.codigo == codigo ) {
+
+//             tContentAux contentAux;
+//             strcpy( contentAux.producto, (*ls)->content.producto);
+//             contentAux.precio = (*ls)->content.precio;
+//             contentAux.codigo = (*ls)->content.codigo;
+
+//             cargarUltimo( &(*resultado),  contentAux);
+//             busquedaPorCodigo( &((*ls)->sig), &(*resultado), codigo );
+//         } else {
+//             busquedaPorCodigo( &((*ls)->sig), &(*resultado), codigo );
+//         }
+//     }
+// }
+
+// void busquedaPorRangoDePrecios (tNodo* ls, tNodo* resultado, float min, float max) {
+//     if ( *ls != NULL ) {
+//         if ( (*ls)->content.precio > min && (*ls)->content.precio < max ) {
+
+//             tContentAux contentAux;
+//             strcpy( contentAux.producto, (*ls)->content.producto );
+//             contentAux.precio = (*ls)->content.precio;
+//             contentAux.codigo = (*ls)->content.codigo;
+
+//             cargarUltimo( &(*resultado), contentAux );
+//             busquedaPorRangoDePrecios( &((*ls)->sig), &(*resultado), min, max );
+//         } else {
+//             busquedaPorRangoDePrecios( &((*ls)->sig), &(*resultado), min, max );
+//         }
+//     }
+// }
+
+// int esVocal ( char* txt ) {
+//     if (*txt != '\0') {
+//         int res = (*txt == 'a' || *txt == 'e' || *txt == 'i' ||
+//                     *txt == 'o' || *txt == 'u' || *txt == 'A' ||
+//                     *txt == 'E' || *txt == 'I' || *txt == 'O' ||
+//                     *txt == 'U');
+        
+//         return res + esVocal ( txt+1 );
+//     }
+// }
+
+// void busquedaPorCaracteristica (tNodo* ls, tNodo* resultado, int nVocales) {
+//     if ( *ls != NULL ) {
+//         if ( esVocal((*ls)->content.producto) == nVocales ) {
+
+//             tContentAux contentAux;
+//             strcpy( contentAux.producto, (*ls)->content.producto );
+//             contentAux.precio = (*ls)->content.precio;
+//             contentAux.codigo = (*ls)->content.codigo;
+
+//             cargarUltimo( &(*resultado), contentAux );
+//             busquedaPorCaracteristica( &((*ls)->sig), &(*resultado), nVocales );
+//         } else {
+//             busquedaPorCaracteristica( &((*ls)->sig), &(*resultado), nVocales );
+//         }
+//     }
+// }
+
+// int main () {
+//     tNodo ls = NULL;
+
+//     cargarArchivoEnLista(&ls, "07-repaso-datos.csv");
+//     imprimirListaR(ls);
+
+//     // printf("-------------------------\n");
+
+//     // eliminarPorCodigo(&ls, 1024);
+//     // imprimirListaR(ls);
+
+//     // printf("-------------------------\n");
+
+//     // eliminarPorNombre(&ls, "Escuadra 45");
+//     // imprimirListaR(ls);
+
+//     // printf("-------------------------\n");
+
+//     // eliminarPorRangoDePrecios(&ls, 5, 20);
+//     // imprimirListaR(ls);
+
+//     tNodo resultado = NULL;
+//     printf("------- Busqueda: -------\n");
+//     // busquedaPorCodigo(&ls ,&resultado, 1848);
+//     // imprimirListaR(resultado);
+
+//     // busquedaPorRangoDePrecios(&ls, &resultado, 5, 20);
+//     // imprimirListaR(resultado);
+
+//     busquedaPorCaracteristica(&ls, &resultado, 2);
+//     imprimirListaR(resultado);
+
+//     // printf( "%d", esVocal("hola") );
+
+//     return 0;
+// }
+
+// ################### LISTAS CON ESTRUCTURAS ######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-struct sContent {
-    char* producto;
-    float precio;
-    int codigo;
-};
-
-typedef struct sContent tContent;
-
-struct sContentAux {
-    char producto[50];
-    float precio;
-    int codigo;
-};
-
-typedef struct sContentAux tContentAux;
-
 struct sNodo {
-    tContent content;
+    int valor;
     struct sNodo* sig;
 };
 
 typedef struct sNodo* tNodo;
 
-void eliminarPorRangoDePrecios(tNodo* ls, float min, float max) {
-    if ( *ls != NULL ) {
-        if ( (*ls)->content.precio > min && (*ls)->content.precio < max ) {
-            tNodo aux = *ls;
-            *ls = (*ls)->sig;
-            free(aux);
-            eliminarPorRangoDePrecios( &(*ls), min, max );
-        } else {
-            eliminarPorRangoDePrecios( &((*ls)->sig), min, max );
-        }
-    }
-}
-
-void eliminarPorNombre( tNodo* ls, char* producto) {
-    if ( *ls != NULL ) {
-        if ( strcmp( (*ls)->content.producto, producto ) == 0 ) {
-            tNodo aux = *ls;
-            *ls = (*ls)->sig;
-            free(aux);
-            eliminarPorNombre( &(*ls), producto );
-        } else {
-            eliminarPorNombre( &((*ls)->sig), producto );
-        }
-    }
-}
-
-void eliminarPorCodigo( tNodo* ls, int codigo ) {
-    if (*ls != NULL) {
-        if ( (*ls)->content.codigo == codigo ) {
-            tNodo aux = *ls;
-            *ls = (*ls)->sig;
-            free(aux);
-            eliminarPorCodigo( &(*ls), codigo );
-        } else {
-            eliminarPorCodigo( &((*ls)->sig), codigo );
-        }
-    }
-}
-
-void cargarPrimero( tNodo* ls, tContentAux content ) {
+void push( tNodo* pila, int valor ) {
     tNodo aux = malloc(sizeof(struct sNodo));
-    aux->content.producto = malloc ( strlen (content.producto) + 1 );
-
-    aux->sig = (*ls);
-
-    strcpy(aux->content.producto, content.producto);
-    aux->content.precio = content.precio;
-    aux->content.codigo = content.codigo;
-
-    (*ls) = aux;
-
+    aux->sig = (*pila);
+    aux->valor = valor;
+    (*pila) = aux;
 }
 
-int criterioDeOrden( tContent lsContent, tContentAux content, int nCampo, int asc ) {
+int pop( tNodo* pila ) {
     int res = 0;
 
-    if ( nCampo == 0 ) {
-        if (asc == 1) {
-            if ( strcmp(lsContent.producto, content.producto) > 0 ) {
-                res = 1;
-            }
-        } else {
-            if ( strcmp(lsContent.producto, content.producto) < 0 ) {
-                res = 1;
-            }
-        }
-    }
-    if ( nCampo == 1 ) {
-        if (asc == 1) {
-            if ( lsContent.precio > content.precio ) {
-                res = 1;
-            }
-        } else {
-            if ( lsContent.precio < content.precio ) {
-                res = 1;
-            }
-        }
-    }
-    if ( nCampo == 2 ) {
-        if (asc == 1) {
-            if ( lsContent.codigo > content.codigo ) {
-                res = 1;
-            }
-        } else {
-            if ( lsContent.codigo < content.codigo ) {
-                res = 1;
-            }
-        }
-    }
+    tNodo aux = (*pila);
+    res = aux->valor;
+    (*pila) = (*pila)->sig;
+    free(aux);
 
     return res;
 }
 
-void cargarOrdenado(tNodo* ls, tContentAux content, int nCampo, int asc) {
-    if (*ls == NULL) {
-        *ls = malloc(sizeof(struct sNodo));
-        (*ls)->content.producto = malloc( strlen(content.producto) + 1 );
-        strcpy( (*ls)->content.producto, content.producto );
-        (*ls)->content.precio = content.precio;
-        (*ls)->content.codigo = content.codigo;
-        (*ls)->sig = NULL;
-    } else {
-        if ( criterioDeOrden((*ls)->content, content, nCampo, asc) ) {
-            tNodo aux = malloc(sizeof(struct sNodo));
-            aux->content.producto = malloc(strlen(content.producto) + 1);
+int estaVacia(tNodo* pila) {
+    return *pila == NULL;
+}
 
-            aux->sig = (*ls);
+// void imprimirPilaR (tNodo pila) {
+//     if (pila!=NULL) {
+//         printf("%d ", pila->valor);
+//         imprimirPilaR( pila->sig );
+//     }
+// }
 
-            strcpy(aux->content.producto, content.producto);
-            aux->content.precio = content.precio;
-            aux->content.codigo = content.codigo;
+void impresionConPop(tNodo* pila) {
+    while ( ! estaVacia( &(*pila) ) ) {
+        printf("%d ", pop( &(*pila) ) );
+    }
+}
 
-            (*ls) = aux;
+void busquedaPorRango(tNodo* pila, tNodo* resultado, int min, int max) {
+    int extraido;
+    tNodo pilaAux = NULL;
+
+    while ( ! estaVacia( &(*pila) ) ) {
+        extraido = pop( &(*pila) );
+
+        if ( extraido > min && extraido < max ) {
+            push(&(*resultado), extraido);
         } else {
-            cargarOrdenado(&((*ls)->sig), content, nCampo, asc);
+            push(&pilaAux, extraido);
         }
     }
-}
 
-void imprimirListaR (tNodo ls) {
-    if (ls != NULL) {
-        printf("%-14s %7.1f %7d\n", ls->content.producto, ls->content.precio, ls->content.codigo);
-        imprimirListaR( ls->sig );
-    }
-}
-
-void cargarUltimo(tNodo* ls, tContentAux content) {
-    if (*ls == NULL) {
-        *ls = malloc(sizeof(struct sNodo));
-        (*ls)->content.producto = malloc( strlen(content.producto) + 1 );
-        strcpy( (*ls)->content.producto, content.producto );
-        (*ls)->content.precio = content.precio;
-        (*ls)->content.codigo = content.codigo;
-        (*ls)->sig = NULL;
-    } else {
-        cargarUltimo( &((*ls)->sig), content );
-    }
-}
-
-int cargarArchivoEnLista( tNodo* ls, char* nombreArch ) {
-    FILE* arch;
-    arch = fopen(nombreArch, "r");
-
-    if (arch == NULL) {
-        printf("error archivo");
-        return -1;
-    }
-
-    tContentAux content;
-    int r = fscanf(arch, "%[^,], %f, %d\n", content.producto, &content.precio, &content.codigo);
-    while (r!=EOF) {
-        // cargarUltimo(&(*ls), content); 
-        // cargarOrdenado( &(*ls), content, 0 , 0);
-        cargarPrimero( &(*ls), content );
-        r = fscanf(arch, "%[^,], %f, %d\n", content.producto, &content.precio, &content.codigo);
-    } 
-
-    return 0;
-}
-
-void busquedaPorCodigo(tNodo* ls, tNodo* resultado, int codigo) {
-    if (*ls != NULL) {
-        if ( (*ls)->content.codigo == codigo ) {
-
-            tContentAux contentAux;
-            strcpy( contentAux.producto, (*ls)->content.producto);
-            contentAux.precio = (*ls)->content.precio;
-            contentAux.codigo = (*ls)->content.codigo;
-
-            cargarUltimo( &(*resultado),  contentAux);
-            busquedaPorCodigo( &((*ls)->sig), &(*resultado), codigo );
-        } else {
-            busquedaPorCodigo( &((*ls)->sig), &(*resultado), codigo );
-        }
-    }
-}
-
-void busquedaPorRangoDePrecios (tNodo* ls, tNodo* resultado, float min, float max) {
-    if ( *ls != NULL ) {
-        if ( (*ls)->content.precio > min && (*ls)->content.precio < max ) {
-
-            tContentAux contentAux;
-            strcpy( contentAux.producto, (*ls)->content.producto );
-            contentAux.precio = (*ls)->content.precio;
-            contentAux.codigo = (*ls)->content.codigo;
-
-            cargarUltimo( &(*resultado), contentAux );
-            busquedaPorRangoDePrecios( &((*ls)->sig), &(*resultado), min, max );
-        } else {
-            busquedaPorRangoDePrecios( &((*ls)->sig), &(*resultado), min, max );
-        }
-    }
-}
-
-int esVocal ( char* txt ) {
-    if (*txt != '\0') {
-        int res = (*txt == 'a' || *txt == 'e' || *txt == 'i' ||
-                    *txt == 'o' || *txt == 'u' || *txt == 'A' ||
-                    *txt == 'E' || *txt == 'I' || *txt == 'O' ||
-                    *txt == 'U');
-        
-        return res + esVocal ( txt+1 );
-    }
-}
-
-void busquedaPorCaracteristica (tNodo* ls, tNodo* resultado, int nVocales) {
-    if ( *ls != NULL ) {
-        if ( esVocal((*ls)->content.producto) == nVocales ) {
-
-            tContentAux contentAux;
-            strcpy( contentAux.producto, (*ls)->content.producto );
-            contentAux.precio = (*ls)->content.precio;
-            contentAux.codigo = (*ls)->content.codigo;
-
-            cargarUltimo( &(*resultado), contentAux );
-            busquedaPorCaracteristica( &((*ls)->sig), &(*resultado), nVocales );
-        } else {
-            busquedaPorCaracteristica( &((*ls)->sig), &(*resultado), nVocales );
-        }
+    while( ! estaVacia( &pilaAux ) ) {
+        push( &(*pila), pop( &pilaAux ) );
     }
 }
 
 int main () {
-    tNodo ls = NULL;
+    tNodo pila = NULL;
 
-    cargarArchivoEnLista(&ls, "07-repaso-datos.csv");
-    imprimirListaR(ls);
+    push(&pila, 10);
+    push(&pila, 140);
+    push(&pila, 18);
+    push(&pila, 3);
 
-    // printf("-------------------------\n");
-
-    // eliminarPorCodigo(&ls, 1024);
-    // imprimirListaR(ls);
-
-    // printf("-------------------------\n");
-
-    // eliminarPorNombre(&ls, "Escuadra 45");
-    // imprimirListaR(ls);
-
-    // printf("-------------------------\n");
-
-    // eliminarPorRangoDePrecios(&ls, 5, 20);
-    // imprimirListaR(ls);
+    // imprimirPilaR(pila);
 
     tNodo resultado = NULL;
-    printf("------- Busqueda: -------\n");
-    // busquedaPorCodigo(&ls ,&resultado, 1848);
-    // imprimirListaR(resultado);
+    busquedaPorRango(&pila, &resultado, 5, 20);
+    impresionConPop(&resultado);
 
-    // busquedaPorRangoDePrecios(&ls, &resultado, 5, 20);
-    // imprimirListaR(resultado);
+    printf("\n-------------------------\n");
 
-    busquedaPorCaracteristica(&ls, &resultado, 2);
-    imprimirListaR(resultado);
-
-    // printf( "%d", esVocal("hola") );
+    impresionConPop(&pila);
 
     return 0;
 }
-
