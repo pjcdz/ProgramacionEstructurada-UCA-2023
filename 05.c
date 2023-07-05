@@ -730,79 +730,266 @@
 
 // ############################# EJ 0503 #######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+
+// struct s_nodo {
+//     int valor;
+//     struct s_nodo* sig;
+// };
+
+// typedef struct s_nodo* t_nodo;
+
+// void push(t_nodo* ls, int valor) {
+//     t_nodo aux = malloc(sizeof(struct s_nodo));
+//     aux->sig = (*ls);
+
+//     aux->valor = valor;
+
+//     (*ls) = aux;
+// }
+
+// int pop(t_nodo* ls) {
+//     t_nodo aux = NULL;
+//     int output = 0;
+
+//     aux = (*ls);
+//     output = aux->valor;
+
+//     (*ls) = (*ls)->sig;
+//     free(aux);
+
+//     return output;
+// }
+
+// t_nodo busqueda(t_nodo* ls, int valor) {
+//     t_nodo lsAux = NULL;
+//     t_nodo output = NULL;
+//     int found = 0;
+
+//     int encontrado = 0;
+
+//     while ( found == 0) {
+//         encontrado = pop(&(*ls));
+//         if ( encontrado == valor ) {
+//             push( &output, encontrado );
+//             found++;
+//         } else {
+//             push( &lsAux, encontrado );
+//         }
+//     }
+
+//     return output;
+// }
+
+// void imprimirRecursiva(t_nodo ls) {
+//     if (ls != NULL) {
+//         printf("%d ", ls->valor);
+//         imprimirRecursiva(ls->sig);
+//     }
+// }
+
+// int main() {
+//     t_nodo ls = NULL;
+//     push(&ls, 3);
+//     push(&ls, 1);
+//     push(&ls, 2);
+//     push(&ls, 3);
+//     push(&ls, 2);
+//     imprimirRecursiva(ls);
+//     printf("\nPop: %d\n", pop(&ls));
+//     imprimirRecursiva(ls);
+
+//     printf("\n--------------\n");
+//     t_nodo search = busqueda(&ls, 3);
+//     imprimirRecursiva(search);
+
+//     return 0;
+// }
+
+// ############################# EJ 07 #######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-struct s_nodo {
+struct sNodoBin {
     int valor;
-    struct s_nodo* sig;
+    struct sNodoBin* izq;
+    struct sNodoBin* der;
 };
 
-typedef struct s_nodo* t_nodo;
+typedef struct sNodoBin* tNodoBin;
 
-void push(t_nodo* ls, int valor) {
-    t_nodo aux = malloc(sizeof(struct s_nodo));
-    aux->sig = (*ls);
+struct sNodo {
+    tNodoBin valor;
+    struct sNodo* sig;
+};
 
-    aux->valor = valor;
+typedef struct sNodo* tNodo;
 
-    (*ls) = aux;
+struct sQueue {
+    tNodo head;
+    tNodo tail;
+};
+
+typedef struct sQueue tQueue;
+
+void eliminarArbol ( tNodoBin* arbol ) {
+    if ( *arbol != NULL ) {
+        eliminarArbol( &((*arbol)->izq) );
+        eliminarArbol( &((*arbol)->der) );
+        free(*arbol);
+        *arbol = NULL;
+    }
 }
 
-int pop(t_nodo* ls) {
-    t_nodo aux = NULL;
-    int output = 0;
-
-    aux = (*ls);
-    output = aux->valor;
-
-    (*ls) = (*ls)->sig;
-    free(aux);
-
-    return output;
-}
-
-t_nodo busqueda(t_nodo* ls, int valor) {
-    t_nodo lsAux = NULL;
-    t_nodo output = NULL;
-    int found = 0;
-
-    int encontrado = 0;
-
-    while ( found == 0) {
-        encontrado = pop(&(*ls));
-        if ( encontrado == valor ) {
-            push( &output, encontrado );
-            found++;
+void buscarYBorrarEnArbol(tNodoBin* arbol, int valor ) {
+    if ( *arbol != NULL ) {
+        if ( (*arbol)->valor > valor ) {
+            buscarYBorrarEnArbol( &((*arbol)->izq), valor );
+        } else if ( (*arbol)->valor < valor ) {
+            buscarYBorrarEnArbol( &((*arbol)->der), valor );
         } else {
-            push( &lsAux, encontrado );
+            eliminarArbol( arbol );
         }
     }
-
-    return output;
 }
 
-void imprimirRecursiva(t_nodo ls) {
-    if (ls != NULL) {
-        printf("%d ", ls->valor);
-        imprimirRecursiva(ls->sig);
+void queue( tQueue* cola, tNodoBin valor ) {
+    tNodo aux = malloc(sizeof(struct sNodo));
+    aux->valor = valor;
+    aux->sig = NULL;
+
+    if ( cola->head == NULL && cola->tail == NULL ) {
+        cola->head = aux;
+        cola->tail = aux; 
+    } else {
+        cola->tail->sig = aux;
+        cola->tail = aux;
+    }
+}
+
+tNodoBin dequeue( tQueue* cola ) {
+    tNodoBin res = NULL;
+
+    tNodo aux = cola->head;
+    cola->head = cola->head->sig;
+    res = aux->valor;
+    free(aux);
+
+    if ( cola->head == NULL ) {
+        cola->tail = NULL;
+    }
+
+    return res;
+}
+
+void imprimirPorNivel ( tNodoBin arbol ) {
+    tNodoBin aux = NULL;
+    tQueue cola = {NULL, NULL};
+
+    queue(&cola, arbol);
+
+    while ( cola.head != NULL ) {
+        aux = dequeue(&cola);
+
+        if ( aux->izq != NULL ) {
+            queue( &cola, aux->izq );
+        }
+
+        if ( aux->der != NULL ) {
+            queue( &cola, aux->der );
+        }
+
+        printf("%d ", aux->valor);
+    }
+}
+
+void imprimirPostOrder2 ( tNodoBin arbol ) {
+    if ( arbol != NULL ) {
+        imprimirPostOrder2( arbol->izq );
+        imprimirPostOrder2( arbol->der );
+        printf("<%p> <- <%p> %d -> <%p> \n", arbol->izq, arbol, arbol->valor, arbol->der );
+    }
+}
+
+void imprimirPostOrder ( tNodoBin arbol ) {
+    if ( arbol != NULL ) {
+        imprimirPostOrder( arbol->izq );
+        imprimirPostOrder( arbol->der );
+        printf("%d ", arbol->valor);
+    }
+}
+
+void imprimirInOrder ( tNodoBin arbol ) {
+    if ( arbol != NULL ) {
+        imprimirInOrder( arbol->izq );
+        printf("%d ", arbol->valor);
+        imprimirInOrder( arbol->der );
+    }
+}
+
+void imprimirPreOrden( tNodoBin arbol ) { 
+    if ( arbol != NULL ) {
+        printf("%d ", arbol->valor); // ARBOL
+        imprimirPreOrden( arbol->izq );
+        imprimirPreOrden( arbol->der );
+    }
+}
+
+void insertarEnArbol(tNodoBin* arbol, int valor) {
+    if (*arbol == NULL) {
+        *arbol = malloc(sizeof(struct sNodoBin));
+        (*arbol)->valor = valor;
+        (*arbol)->izq = NULL;
+        (*arbol)->der = NULL;
+    } else {
+        if ( (*arbol)->valor > valor ) {
+            insertarEnArbol ( &((*arbol)->izq), valor );
+        } else {
+            insertarEnArbol ( &((*arbol)->der), valor );
+        }
     }
 }
 
 int main() {
-    t_nodo ls = NULL;
-    push(&ls, 3);
-    push(&ls, 1);
-    push(&ls, 2);
-    push(&ls, 3);
-    push(&ls, 2);
-    imprimirRecursiva(ls);
-    printf("\nPop: %d\n", pop(&ls));
-    imprimirRecursiva(ls);
+    tNodoBin arbol = NULL;
 
-    printf("\n--------------\n");
-    t_nodo search = busqueda(&ls, 3);
-    imprimirRecursiva(search);
+    insertarEnArbol( &arbol, 35 );
+    insertarEnArbol( &arbol, 45 );
+    insertarEnArbol( &arbol, 30 );
+    insertarEnArbol( &arbol, 20 );
+    insertarEnArbol( &arbol, 15 );
+    insertarEnArbol( &arbol, 40 );
+    insertarEnArbol( &arbol, 38 );
+    insertarEnArbol( &arbol, 41 );
+    insertarEnArbol( &arbol, 55 );
+    insertarEnArbol( &arbol, 21 );
 
-    return 0;
+    printf("\n-------- preOrder ---------\n");
+    imprimirPreOrden( arbol );
+
+    printf("\n-------- inOrder ---------\n");
+    imprimirInOrder( arbol );
+
+    printf("\n-------- postOrder ---------\n");
+    imprimirPostOrder( arbol );
+
+    printf("\n-------- postOrder2 ---------\n");
+    imprimirPostOrder2 ( arbol );
+
+    printf("-------- imprimir por nivel ---------\n");
+    imprimirPorNivel( arbol );
+
+    printf("\n----------- inOrder -----------\n");
+    imprimirInOrder( arbol );
+
+    printf("\n--- eliminar buscando valor ---");
+    buscarYBorrarEnArbol( &arbol, 20 );
+
+    printf("\n----------- inOrder -----------\n");
+    imprimirInOrder( arbol );
+
 }
+

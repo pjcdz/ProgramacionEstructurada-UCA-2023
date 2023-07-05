@@ -924,6 +924,5 @@ int main() {
     printf("\n-------- Arbol binario ---------\n");
     imprimirArbol(arbol, 0);
 
-
     return 0;
 }
