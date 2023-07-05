@@ -597,12 +597,93 @@
 
 // ################### COLAS ######################################################################################
 
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+
+// struct sNodo {
+//     int valor;
+//     struct sNodo* sig;
+// };
+
+// typedef struct sNodo* tNodo;
+
+// struct sQueue {
+//     tNodo head;
+//     tNodo tail;
+// };
+
+// typedef struct sQueue tQueue;
+
+// void queue(tQueue* cola, int valor) {
+//     tNodo aux = malloc(sizeof(struct sNodo));
+//     aux->valor = valor;
+//     aux->sig = NULL;
+//     if ( cola->head == NULL && cola->tail == NULL ) {
+//         cola->head = aux;
+//         cola->tail = aux;
+//     } else {
+//         cola->tail->sig = aux;
+//         cola->tail = aux;
+//     }
+// }
+
+// int dequeue( tQueue* cola ) {
+//     int res;
+
+//     tNodo aux = cola->head;
+//     cola->head = cola->head->sig;
+//     res = aux->valor;
+//     free(aux);
+
+//     if (cola->head == NULL) {
+//         cola->tail == NULL;
+//     }
+
+//     return res;
+// }
+
+// int estaVacio ( tQueue* cola ) {
+//     return cola->head == NULL && cola->tail == NULL ;
+// }
+
+// void imprimirPorDequeue( tQueue* cola ) {
+//     while ( ! estaVacio( &(*cola) ) ) {
+//         printf("%d ", dequeue( &(*cola) ) );
+//     }
+// }
+
+// int main() {
+//     tQueue cola = {NULL,NULL};
+
+//     queue(&cola, 6);
+//     queue(&cola, 3);
+//     queue(&cola, 26);
+//     queue(&cola, 23);
+
+//     imprimirPorDequeue(&cola);
+    
+//     return 0;
+// }
+
+// ################### ARBOLES ######################################################################################
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-struct sNodo {
+struct sNodoBin {
     int valor;
+    struct sNodoBin* izq;
+    struct sNodoBin* der;
+};
+
+typedef struct sNodoBin* tNodoBin;
+
+// ############ COLA ################
+
+struct sNodo {
+    tNodoBin valor;
     struct sNodo* sig;
 };
 
@@ -615,10 +696,113 @@ struct sQueue {
 
 typedef struct sQueue tQueue;
 
-void queue(tQueue* cola, int valor) {
+void eliminarArbol ( tNodoBin* arbol ) {
+    if ( *arbol != NULL ) {
+        eliminarArbol( &((*arbol)->izq) );
+        eliminarArbol( &((*arbol)->der) );
+        free(*arbol);
+        *arbol = NULL;
+    }
+}
+
+void buscarYBorrarEnArbol( tNodoBin* arbol, int valor ) {
+    if ( *arbol != NULL ) {
+        if ( (*arbol)->valor > valor ) {
+            buscarYBorrarEnArbol( &((*arbol)->izq), valor );
+        } else if ( (*arbol)->valor < valor ) {
+            buscarYBorrarEnArbol( &((*arbol)->der), valor );
+        } else {
+            eliminarArbol( arbol );
+        }
+    }
+}
+
+tNodoBin direccionValorEnArbol (tNodoBin arbol, int valor) {
+    tNodoBin res = NULL;
+
+    if ( arbol != NULL ) {
+        if ( arbol->valor == valor ) {
+            res = arbol;
+        } else {
+            if ( arbol->valor > valor ) {
+                res = direccionValorEnArbol( arbol->izq, valor );
+            } else {
+                res = direccionValorEnArbol( arbol->der, valor );
+            }
+        }
+    }
+}
+
+int estaValorEnArbol (tNodoBin arbol, int valor ) {
+    int res = 0;
+
+    if ( arbol != NULL ) {
+        if ( arbol->valor == valor ) {
+            res = 1;
+        } else {
+            if ( arbol->valor > valor ) {
+                res = estaValorEnArbol( arbol->izq, valor );        
+            } else {
+                res = estaValorEnArbol( arbol->der, valor );
+            }
+        }
+    }
+
+    return res;
+}
+
+int sumarUnNivel(tNodoBin arbol, int nivel) {
+    int res = 0;
+
+    if ( arbol != NULL ) {
+        if ( nivel == 0 ) {
+            res = arbol->valor;
+        } 
+        res = res + sumarUnNivel( arbol->izq, nivel-1 );
+        res = res + sumarUnNivel( arbol->der, nivel-1 );
+    }
+
+    return res;
+}
+
+void imprimirArbol(tNodoBin arbol, int nivel) {
+    if (arbol != NULL) {
+        imprimirArbol(arbol->der, nivel + 1);
+
+        for (int i = 0; i < nivel - 1; i++) {
+            printf("    "); // Espacios para la indentación
+        }
+
+        if (nivel > 0) {
+            printf("|---"); // Conexión lateral
+        }
+
+        printf("%d (%d)\n", arbol->valor, nivel);
+
+        imprimirArbol(arbol->izq, nivel + 1);
+    }
+}
+
+tNodoBin dequeue ( tQueue* cola ) {
+    tNodoBin valor = NULL;
+
+    tNodo aux = cola->head;
+    cola->head = cola->head->sig;
+    valor = aux->valor;
+    free(aux);
+
+    if ( cola->head == NULL ) {
+        cola->tail = NULL;
+    }
+
+    return valor;
+}
+
+void queue( tQueue* cola, tNodoBin valor ) {
     tNodo aux = malloc(sizeof(struct sNodo));
     aux->valor = valor;
     aux->sig = NULL;
+
     if ( cola->head == NULL && cola->tail == NULL ) {
         cola->head = aux;
         cola->tail = aux;
@@ -628,40 +812,118 @@ void queue(tQueue* cola, int valor) {
     }
 }
 
-int dequeue( tQueue* cola ) {
-    int res;
+void porNivelesImprimir( tNodoBin arbol ) {
+    tQueue cola = {NULL, NULL};
+    tNodoBin nodoAux = NULL;
 
-    tNodo aux = cola->head;
-    cola->head = cola->head->sig;
-    res = aux->valor;
-    free(aux);
+    queue(&cola, arbol);
 
-    if (cola->head == NULL) {
-        cola->tail == NULL;
+    while ( cola.head != NULL ) {
+        nodoAux = dequeue(&cola);
+        if ( nodoAux->izq != NULL ) {
+            queue(&cola, nodoAux->izq);   
+        } if ( nodoAux->der != NULL ) {
+            queue(&cola, nodoAux->der);
+        } 
+        printf("%d ", nodoAux->valor);
+    } 
+    printf("\n");
+}
+
+void preOrderImprimir(tNodoBin arbol) {
+    if (arbol != NULL) {
+        printf("%d - ", arbol->valor); // PROCEDO EL NODO
+        preOrderImprimir( arbol->izq ); // IZQ
+        preOrderImprimir( arbol->der ); // DER
     }
-
-    return res;
 }
 
-int estaVacio ( tQueue* cola ) {
-    return cola->head == NULL && cola->tail == NULL ;
+void inOrderImprimir(tNodoBin arbol) {
+    if (arbol != NULL) {
+        inOrderImprimir( arbol->izq );
+        printf("%d - ", arbol->valor);
+        inOrderImprimir( arbol->der );
+    }
 }
 
-void imprimirPorDequeue( tQueue* cola ) {
-    while ( &(*cola) != NULL ) {
-        printf("%d ", dequeue( &(*cola) ) );
+void postOrderImprimir(tNodoBin arbol) {
+    if (arbol != NULL) {
+        postOrderImprimir( arbol->izq );
+        postOrderImprimir( arbol->der );
+        printf("%d - ", arbol->valor);
+    }
+}
+
+void postOrderImprimir2(tNodoBin arbol) {
+    if (arbol != NULL) {
+        postOrderImprimir2( arbol->izq );
+        postOrderImprimir2( arbol->der );
+        printf(" (%p) <- (%p) %d -> (%p) \n", arbol->izq, arbol, arbol->valor, arbol->der );
+    }
+}
+
+void insertarEnArbol( tNodoBin* arbol, int valor ) {
+    if ( *arbol == NULL ) {
+        *arbol = malloc( sizeof(struct sNodoBin) );
+        (*arbol)->valor = valor;
+        (*arbol)->izq = NULL;
+        (*arbol)->der = NULL;
+    } else {
+        if ( (*arbol)->valor > valor ) {
+            insertarEnArbol ( &((*arbol)->izq), valor );
+        } else {
+            insertarEnArbol ( &((*arbol)->der), valor );
+        }
     }
 }
 
 int main() {
-    tQueue cola = {NULL,NULL};
+    tNodoBin arbol = NULL;
 
-    queue(&cola, 6);
-    queue(&cola, 3);
-    queue(&cola, 26);
-    queue(&cola, 23);
+    insertarEnArbol( &arbol, 35 );
+    insertarEnArbol( &arbol, 45 );
+    insertarEnArbol( &arbol, 30 );
+    insertarEnArbol( &arbol, 20 );
+    insertarEnArbol( &arbol, 15 );
+    insertarEnArbol( &arbol, 40 );
+    insertarEnArbol( &arbol, 38 );
+    insertarEnArbol( &arbol, 41 );
+    insertarEnArbol( &arbol, 55 );
+    insertarEnArbol( &arbol, 21 );
 
-    imprimirPorDequeue(&cola);
+    printf("\n-------- preOrder ---------\n");
+    preOrderImprimir(arbol);
+
+    printf("\n-------- inOrder ---------\n");
+    inOrderImprimir(arbol);
+
+    printf("\n-------- postOrder ---------\n");
+    postOrderImprimir(arbol);
+
+    printf("\n-------- postOrder 2 ---------\n");
+    postOrderImprimir2(arbol);
+
+    printf("\n-------- por niveles Imprimir ---------\n");
+    porNivelesImprimir(arbol);
+
+    printf("\n-------- Arbol binario ---------\n");
+    imprimirArbol(arbol, 0);
+
+    printf("\n-------- Sumatoria de un nivel ---------\n");
+    printf("%d \n", sumarUnNivel(arbol, 3) );
+
+    printf("\n-------- Esta en arbol? ---------\n");
+    printf("%d \n", estaValorEnArbol(arbol, 20) );
+
+    printf("\n-------- Direccion valor en arbol ---------\n");
+    printf("<%p> \n", direccionValorEnArbol(arbol, 20) );
+
+    printf("\n-------- Buscar y borrar valor ---------\n");
+    buscarYBorrarEnArbol(&arbol, 20);
+
+    printf("\n-------- Arbol binario ---------\n");
+    imprimirArbol(arbol, 0);
+
 
     return 0;
 }
