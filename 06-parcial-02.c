@@ -134,9 +134,9 @@ int main () {
     leerArchivoCargarLs(&ls, "06-parcial-datos.csv");
     imprimirRecursiva(ls);
 
-    printf("-------------------------------------\n");
-    eliminarRangoPrecios (&ls, 5, 20);
-    imprimirRecursiva(ls);
+    // printf("-------------------------------------\n");
+    // eliminarRangoPrecios (&ls, 5, 20);
+    // imprimirRecursiva(ls);
 
     // printf("-------------------------------------\n");
     // t_nodo resultado = NULL;
