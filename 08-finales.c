@@ -254,3 +254,144 @@
 // void main() { 
 //     printf("%c",x('a'));
 // }
+
+
+// InformaticaII_FINAL_FEB_2011 ##############################################
+
+// 2.1 - C: 9 ✅
+// void main() { 
+//     int a=9, b=13, c=-3, d=8;
+//     int *bb, **cc;
+//     bb=&a;
+//     cc= &bb;
+//     (*bb)++;
+//     a= 5;
+//     **cc = **cc + 4;
+//     cc = &d;
+//     printf("%d", *bb);
+// }
+
+// 2.2 - E. wwww ✅
+// char x (char a) {
+//     if (a<='w')
+//     printf("%c", x(a+1));
+//     return 'w';
+// }
+// void main() { 
+//     printf("%c",x('u'));
+// }
+
+// 2.3 - B: 893456789 ✅
+// void main() { 
+//     char *b = "3456789";
+//     char * p = b;
+//     p += 5;
+//     printf( "%s%s", p,b ); 
+// }
+
+// 2.4 - D: 15 ✅
+// void main() { 
+//     unsigned char a;
+//     a= ~( (~0) << (1<<2));
+//     printf("%d",a);
+// }
+
+
+// InformaticaII_FINAL_FEB_2013 ##############################################
+
+// 2.1 - c: 2 ✅
+// int retorno(int valor) {
+//     if( valor != (valor&&valor) ) {
+//         retorno(valor&valor);
+//         if(valor!=1)
+//         return 144;
+//     }
+// return 266;
+// }
+// void main() { 
+//     printf("%d\n", retorno(1));
+//     printf("%d\n", retorno(0));
+//     printf("%d\n", retorno(2));
+// }
+
+// 2.2 - E: error ❌ -> C: 3 No es error porque sobreescribe "uno"
+// int main() {
+//     int a[]={1,3,5,7,9,0};
+//     int *uno=NULL, dos=0;
+//     uno = a;
+//     dos= *(uno + *uno);
+//     printf("dos: %d\n", dos);
+//     return 0;
+// }
+
+// 2.3 - D: 15 ✅
+// void main() { 
+//     unsigned char a;
+//     a= ~( (~0) << (1<<2));
+//     printf("%d", a);
+// }
+
+// 2.4 - A: Siempre muestra rojo ✅
+// void funcion(int a, int b) {
+//     if ( (a << b) > a )
+//         printf("rojo");
+//     else
+//         printf("negro");
+// }
+// void main() { 
+//     funcion(2,1);
+// }
+
+// InformaticaII_FINAL_JULIO_2011b ##############################################
+
+// 2.1 - B: ab ❌ -> D: aa. No tiene {} en el if y se corta en return 'a'
+// char x (char a) {
+//     if (a<'b')
+//     printf("%c", x(a+1));
+//     return 'a';
+//     if (a>='b')
+//     return 'b';
+// }
+// void main() {
+//     printf("%c",x('a'));
+// }
+
+// 2.2 - B: FAAAaAAA ✅
+// void recursiva(char *nombre, int i) { 
+//     char aux;
+//     if(*nombre!='\0' )
+//         { recursiva(nombre+1, i+1);
+//     if(*nombre>'a' && *nombre<'z')
+//         { *nombre=65; }
+//     else
+//         { *nombre=*nombre&255; }
+//     }
+// }
+// int main() { 
+//     char nombre[]="Fernando";
+//     recursiva(nombre, 1);
+//     printf("%s",nombre);
+// }
+
+// 2.3 - D: 993456799 ✅
+// void main()
+// {
+//     char b[] = "3456789";
+//     char * p = b+5 ;
+//     int i=0;
+//     while(*(b+i)!='\0')
+//     i++;
+//     while(i>0 && *p<'9')
+//     {
+//     i--;
+//     *p=*p+1;
+//     }
+//     printf( "%s%s", p,b );
+// }
+
+// 2.4 - B: 1 ❌ -> F: 65. WHY? No hay por que
+// void main() {
+//     unsigned char a;
+//     a = ( ~ ((31<<1)) & 127);
+//     printf("%d",a);
+// }
