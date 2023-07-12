@@ -765,24 +765,6 @@
 //     return res;
 // }
 
-// void imprimirArbol(tNodoBin arbol, int nivel) {
-//     if (arbol != NULL) {
-//         imprimirArbol(arbol->der, nivel + 1);
-
-//         for (int i = 0; i < nivel - 1; i++) {
-//             printf("    "); // Espacios para la indentación
-//         }
-
-//         if (nivel > 0) {
-//             printf("|---"); // Conexión lateral
-//         }
-
-//         printf("%d (%d)\n", arbol->valor, nivel);
-
-//         imprimirArbol(arbol->izq, nivel + 1);
-//     }
-// }
-
 // tNodoBin dequeue ( tQueue* cola ) {
 //     tNodoBin valor = NULL;
 
@@ -910,9 +892,6 @@
 //     printf("\n-------- por niveles Imprimir ---------\n");
 //     porNivelesImprimir(arbol);
 
-//     printf("\n-------- Arbol binario ---------\n");
-//     imprimirArbol(arbol, 0);
-
 //     printf("\n-------- Sumatoria de un nivel ---------\n");
 //     printf("%d \n", sumarUnNivel(arbol, 3) );
 
@@ -924,9 +903,6 @@
 
 //     printf("\n-------- Buscar y borrar valor ---------\n");
 //     buscarYBorrarEnArbol(&arbol, 20);
-
-//     printf("\n-------- Arbol binario ---------\n");
-//     imprimirArbol(arbol, 0);
 
 //     return 0;
 // }

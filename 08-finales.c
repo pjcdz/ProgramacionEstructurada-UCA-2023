@@ -4,7 +4,7 @@
 
 // Final INFO2-DIC-2016A (Parte_1-2 de 3) ##############################################
 
-// 2.1) - E -> 0 ✅
+// 2.1) - E -> 0 ✅ ✅
 // int main() {
 //     unsigned char a=1;
 //     unsigned int i;
@@ -16,7 +16,7 @@
 //     printf("\n%d",a);
 // }
 
-// 2.2) - F: infinite loop ❌ -> A: "b"
+// 2.2) - F: infinite loop ❌ -> A: "b" ✅
 // char f(char a) {
 //     if (a<'c')
 //         f(a+1);
@@ -31,7 +31,7 @@
 //     printf("%c",f('b'));
 // }
 
-// 2.3) - D: 11 ❌ -> E: error al asignar NULL
+// 2.3) - D: 11 ❌ -> E: error al asignar NULL ✅
 // int main() { 
 //     int* p=NULL;
 //     (*p)=10;
@@ -39,7 +39,7 @@
 //     return 0;
 // }
 
-// 2.4) - E: 14 ✅
+// 2.4) - E: 14 ✅ ✅
 // void f() { 
 //     int a=9, b=13;
 //     int *bb, **cc;
@@ -56,7 +56,7 @@
 
 // Final PROGESTRUC-DIC-2017B (Parte_1-2 de 3).docx ##############################################
 
-// 2.1) - E: 6 ✅
+// 2.1) - E: 6 ✅ ✅
 
 // void sum (int arr[]){
 //     arr[0] = arr[0]+3;
@@ -72,7 +72,7 @@
 //     return 0;
 // }
 
-// 2.2) - E: 14 ✅
+// 2.2) - E: 14 ✅ ✅ 
 // void f(){
 //     int a=9, b=13;
 //     int *bb, **cc;
@@ -85,7 +85,7 @@
 //     return 0;
 // }
 
-// 2.3) - E: error ✅
+// 2.3) - E: error ✅ ✅
 // int main(){
 //     int* p=NULL;
 //     (*p)=10;
@@ -93,7 +93,7 @@
 //     return 0;
 // }
 
-// 2.4) - B: 12 ❌ -> E: 81
+// 2.4) - B: 12 ❌ -> E: 81 ✅
 // int foo(int n,int m){
 //     int miFoo=1;
 //     if(m>0){
@@ -110,7 +110,7 @@
 
 // Final PROGESTRUC-JUL-2017A (Parte_1-2 de 3) ##############################################
 
-// 2.1) - H: ninguna ✅
+// 2.1) - H: ninguna ✅ ✅
 // int foo(int n,int m){
 //     int miFoo=1;
 //     if(m>0){
@@ -124,7 +124,7 @@
 //     return 0;
 // }
 
-// 2.2) - A: (0,0) ✅
+// 2.2) - A: (0,0) ✅ ✅
 // int main() {
 //     char* s[5]; int i=0;
 //     char c='2';
@@ -137,7 +137,7 @@
 //     return 0;
 // }
 
-// 2.3) - F: error ✅
+// 2.3) - F: error ✅ ✅
 // int main(){
 //     char* s=NULL; int i;
 //     for(i=0;i<4;i++){
@@ -148,7 +148,7 @@
 //     return 0;
 // }
 
-// 2.4) - E: 0 ✅
+// 2.4) - E: 0 ✅ ✅
 // int foo(unsigned char n,unsigned char filter){
 //     return n&((255&(filter<<n+n))>1);
 // }
@@ -161,7 +161,7 @@
 
 // Final PROGESTRUC-JUL-2018A (Parte_1-2 de 3).docx ##############################################
 
-// 2.1) - D: 7 ✅
+// 2.1) - D: 7 ✅ ✅
 // void sum (int arr[]){
 //     *arr = *arr +3;
 // }
@@ -176,7 +176,7 @@
 //     return 0;
 // }
 
-// 2.2) - E: 22 ✅
+// 2.2) - E: 22 ✅ ✅
 // void f(){
 //     int a=9, b=13;
 //     int* ar[2];
@@ -189,7 +189,7 @@
 //     return 0;
 // }
 
-// 2.3) - E: error ✅
+// 2.3) - E: error ✅ ✅
 // int main(){
 //     int* p=NULL;
 //     (*p)=10;
@@ -197,7 +197,7 @@
 //     return 0;
 // }
 
-// 2.4) - H: ninguna ✅
+// 2.4) - H: ninguna ✅ ✅
 // int foo(int n,int m){ 
 //     int miFoo=0;
 //     if(m<0){
@@ -215,7 +215,7 @@
 
 // InformaticaII_FINAL_DIC_2013  ##############################################
 
-// 2.1 - C: 0 ✅
+// 2.1 - C: 0 ✅ ✅
 // int doble(int valor) {
 //     int entero=16;
 //     entero=(valor<<20)&16;
@@ -227,7 +227,7 @@
 //     return 0;
 // }
 
-// 2.2 - F: ninguna ❌ -> A: no muestra nada (printf("\0"))
+// 2.2 - F: ninguna ❌ -> A: no muestra nada (printf("\0")) ✅
 // int main() {
 //     char *ptrA = "Juan";
 //     char *ptrB = "Pedro";
@@ -236,14 +236,14 @@
 //     printf("%c", *ptrA);
 // }
 
-// 2.3 - D: 128 ✅
-// int main() {
-//     unsigned char a;
-//     a= ~0 << ((sizeof(unsigned char)*8)-1);
-//     printf("%d", a);
-// }
+// 2.3 - D: 128 ❌ -> G: ninguna (-128) ✅
+int main() {
+    unsigned char a;
+    a= ~0 << ((sizeof(unsigned char)*8)-1);
+    printf("%d",  ( ~ ((31<<1)) & 127));
+}
 
-// 2.4 - D: bzzzz ✅
+// 2.4 - D: bzzzz ✅ ✅
 // char x (char a) {
 //     if (a<='c')
 //     printf("%c", x(a+1));
@@ -258,7 +258,7 @@
 
 // InformaticaII_FINAL_FEB_2011 ##############################################
 
-// 2.1 - C: 9 ✅
+// 2.1 - C: 9 ✅ ✅
 // void main() { 
 //     int a=9, b=13, c=-3, d=8;
 //     int *bb, **cc;
@@ -271,7 +271,7 @@
 //     printf("%d", *bb);
 // }
 
-// 2.2 - E. wwww ✅
+// 2.2 - E. wwww ✅ ✅
 // char x (char a) {
 //     if (a<='w')
 //     printf("%c", x(a+1));
@@ -281,7 +281,7 @@
 //     printf("%c",x('u'));
 // }
 
-// 2.3 - B: 893456789 ✅
+// 2.3 - B: 893456789 ✅ ✅
 // void main() { 
 //     char *b = "3456789";
 //     char * p = b;
@@ -289,7 +289,7 @@
 //     printf( "%s%s", p,b ); 
 // }
 
-// 2.4 - D: 15 ✅
+// 2.4 - D: 15 ✅ ✅
 // void main() { 
 //     unsigned char a;
 //     a= ~( (~0) << (1<<2));
@@ -299,7 +299,7 @@
 
 // InformaticaII_FINAL_FEB_2013 ##############################################
 
-// 2.1 - c: 2 ✅
+// 2.1 - c: 2 ✅ ✅
 // int retorno(int valor) {
 //     if( valor != (valor&&valor) ) {
 //         retorno(valor&valor);
@@ -314,7 +314,7 @@
 //     printf("%d\n", retorno(2));
 // }
 
-// 2.2 - E: error ❌ -> C: 3 No es error porque sobreescribe "uno"
+// 2.2 - E: error ❌ -> C: 3 No es error porque sobreescribe "uno" ✅
 // int main() {
 //     int a[]={1,3,5,7,9,0};
 //     int *uno=NULL, dos=0;
@@ -324,14 +324,14 @@
 //     return 0;
 // }
 
-// 2.3 - D: 15 ✅
+// 2.3 - D: 15 ✅ ✅
 // void main() { 
 //     unsigned char a;
 //     a= ~( (~0) << (1<<2));
 //     printf("%d", a);
 // }
 
-// 2.4 - A: Siempre muestra rojo ✅
+// 2.4 - A: Siempre muestra rojo ✅ ✅
 // void funcion(int a, int b) {
 //     if ( (a << b) > a )
 //         printf("rojo");
